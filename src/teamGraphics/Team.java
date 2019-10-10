@@ -1,24 +1,25 @@
-package Team;
+package teamGraphics;
 
-import entity.Cage;
-import entity.DicePlace;
-import entity.Rank;
-import entity.Step;
+import entity.unchanged.Cage;
+import entity.unchanged.DicePlace;
+import entity.unchanged.Rank;
+import entity.unchanged.Step;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Team {
 
     final int RANK_DISTANCE = 40;
-    final int STEP_DISTANCE = 48;
+    final int STEP_DISTANCE = 40;
     final int NUMBER_OF_RANK = 6;
-    final int NUMBER_OF_STEP = 5;
+    final int NUMBER_OF_STEP = 6;
 
     Cage cage;
     DicePlace dicePlace;
     ArrayList<Rank> ranks;
-    ArrayList<Step> steps;
+    HashMap<Integer, Step> steps;
 
     public abstract void initialRank();
 
@@ -30,11 +31,13 @@ public abstract class Team {
         for (Rank rank : ranks) {
             rank.render(g);
         }
-        for (Step step : steps) {
+        ArrayList<Step> stepTemp = new ArrayList<>(steps.values());
+        for (Step step : stepTemp) {
             step.render(g);
         }
     }
 
-    ;
-
+    public HashMap<Integer, Step> getSteps() {
+        return steps;
+    }
 }

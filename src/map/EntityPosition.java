@@ -16,19 +16,19 @@ public class EntityPosition {
     public static final int ORANGE_CAGE_Y = 480;
 
 
-    // Dice
+    // Dice PLACE
 
-    public static final int BLUE_Dice_X = 10;
-    public static final int BLUE_Dice_Y = 15;
+    public static final int BLUE_DICE_PLACE_X = 10;
+    public static final int BLUE_DICE_PLACE_Y = 15;
 
-    public static final int RED_Dice_X = 820;
-    public static final int RED_Dice_Y = 15;
+    public static final int RED_DICE_PLACE_X = 820;
+    public static final int RED_DICE_PLACE_Y = 15;
 
-    public static final int VIOLET_Dice_X = 10;
-    public static final int VIOLET_Dice_Y = 615;
+    public static final int VIOLET_DICE_PLACE_X = 10;
+    public static final int VIOLET_DICE_PLACE_Y = 615;
 
-    public static final int ORANGE_Dice_X = 820;
-    public static final int ORANGE_Dice_Y = 615;
+    public static final int ORANGE_DICE_PLACE_X = 820;
+    public static final int ORANGE_DICE_PLACE_Y = 615;
 
 
     // Rank
@@ -71,7 +71,7 @@ public class EntityPosition {
     public static final int ORANGE_FIRST_Y = 665;
 
     public static final int BLUE_STEP_HORIZONTAL_X = 375;
-    public static final int BLUE_STEP_HORIZONTAL_FIRST_Y = 83;
+    public static final int BLUE_STEP_HORIZONTAL_FIRST_Y = 75;
     public static final int BLUE_STEP_HORIZONTAL_LAST_Y = 235;
 
     public static final int BLUE_STEP_VERTICAL_Y = 275;
@@ -87,11 +87,11 @@ public class EntityPosition {
     public static final int RED_STEP_VERTICAL_LAST_X = 685;
 
     public static final int VIOLET_STEP_HORIZONTAL_X = 375;
-    public static final int VIOLET_STEP_HORIZONTAL_FIRST_Y = 473;
+    public static final int VIOLET_STEP_HORIZONTAL_FIRST_Y = 465;
     public static final int VIOLET_STEP_HORIZONTAL_LAST_Y = 625;
 
     public static final int VIOLET_STEP_VERTICAL_Y = 425;
-    public static final int VIOLET_STEP_VERTICAL_FIRST_X = 183;
+    public static final int VIOLET_STEP_VERTICAL_FIRST_X = 175;
     public static final int VIOLET_STEP_VERTICAL_LAST_X = 295;
 
     public static final int ORANGE_STEP_HORIZONTAL_X = 525;
@@ -99,7 +99,7 @@ public class EntityPosition {
     public static final int ORANGE_STEP_HORIZONTAL_LAST_Y = 585;
 
     public static final int ORANGE_STEP_VERTICAL_Y = 425;
-    public static final int ORANGE_STEP_VERTICAL_FIRST_X = 573;
+    public static final int ORANGE_STEP_VERTICAL_FIRST_X = 565;
     public static final int ORANGE_STEP_VERTICAL_LAST_X = 725;
 
 

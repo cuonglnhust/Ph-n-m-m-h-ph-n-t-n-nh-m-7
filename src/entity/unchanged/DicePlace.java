@@ -1,6 +1,6 @@
-package entity;
+package entity.unchanged;
 
-import map.EntityPosition;
+import entity.Entity;
 import map.EntitySize;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ public class DicePlace extends Entity {
 
 
     public DicePlace(BufferedImage DiceImage, int x, int y) {
-        super(x, y, EntitySize.Dice_WIDTH, EntitySize.Dice_HEIGHT);
+        super(x, y, EntitySize.DICE_PLACE_WIDTH, EntitySize.DICE_PLACE_HEIGHT);
         this.entity = DiceImage;
     }
 

@@ -5,12 +5,12 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    int x;
-    int y;
-    int width,height;
+    protected int x;
+    protected int y;
+    protected int width,height;
     protected BufferedImage entity;
 
-    Entity(int x, int y, int width, int height) {
+    public Entity(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;

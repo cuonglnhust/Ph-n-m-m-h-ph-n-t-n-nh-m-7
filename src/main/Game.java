@@ -1,5 +1,6 @@
 package main;
 
+import mouse.Mouse;
 import state.GameState;
 import state.State;
 import graphics.CreateImage;
@@ -16,12 +17,14 @@ public class Game implements Runnable {
     private BufferStrategy bs;
     private Graphics g;
     private State state;
+    private Mouse mouse;
 
 
     public Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
         this.title = title;
+        mouse = new Mouse();
     }
 
     private void init() {
@@ -98,5 +101,7 @@ public class Game implements Runnable {
         }
     }
 
-
+    public Mouse getMouse() {
+        return mouse;
+    }
 }

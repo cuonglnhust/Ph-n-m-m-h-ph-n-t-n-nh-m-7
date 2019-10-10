@@ -1,5 +1,6 @@
-package entity;
+package entity.unchanged;
 
+import entity.Entity;
 import map.EntityPosition;
 
 import java.awt.*;
