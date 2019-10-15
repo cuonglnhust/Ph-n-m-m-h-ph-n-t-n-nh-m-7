@@ -12,13 +12,14 @@ import java.awt.*;
 // ngựa
 public class Horse extends Entity {
 
+    private final int CANT_MOVE = 56;
     private final int OFFSET = 28;
     private int team;
 
 
     // x, y tọa độ ô đang đứng
 
-    // ô đang đứng, = 0 là chưa xuất phát hoặc đã lên chuồng
+    // ô đang đứng, = -1 là chưa xuất phát hoặc đã lên chuồng
     private int position;
 
     // ô trong chuồng, = 0 nếu chưa lên chuồng
@@ -51,54 +52,124 @@ public class Horse extends Entity {
     }
 
     // Phát hiện sự kiện di chuyển theo Click chuột
-    public boolean isMove() {
+    public boolean isClicked() {
         if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
             return mouse.isLeftClick() || mouse.isRightClick();
         }
         return false;
     }
 
+    public void action(int diceValue) {
+        // ở trong chuồng
+        if (rank != 0) {
+            if (diceValue - rank == 1) {
+                rank = diceValue;
+            }
+        }
+        // đang ở điểm cuối
+        else if (Constant.teamLastPoint.get(team) == position) {
+            // lên chuồng
+            rank = diceValue;
+            position = -1;
+        }
+        // xuất quân
+        else if (rank == 0 && position == -1) {
+            position = 0;
+        } else {
+
+        }
+    }
+
     // Ngựa di chuyển theo số bước step
     public void move(int step) {
-
+        int checkResult = checkLine(step);
+        if (checkResult == CANT_MOVE) {
+            // không thể di chuyển
+        } else if (checkResult > 0) {
+            // di chuyển được
+        } else {
+            // đá
+        }
     }
 
     /* check xem trên đường đi có ngựa khác hay không
-    Trả về vị trí ô tiếp theo nếu di chuyển được */
+
+    Trả về last_position nếu di chuyển được
+    Trả về 56 nếu không đi được
+    Trả về -last_position nếu đá
+
+    */
+
     private int checkLine(int step) {
         int first_position = position;
         int last_position = position + step;
-
-        // check đang có trong chuồng không
-        if (isRank()) {
-            return -1;
+        // TH first < last < 56
+        if (last_position < 56) {
+            return actionWithCondition(isBlock1(first_position, last_position), last_position);
         }
-        // check xem có đang ở ô cuối không
-        else if (isLast()) {
-            return -1;
+        // TH last < first < 56
+        else {
+            // tính lại last_position
+            last_position = last_position - 56;
+            return actionWithCondition(isBlock2(first_position, last_position), last_position);
         }
+    }
 
-        // tính lại last
 
-        else{
-            if (last_position < 56){
-                // check xem last_position
-                return last_position;
-            }else if (last_position == 56){
-
+    // check ngựa trên đường trong TH first < last < 56
+    private int isBlock1(int first, int last) {
+        for (int i = first + 1; i <= last; i++) {
+            if (map.getVirtualMap()[i] != 0) {
+                if (i == last) {
+                    // ô last đang có ngựa
+                    return 1;
+                }
+                // 1 trong các ô đang có ngựa, không phải last
+                return -1;
             }
+        }
+        // không có ngựa trên đường
+        return 0;
+    }
 
-            return 0;
+    // check ngựa trên đường trong TH last < first < 56
+    private int isBlock2(int first, int last) {
+        // Chia đường thành 2 đoạn
+
+        // xét nửa đoạn đường đầu
+        for (int i = first + 1; i < 56; i++) {
+            if (map.getVirtualMap()[i] != 0) {
+                return -1;
+            }
         }
 
+        // xét nửa đoạn sau
+        for (int i = 0; i <= last; i++) {
+            if (map.getVirtualMap()[i] != 0) {
+                if (i == last) {
+                    return 1;
+                }
+                return -1;
+            }
+        }
+        return 0;
     }
 
-    private boolean isRank() {
-        return rank != 0;
-    }
-
-    private boolean isLast() {
-        return Constant.teamLastPoint.containsKey(team);
+    // kết quả check đường
+    private int actionWithCondition(int condition, int lastPosition) {
+        switch (condition) {
+            case 0:
+                return lastPosition;
+            case 1:
+                // check xem ô last là ngựa gì
+                // cùng màu
+                if (map.getVirtualMap()[lastPosition] == team) {
+                    return CANT_MOVE;
+                }
+                return -lastPosition;
+            default:
+                return CANT_MOVE;
+        }
     }
 
 
