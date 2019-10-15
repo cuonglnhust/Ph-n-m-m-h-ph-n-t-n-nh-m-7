@@ -38,6 +38,10 @@ public class Map {
 
     }
 
+    private void initialVirtualMap(){
+
+    }
+
     public void tick() {
 
     }
@@ -55,5 +59,9 @@ public class Map {
 
     public HashMap<Integer, Step> getMapGraphics() {
         return mapGraphics;
+    }
+
+    public int[] getVirtualMap() {
+        return virtualMap;
     }
 }

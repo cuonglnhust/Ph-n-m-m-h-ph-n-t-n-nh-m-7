@@ -14,10 +14,10 @@ import java.util.HashMap;
 public class Violet extends Team {
 
     private final Color VIOLET_RANK_BACKGROUND = Color.decode("#b560b4");
-    private final int FIRST_POSITION = 15;
-    private final int LAST_POSITION = 14;
-    private final int FIRST_HORIZONTAL_POSITION = 22;
-    private final int FIRST_VERTICAL_POSITION = 16;
+    private final int FIRST_POSITION = 14;
+    private final int LAST_POSITION = 13;
+    private final int FIRST_HORIZONTAL_POSITION = 21;
+    private final int FIRST_VERTICAL_POSITION = 15;
 
 
 

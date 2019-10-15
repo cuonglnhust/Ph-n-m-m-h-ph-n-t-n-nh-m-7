@@ -28,6 +28,7 @@ public class Game implements Runnable {
     }
 
     private void init() {
+        Handler.getInstance().setGame(this);
         display = new Display(title, width, height);
         CreateImage.create();
         state = new GameState();

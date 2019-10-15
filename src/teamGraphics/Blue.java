@@ -14,10 +14,10 @@ import java.util.HashMap;
 public class Blue extends Team {
 
     private final Color BLUE_RANK_BACKGROUND = Color.decode("#8080ff");
-    private final int FIRST_POSITION = 1;
-    private final int LAST_POSITION = 56;
-    private final int FIRST_HORIZONTAL_POSITION = 2;
-    private final int FIRST_VERTICAL_POSITION = 13;
+    private final int FIRST_POSITION = 0;
+    private final int LAST_POSITION = 55;
+    private final int FIRST_HORIZONTAL_POSITION = 1;
+    private final int FIRST_VERTICAL_POSITION = 12;
 
     public Blue() {
 
