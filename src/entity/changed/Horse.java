@@ -2,23 +2,29 @@ package entity.changed;
 
 import entity.Entity;
 import graphics.Constant;
+import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
 import map.Map;
 import mouse.Mouse;
+import player.Player;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 // ngựa
 public class Horse extends Entity {
 
     private final int CANT_MOVE = 56;
     private final int OFFSET = 28;
+
+    // đội màu gì
     private int team;
 
+    // chủ sở hữu của nó
+    private Player player;
 
     // x, y tọa độ ô đang đứng
-
     // ô đang đứng, = -1 là chưa xuất phát hoặc đã lên chuồng
     private int position;
 
@@ -30,9 +36,30 @@ public class Horse extends Entity {
 
     public Horse(int x, int y, int team) {
         super(x, y, EntitySize.HORSE_WIDTH, EntitySize.HORSE_HEIGHT);
+        position = -1;
+        rank = 0;
         mouse = Handler.getInstance().getMouse();
         map = Handler.getInstance().getMap();
         this.team = team;
+        setEntity();
+    }
+
+    // khởi tạo graphics Horse theo team
+    private void setEntity() {
+        switch (team) {
+            case Constant.TEAM_BLUE:
+                entity = CreateImage.blueHorse;
+                break;
+            case Constant.TEAM_RED:
+                entity = CreateImage.redHorse;
+                break;
+            case Constant.TEAM_ORANGE:
+                entity = CreateImage.orangeHorse;
+                break;
+            case Constant.TEAM_VIOLET:
+                entity = CreateImage.violetHorse;
+                break;
+        }
     }
 
     @Override
@@ -51,10 +78,13 @@ public class Horse extends Entity {
         return new Rectangle(x, y - OFFSET, width, height);
     }
 
-    // Phát hiện sự kiện di chuyển theo Click chuột
+    // Phát hiện sự kiện di chuyển theo Click chuột vào ngựa
     public boolean isClicked() {
-        if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
-            return mouse.isLeftClick() || mouse.isRightClick();
+        if (player.isTurn()) {
+            if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
+                return mouse.isLeftClick() || mouse.isRightClick();
+            }
+            return false;
         }
         return false;
     }
@@ -74,7 +104,7 @@ public class Horse extends Entity {
         }
         // xuất quân
         else if (rank == 0 && position == -1) {
-            position = 0;
+
         } else {
 
         }

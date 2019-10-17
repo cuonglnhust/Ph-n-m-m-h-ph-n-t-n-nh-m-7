@@ -7,7 +7,7 @@ public abstract class Entity {
 
     protected int x;
     protected int y;
-    protected int width,height;
+    protected int width, height;
     protected BufferedImage entity;
 
     public Entity(int x, int y, int width, int height) {
@@ -18,5 +18,6 @@ public abstract class Entity {
     }
 
     public abstract void tick();
+
     public abstract void render(Graphics g);
 }

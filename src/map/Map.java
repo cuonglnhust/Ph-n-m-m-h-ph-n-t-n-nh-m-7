@@ -38,7 +38,7 @@ public class Map {
 
     }
 
-    private void initialVirtualMap(){
+    private void initialVirtualMap() {
 
     }
 
@@ -54,7 +54,16 @@ public class Map {
         g.setColor(Color.red);
         g.drawRect(115, 15, 700, 700);
         g.drawImage(CreateImage.dice, EntityPosition.ORANGE_DICE_PLACE_X + 25, EntityPosition.ORANGE_DICE_PLACE_Y + 25, 50, 50, null);
-        g.drawImage(CreateImage.violetHo, EntityPosition.RED_FIRST_X, EntityPosition.RED_FIRST_Y - 28, null);
+        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN, EntityPosition.RED_HORSE_Y, null);
+        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30, EntityPosition.RED_HORSE_Y, null);
+        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30 * 2, EntityPosition.RED_HORSE_Y, null);
+        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30 * 3, EntityPosition.RED_HORSE_Y, null);
+
+        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN, EntityPosition.BLUE_HORSE_Y, null);
+        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30, EntityPosition.BLUE_HORSE_Y, null);
+        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30 * 2, EntityPosition.BLUE_HORSE_Y, null);
+        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30 * 3, EntityPosition.BLUE_HORSE_Y, null);
+
     }
 
     public HashMap<Integer, Step> getMapGraphics() {
