@@ -14,10 +14,7 @@ import java.util.HashMap;
 public class Orange extends Team {
 
     private final Color ORANGE_RANK_BACKGROUND = Color.decode("#ffb163");
-    private final int FIRST_POSITION = 28;
-    private final int LAST_POSITION = 27;
-    private final int FIRST_HORIZONTAL_POSITION = 34;
-    private final int FIRST_VERTICAL_POSITION = 35;
+    private final Position position = new Position(28,27,34,35);
 
 
     public Orange() {
@@ -28,7 +25,7 @@ public class Orange extends Team {
     }
 
     @Override
-    public void initialRank() {
+    protected void initialRank() {
         ranks = new ArrayList<>();
         int orangeYMax = EntityPosition.ORANGE_RANK_Y_MAX;
         for (int i = 0; i < NUMBER_OF_RANK; i++) {
@@ -38,14 +35,14 @@ public class Orange extends Team {
     }
 
     @Override
-    public void initialStep() {
+    protected void initialStep() {
         steps = new HashMap<>();
-        steps.put(FIRST_POSITION,new Step(CreateImage.orangePoint, EntityPosition.ORANGE_FIRST_X, EntityPosition.ORANGE_FIRST_Y));
-        steps.put(LAST_POSITION,new Step(CreateImage.orangeCircle, EntityPosition.ORANGE_END_X, EntityPosition.ORANGE_END_Y));
+        steps.put(position.getFirstPosition(),new Step(CreateImage.orangePoint, EntityPosition.ORANGE_FIRST_X, EntityPosition.ORANGE_FIRST_Y));
+        steps.put(position.getLastPosition(),new Step(CreateImage.orangeCircle, EntityPosition.ORANGE_END_X, EntityPosition.ORANGE_END_Y));
         int orangeHorizontalMinY = EntityPosition.ORANGE_STEP_HORIZONTAL_FIRST_Y;
         int orangeVerticalMinX = EntityPosition.ORANGE_STEP_VERTICAL_FIRST_X;
-        int firstHorizontalPosition = FIRST_HORIZONTAL_POSITION;
-        int firstVerticalPosition = FIRST_VERTICAL_POSITION;
+        int firstHorizontalPosition = position.getFirstHorizontalPosition();
+        int firstVerticalPosition = position.getFirstVerticalPosition();
         // dọc giảm, ngang tăng
         for (int i = 0; i < NUMBER_OF_STEP; i++) {
             steps.put(firstHorizontalPosition,new Step(CreateImage.orangeCircle, EntityPosition.ORANGE_STEP_HORIZONTAL_X, orangeHorizontalMinY));

@@ -1,5 +1,6 @@
 package entity.changed;
 
+import constant.TeamType;
 import entity.Entity;
 import graphics.Constant;
 import graphics.CreateImage;
@@ -19,7 +20,7 @@ public class Horse extends Entity {
     private final int OFFSET = 28;
 
     // đội màu gì
-    private int team;
+    private TeamType team;
 
     // chủ sở hữu của nó
     private Player player;
@@ -34,7 +35,7 @@ public class Horse extends Entity {
     private Mouse mouse;
     private Map map;
 
-    public Horse(int x, int y, int team) {
+    public Horse(int x, int y, TeamType team) {
         super(x, y, EntitySize.HORSE_WIDTH, EntitySize.HORSE_HEIGHT);
         position = -1;
         rank = 0;
@@ -45,21 +46,11 @@ public class Horse extends Entity {
     }
 
     // khởi tạo graphics Horse theo team
-    private void setEntity() {
-        switch (team) {
-            case Constant.TEAM_BLUE:
-                entity = CreateImage.blueHorse;
-                break;
-            case Constant.TEAM_RED:
-                entity = CreateImage.redHorse;
-                break;
-            case Constant.TEAM_ORANGE:
-                entity = CreateImage.orangeHorse;
-                break;
-            case Constant.TEAM_VIOLET:
-                entity = CreateImage.violetHorse;
-                break;
-        }
+    protected void setEntity() {
+    }
+
+    // xuất quân
+    protected void starting() {
     }
 
     @Override
@@ -193,7 +184,7 @@ public class Horse extends Entity {
             case 1:
                 // check xem ô last là ngựa gì
                 // cùng màu
-                if (map.getVirtualMap()[lastPosition] == team) {
+                if (map.getVirtualMap()[lastPosition] == team.ordinal()) {
                     return CANT_MOVE;
                 }
                 return -lastPosition;

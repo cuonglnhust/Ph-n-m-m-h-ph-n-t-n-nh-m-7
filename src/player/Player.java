@@ -1,7 +1,7 @@
 package player;
 
-import entity.changed.Dice;
-import entity.changed.Horse;
+import constant.TeamType;
+import entity.changed.*;
 import graphics.Constant;
 
 import java.awt.*;
@@ -16,12 +16,12 @@ public class Player {
     private Dice dice;
 
     // đội màu gì
-    private int team;
+    private TeamType team;
 
     // lượt chơi
     private boolean turn;
 
-    public Player(Dice dice, int team) {
+    public Player(Dice dice, TeamType team) {
         this.dice = dice;
         this.team = team;
     }
@@ -42,28 +42,28 @@ public class Player {
     private void initHorse() {
         horses = new ArrayList<>();
         switch (team) {
-            case Constant.TEAM_BLUE:
+            case TEAM_BLUE:
                 for (int i = 0; i < 4; i++) {
                     Point point = Constant.blueHorseTeam.get(i);
-                    horses.add(new Horse(point.x, point.y, team));
+                    horses.add(new HorseBlue(point.x, point.y, team));
                 }
                 break;
-            case Constant.TEAM_RED:
+            case TEAM_RED:
                 for (int i = 0; i < 4; i++) {
                     Point point = Constant.redHorseTeam.get(i);
-                    horses.add(new Horse(point.x, point.y, team));
+                    horses.add(new HorseRed(point.x, point.y, team));
                 }
                 break;
-            case Constant.TEAM_ORANGE:
+            case TEAM_ORANGE:
                 for (int i = 0; i < 4; i++) {
                     Point point = Constant.orangeHorseTeam.get(i);
-                    horses.add(new Horse(point.x, point.y, team));
+                    horses.add(new HorseOrange(point.x, point.y, team));
                 }
                 break;
-            case Constant.TEAM_VIOLET:
+            case TEAM_VIOLET:
                 for (int i = 0; i < 4; i++) {
                     Point point = Constant.violetHorseTeam.get(i);
-                    horses.add(new Horse(point.x, point.y, team));
+                    horses.add(new HorseViolet(point.x, point.y, team));
                 }
                 break;
         }

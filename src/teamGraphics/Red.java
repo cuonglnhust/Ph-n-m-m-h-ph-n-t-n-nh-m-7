@@ -14,10 +14,11 @@ import java.util.HashMap;
 public class Red extends Team {
 
     private final Color RED_RANK_BACKGROUND = Color.decode("#fc7c7c");
-    private final int FIRST_POSITION = 42;
-    private final int LAST_POSITION = 41;
-    private final int FIRST_HORIZONTAL_POSITION = 54;
-    private final int FIRST_VERTICAL_POSITION = 48;
+    private final Position position = new Position(42,41,54,48);
+
+
+
+
 
 
     public Red() {
@@ -25,10 +26,11 @@ public class Red extends Team {
         dicePlace = new DicePlace(CreateImage.redDice, EntityPosition.RED_DICE_PLACE_X, EntityPosition.RED_DICE_PLACE_Y);
         initialRank();
         initialStep();
+
     }
 
     @Override
-    public void initialRank() {
+    protected void initialRank() {
         ranks = new ArrayList<>();
         int redXMax = EntityPosition.RED_RANK_X_MAX;
         for (int i = 0; i < NUMBER_OF_RANK; i++) {
@@ -38,14 +40,14 @@ public class Red extends Team {
     }
 
     @Override
-    public void initialStep() {
+    protected void initialStep() {
         steps = new HashMap<>();
-        steps.put(FIRST_POSITION,new Step(CreateImage.redPoint, EntityPosition.RED_FIRST_X, EntityPosition.RED_FIRST_Y));
-        steps.put(LAST_POSITION,new Step(CreateImage.redCircle, EntityPosition.RED_END_X, EntityPosition.RED_END_Y));
+        steps.put(position.getFirstPosition(),new Step(CreateImage.redPoint, EntityPosition.RED_FIRST_X, EntityPosition.RED_FIRST_Y));
+        steps.put(position.getLastPosition(),new Step(CreateImage.redCircle, EntityPosition.RED_END_X, EntityPosition.RED_END_Y));
         int redHorizontalMinY = EntityPosition.RED_STEP_HORIZONTAL_FIRST_Y;
         int redVerticalMinX = EntityPosition.RED_STEP_VERTICAL_FIRST_X;
-        int firstHorizontalPosition = FIRST_HORIZONTAL_POSITION;
-        int firstVerticalPosition = FIRST_VERTICAL_POSITION;
+        int firstHorizontalPosition = position.getFirstHorizontalPosition();
+        int firstVerticalPosition = position.getFirstVerticalPosition();
         // dọc giảm, ngang giảm
         for (int i = 0; i < NUMBER_OF_STEP; i++) {
             steps.put(firstHorizontalPosition,new Step(CreateImage.redCircle, EntityPosition.RED_STEP_HORIZONTAL_X, redHorizontalMinY));

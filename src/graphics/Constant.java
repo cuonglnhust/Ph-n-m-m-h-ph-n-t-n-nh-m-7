@@ -1,34 +1,30 @@
 package graphics;
 
+import constant.TeamType;
 import map.EntityPosition;
 
 import java.awt.*;
 import java.util.HashMap;
 
 public class Constant {
-    public static HashMap<Integer, Integer> teamLastPoint;
+    public static HashMap<TeamType, Integer> teamLastPoint;
 
     public static HashMap<Integer, Point> blueHorseTeam, redHorseTeam, orangeHorseTeam, violetHorseTeam;
-
-    public static final int TEAM_BLUE = 1;
-    public static final int TEAM_RED = 4;
-    public static final int TEAM_VIOLET = 2;
-    public static final int TEAM_ORANGE = 3;
 
     public static void init() {
         initTeamLastPoint();
     }
 
     private static void initTeamLastPoint() {
-        teamLastPoint.put(TEAM_VIOLET, 13);
-        teamLastPoint.put(TEAM_ORANGE, 27);
-        teamLastPoint.put(TEAM_RED, 41);
-        teamLastPoint.put(TEAM_BLUE, 55);
+        teamLastPoint.put(TeamType.TEAM_VIOLET, 13);
+        teamLastPoint.put(TeamType.TEAM_ORANGE, 27);
+        teamLastPoint.put(TeamType.TEAM_RED, 41);
+        teamLastPoint.put(TeamType.TEAM_BLUE, 55);
     }
 
     // khởi tạo vị trí cho ngựa trong chuồng
-    private static void initHorseTeam(int team) {
-        switch (team) {
+    private static void initHorseTeam(TeamType teamType) {
+        switch (teamType) {
             case TEAM_BLUE:
                 for (int i = 0; i < 4; i++) {
                     blueHorseTeam.put(i, new Point(EntityPosition.BLUE_HORSE_X_MIN + i * 30,

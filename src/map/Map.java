@@ -1,6 +1,7 @@
 package map;
 
 
+import constant.TeamType;
 import entity.unchanged.Step;
 import teamGraphics.Blue;
 import teamGraphics.Orange;
@@ -35,10 +36,6 @@ public class Map {
 
         Stream.of(blueTeam.getSteps(), violetTeam.getSteps(), orangeTeam.getSteps(), redTeam.getSteps()).
                 flatMap(m -> m.entrySet().stream()).collect(Collectors.toMap(java.util.Map.Entry::getKey, java.util.Map.Entry::getValue));
-
-    }
-
-    private void initialVirtualMap() {
 
     }
 

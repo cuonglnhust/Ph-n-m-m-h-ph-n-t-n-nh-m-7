@@ -14,13 +14,10 @@ import java.util.HashMap;
 public class Blue extends Team {
 
     private final Color BLUE_RANK_BACKGROUND = Color.decode("#8080ff");
-    private final int FIRST_POSITION = 0;
-    private final int LAST_POSITION = 55;
-    private final int FIRST_HORIZONTAL_POSITION = 1;
-    private final int FIRST_VERTICAL_POSITION = 12;
+    private final Position position = new Position(0, 55, 1, 12);
+
 
     public Blue() {
-
         cage = new Cage(CreateImage.blueBackground, EntityPosition.BLUE_CAGE_X, EntityPosition.BLUE_CAGE_Y);
         dicePlace = new DicePlace(CreateImage.blueDice, EntityPosition.BLUE_DICE_PLACE_X, EntityPosition.BLUE_DICE_PLACE_Y);
         initialRank();
@@ -28,7 +25,7 @@ public class Blue extends Team {
     }
 
     @Override
-    public void initialRank() {
+    protected void initialRank() {
         ranks = new ArrayList<>();
         int blueYMin = EntityPosition.BLUE_RANK_Y_MIN;
         for (int i = 0; i < NUMBER_OF_RANK; i++) {
@@ -38,19 +35,19 @@ public class Blue extends Team {
     }
 
     @Override
-    public void initialStep() {
+    protected void initialStep() {
         steps = new HashMap<>();
         // step First
-        steps.put(FIRST_POSITION, new Step(CreateImage.bluePoint, EntityPosition.BLUE_FIRST_X, EntityPosition.BLUE_FIRST_Y));
+        steps.put(position.getFirstPosition(), new Step(CreateImage.bluePoint, EntityPosition.BLUE_FIRST_X, EntityPosition.BLUE_FIRST_Y));
 
         // step End
-        steps.put(LAST_POSITION, new Step(CreateImage.blueCircle, EntityPosition.BLUE_END_X, EntityPosition.BLUE_END_Y));
+        steps.put(position.getLastPosition(), new Step(CreateImage.blueCircle, EntityPosition.BLUE_END_X, EntityPosition.BLUE_END_Y));
 
         // step còn lại
         int blueHorizontalYMin = EntityPosition.BLUE_STEP_HORIZONTAL_FIRST_Y;
         int blueVerticalXMin = EntityPosition.BLUE_STEP_VERTICAL_FIRST_X;
-        int firstHorizontalPosition = FIRST_HORIZONTAL_POSITION;
-        int firstVerticalPosition = FIRST_VERTICAL_POSITION;
+        int firstHorizontalPosition = position.getFirstHorizontalPosition();
+        int firstVerticalPosition = position.getFirstVerticalPosition();
 
         // dọc tăng position, ngang giảm position
 
@@ -63,7 +60,5 @@ public class Blue extends Team {
             firstHorizontalPosition++;
             firstVerticalPosition--;
         }
-
-
     }
 }

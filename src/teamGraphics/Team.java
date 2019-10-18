@@ -21,9 +21,9 @@ public abstract class Team {
     ArrayList<Rank> ranks;
     HashMap<Integer, Step> steps;
 
-    public abstract void initialRank();
+    protected abstract void initialRank();
 
-    public abstract void initialStep();
+    protected abstract void initialStep();
 
     public void render(Graphics g) {
         cage.render(g);

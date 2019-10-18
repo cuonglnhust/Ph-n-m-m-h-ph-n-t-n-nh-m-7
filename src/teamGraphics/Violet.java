@@ -14,11 +14,7 @@ import java.util.HashMap;
 public class Violet extends Team {
 
     private final Color VIOLET_RANK_BACKGROUND = Color.decode("#b560b4");
-    private final int FIRST_POSITION = 14;
-    private final int LAST_POSITION = 13;
-    private final int FIRST_HORIZONTAL_POSITION = 21;
-    private final int FIRST_VERTICAL_POSITION = 15;
-
+    private final Position position = new Position(14, 13, 21, 15);
 
 
     public Violet() {
@@ -29,7 +25,7 @@ public class Violet extends Team {
     }
 
     @Override
-    public void initialRank() {
+    protected void initialRank() {
         ranks = new ArrayList<>();
         int violetXMin = EntityPosition.VIOLET_RANK_X_MIN;
         for (int i = 0; i < NUMBER_OF_RANK; i++) {
@@ -39,18 +35,18 @@ public class Violet extends Team {
     }
 
     @Override
-    public void initialStep() {
+    protected void initialStep() {
         steps = new HashMap<>();
-        steps.put(FIRST_POSITION,new Step(CreateImage.violetPoint, EntityPosition.VIOLET_FIRST_X, EntityPosition.VIOLET_FIRST_Y));
-        steps.put(LAST_POSITION,new Step(CreateImage.violetCircle, EntityPosition.VIOLET_END_X, EntityPosition.VIOLET_END_Y));
+        steps.put(position.getFirstPosition(), new Step(CreateImage.violetPoint, EntityPosition.VIOLET_FIRST_X, EntityPosition.VIOLET_FIRST_Y));
+        steps.put(position.getLastPosition(), new Step(CreateImage.violetCircle, EntityPosition.VIOLET_END_X, EntityPosition.VIOLET_END_Y));
         int violetHorizontalMinY = EntityPosition.VIOLET_STEP_HORIZONTAL_FIRST_Y;
         int violetVerticalMinX = EntityPosition.VIOLET_STEP_VERTICAL_FIRST_X;
-        int firstHorizontalPosition = FIRST_HORIZONTAL_POSITION;
-        int firstVerticalPosition = FIRST_VERTICAL_POSITION;
+        int firstHorizontalPosition = position.getFirstHorizontalPosition();
+        int firstVerticalPosition = position.getFirstVerticalPosition();
         // ngang tăng, dọc tăng
         for (int i = 0; i < NUMBER_OF_STEP; i++) {
-            steps.put(firstVerticalPosition,new Step(CreateImage.violetCircle, violetVerticalMinX, EntityPosition.VIOLET_STEP_VERTICAL_Y));
-            steps.put(firstHorizontalPosition,new Step(CreateImage.violetCircle, EntityPosition.VIOLET_STEP_HORIZONTAL_X, violetHorizontalMinY));
+            steps.put(firstVerticalPosition, new Step(CreateImage.violetCircle, violetVerticalMinX, EntityPosition.VIOLET_STEP_VERTICAL_Y));
+            steps.put(firstHorizontalPosition, new Step(CreateImage.violetCircle, EntityPosition.VIOLET_STEP_HORIZONTAL_X, violetHorizontalMinY));
             violetHorizontalMinY += STEP_DISTANCE;
             violetVerticalMinX += STEP_DISTANCE;
             firstHorizontalPosition++;
