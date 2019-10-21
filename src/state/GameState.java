@@ -1,6 +1,7 @@
 package state;
 
 import graphics.CreateImage;
+import main.Handler;
 import map.EntityPosition;
 import map.Map;
 
@@ -8,10 +9,12 @@ import java.awt.*;
 
 public class GameState extends State {
 
-    private Map map = new Map();
+
+    private Map map;
 
     public GameState() {
-
+        map = new Map();
+        Handler.getInstance().setMap(map);
     }
 
     @Override
@@ -23,4 +26,6 @@ public class GameState extends State {
     public void render(Graphics g) {
         map.render(g);
     }
+
+
 }

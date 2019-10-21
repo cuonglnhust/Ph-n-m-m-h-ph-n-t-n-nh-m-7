@@ -4,8 +4,9 @@ import constant.TeamType;
 import graphics.CreateImage;
 
 public class HorseViolet extends Horse {
-    public HorseViolet(int x, int y, TeamType team) {
-        super(x, y, team);
+
+    public HorseViolet(int id, int x, int y) {
+        super(id, x, y);
     }
 
     @Override

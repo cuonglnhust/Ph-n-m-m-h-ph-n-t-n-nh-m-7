@@ -3,7 +3,8 @@ package state;
 import java.awt.*;
 
 public abstract class State {
-    public static State currentState = null;
+
+    private static State currentState = null;
 
     public static State getCurrentState() {
         return currentState;

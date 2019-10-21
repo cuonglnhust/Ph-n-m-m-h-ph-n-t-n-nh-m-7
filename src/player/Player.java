@@ -1,8 +1,11 @@
 package player;
 
+import constant.DiceValue;
 import constant.TeamType;
 import entity.changed.*;
 import graphics.Constant;
+import main.Handler;
+import map.Map;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,26 +13,29 @@ import java.util.ArrayList;
 public class Player {
 
     // ngựa của người chơi
-    private ArrayList<Horse> horses;
-
+    protected ArrayList<Horse> horses;
     // Xúc xắc
-    private Dice dice;
-
+    protected Dice dice;
     // đội màu gì
-    private TeamType team;
-
-    // lượt chơi
-    private boolean turn;
-
-    public Player(Dice dice, TeamType team) {
-        this.dice = dice;
-        this.team = team;
-    }
+    protected TeamType team;
 
     public void tick() {
-        for (Horse horse : horses) {
-            horse.tick();
+        // kiểm tra lượt và đã lắc hay chưa
+        if (Handler.getInstance().getMap().getTurn() == team && !dice.isShake()) {
+            // lắc xúc xắc
+            dice.tick();
+            // ngựa di chuyển theo xúc xắc
+            for (Horse horse : horses) {
+                horse.tick();
+            }
         }
+        // nếu giá trị là 6 thì được lắc tiếp
+        if (dice.getDiceValue() != DiceValue.SIX) {
+            Handler.getInstance().getMap().changeTurn();
+        }
+        // đặt lại xúc xắc
+        dice.setShake(false);
+        dice.setDiceValue(DiceValue.NONE);
     }
 
     public void render(Graphics g) {
@@ -39,47 +45,26 @@ public class Player {
     }
 
     // khởi tạo ngựa
-    private void initHorse() {
+    protected void initHorse() {
         horses = new ArrayList<>();
-        switch (team) {
-            case TEAM_BLUE:
-                for (int i = 0; i < 4; i++) {
-                    Point point = Constant.blueHorseTeam.get(i);
-                    horses.add(new HorseBlue(point.x, point.y, team));
-                }
-                break;
-            case TEAM_RED:
-                for (int i = 0; i < 4; i++) {
-                    Point point = Constant.redHorseTeam.get(i);
-                    horses.add(new HorseRed(point.x, point.y, team));
-                }
-                break;
-            case TEAM_ORANGE:
-                for (int i = 0; i < 4; i++) {
-                    Point point = Constant.orangeHorseTeam.get(i);
-                    horses.add(new HorseOrange(point.x, point.y, team));
-                }
-                break;
-            case TEAM_VIOLET:
-                for (int i = 0; i < 4; i++) {
-                    Point point = Constant.violetHorseTeam.get(i);
-                    horses.add(new HorseViolet(point.x, point.y, team));
-                }
-                break;
-        }
-    }
-
-    // check xem đến lượt hay chưa
-    public boolean isTurn() {
-        return turn;
-    }
-
-    public void setTurn(boolean turn) {
-        this.turn = turn;
     }
 
     // lấy Dice
     public Dice getDice() {
         return dice;
     }
+
+    public ArrayList<Horse> getHorses() {
+        return horses;
+    }
+
+    public TeamType getTeam() {
+        return team;
+    }
+
+    public void setDefaultDice() {
+        dice.setDiceValue(DiceValue.NONE);
+    }
+
+
 }

@@ -11,9 +11,7 @@ public class Handler {
 
     private static Handler handler;
 
-    private Handler() {
-
-    }
+    private Handler() {}
 
     public static Handler getInstance() {
         synchronized (Handler.class) {
@@ -30,6 +28,10 @@ public class Handler {
 
     public Map getMap() {
         return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 
     public Mouse getMouse() {
