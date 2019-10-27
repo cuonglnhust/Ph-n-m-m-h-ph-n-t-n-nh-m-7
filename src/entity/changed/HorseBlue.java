@@ -4,13 +4,14 @@ import constant.TeamType;
 import entity.unchanged.Step;
 import graphics.Constant;
 import graphics.CreateImage;
+import player.Player;
 
 import java.awt.*;
 
 public class HorseBlue extends Horse {
 
-    public HorseBlue(int id, int x, int y) {
-        super(id, x, y);
+    public HorseBlue(int id, int x, int y, Player player) {
+        super(id, x, y, player);
         team = TeamType.TEAM_BLUE;
     }
 
@@ -22,8 +23,9 @@ public class HorseBlue extends Horse {
     @Override
     public void iskickedAss() {
         Point point = Constant.blueHorseTeam.get(this.id);
-        this.setX(point.x);
-        this.setY(point.y);
+        x = point.x;
+        y = point.y;
         this.position = -1;
+        player.getOnCourt().remove(this.id);
     }
 }

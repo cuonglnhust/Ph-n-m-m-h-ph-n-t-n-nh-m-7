@@ -2,6 +2,8 @@ package entity.changed;
 
 import constant.DiceValue;
 import entity.Entity;
+import graphics.Animation;
+import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
 import mouse.Mouse;
@@ -16,17 +18,35 @@ public class Dice extends Entity {
     private Player player;
     private Mouse mouse;
     private boolean shake;
+    private Animation animation;
+
+    // biến căn thời gian diễn ra animation
+    private long lastTime = -1;
+
+    // biến thông báo đang trong animation
+    private boolean onAnimation;
+
 
     public Dice(int x, int y, Player player) {
         super(x + DICE_OFFSET, y + DICE_OFFSET, EntitySize.DICE_WIDTH, EntitySize.DICE_HEIGHT);
         mouse = Handler.getInstance().getMouse();
         shake = false;
+        entity = CreateImage.dice;
     }
 
     @Override
     public void tick() {
         // nếu được click chuột
         if (isClicked()) {
+            if (lastTime == -1) {
+                lastTime = System.currentTimeMillis();
+                animation = new Animation(CreateImage.diceAnimation, 2000);
+            }
+            if (System.currentTimeMillis() - lastTime <= 10000) {
+                onAnimation = true;
+                animation.DrawAnimation();
+            }
+            onAnimation = false;
             shake();
             shake = true;
         }
@@ -34,7 +54,11 @@ public class Dice extends Entity {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(entity, x, y, width, height, null);
+        if (onAnimation) {
+            g.drawImage(animation.getCurrentImage(), x, y, width, height, null);
+        } else {
+            g.drawImage(entity, x, y, width, height, null);
+        }
     }
 
     public DiceValue getDiceValue() {
@@ -45,20 +69,26 @@ public class Dice extends Entity {
         this.diceValue = diceValue;
     }
 
-    private DiceValue shake() {
+    private void shake() {
         double value = Math.random();
         if (value >= 0 && value < 0.15) {
-            return DiceValue.ONE;
+            entity = CreateImage.dice1;
+            diceValue = DiceValue.ONE;
         } else if (value >= 0.15 && value < 0.3) {
-            return DiceValue.TWO;
+            entity = CreateImage.dice2;
+            diceValue = DiceValue.TWO;
         } else if (value >= 0.3 && value < 0.45) {
-            return DiceValue.THREE;
+            entity = CreateImage.dice3;
+            diceValue = DiceValue.THREE;
         } else if (value >= 0.45 && value < 0.6) {
-            return DiceValue.FOUR;
+            entity = CreateImage.dice4;
+            diceValue = DiceValue.FOUR;
         } else if (value >= 0.6 && value < 0.75) {
-            return DiceValue.FIVE;
+            entity = CreateImage.dice5;
+            diceValue = DiceValue.FIVE;
         } else {
-            return DiceValue.SIX;
+            entity = CreateImage.dice6;
+            diceValue = DiceValue.SIX;
         }
     }
 
@@ -67,11 +97,8 @@ public class Dice extends Entity {
     }
 
     public boolean isClicked() {
-        if (player.isTurn()) {
-            if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
-                return mouse.isRightClick() || mouse.isLeftClick();
-            }
-            return false;
+        if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
+            return mouse.isRightClick() || mouse.isLeftClick();
         }
         return false;
     }
@@ -82,5 +109,9 @@ public class Dice extends Entity {
 
     public void setShake(boolean shake) {
         this.shake = shake;
+    }
+
+    public void setDefaultDice() {
+        entity = CreateImage.dice;
     }
 }

@@ -114,16 +114,5 @@ public class EntityPosition {
     public static final int ORANGE_HORSE_X_MIN = 575;
     public static final int ORANGE_HORSE_Y = 503;
 
-    public static final int BLUE_DICE_X = 40;
-    public static final int BLUE_DICE_Y = 40;
-
-    public static final int RED_DICE_X = 840;
-    public static final int RED_DICE_Y = 40;
-
-    public static final int VIOLET_DICE_X = 40;
-    public static final int VIOLET_DICE_Y = 640;
-
-    public static final int ORANGE_DICE_X = 840;
-    public static final int ORANGE_DICE_Y = 640;
 
 }

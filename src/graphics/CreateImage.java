@@ -12,7 +12,8 @@ public class CreateImage {
     public static BufferedImage redDice, blueDice, orangeDice, violetDice;
     public static BufferedImage blueNumber, redNumber, orangeNumber, violetNumber;
     public static ArrayList<BufferedImage> blueRanks, redRanks, orangeRanks, violetRanks;
-    public static BufferedImage dice,dice1, dice2, dice3, dice4, dice5, dice6;
+    public static BufferedImage dice, dice1, dice2, dice3, dice4, dice5, dice6;
+    public static BufferedImage[] diceAnimation;
 
 
     public static void create() {
@@ -84,6 +85,16 @@ public class CreateImage {
         dice4 = ImageLoader.loadImage("res/images/dice_4.png");
         dice5 = ImageLoader.loadImage("res/images/dice_5.png");
         dice6 = ImageLoader.loadImage("res/images/dice_6.png");
+
+        diceAnimation = new BufferedImage[7];
+        diceAnimation[0] = dice;
+        diceAnimation[1] = dice1;
+        diceAnimation[2] = dice2;
+        diceAnimation[3] = dice3;
+        diceAnimation[4] = dice4;
+        diceAnimation[5] = dice5;
+        diceAnimation[6] = dice6;
+
 
     }
 }

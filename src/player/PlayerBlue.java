@@ -14,7 +14,8 @@ public class PlayerBlue extends Player {
     public PlayerBlue() {
         Constant.initHorseBlue();
         initHorse();
-        dice = new Dice(EntityPosition.BLUE_DICE_X, EntityPosition.BLUE_DICE_Y, this);
+        dice = new Dice(EntityPosition.BLUE_DICE_PLACE_X, EntityPosition.BLUE_DICE_PLACE_Y, this);
+        team = TeamType.TEAM_BLUE;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class PlayerBlue extends Player {
         super.initHorse();
         for (int i = 0; i < 4; i++) {
             Point point = Constant.blueHorseTeam.get(i);
-            horses.add(new HorseBlue(i, point.x, point.y));
+            horses.add(new HorseBlue(i, point.x, point.y,this));
         }
     }
 

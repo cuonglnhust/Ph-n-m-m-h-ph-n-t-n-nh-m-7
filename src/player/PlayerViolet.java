@@ -13,7 +13,8 @@ public class PlayerViolet extends Player {
     public PlayerViolet() {
         Constant.initHorseViolet();
         initHorse();
-        dice = new Dice(EntityPosition.VIOLET_DICE_X,EntityPosition.VIOLET_DICE_Y,this);
+        dice = new Dice(EntityPosition.VIOLET_DICE_PLACE_X,EntityPosition.VIOLET_DICE_PLACE_Y,this);
+        team = TeamType.TEAM_VIOLET;
     }
 
     @Override
@@ -21,7 +22,7 @@ public class PlayerViolet extends Player {
         super.initHorse();
         for (int i = 0; i < 4; i++) {
             Point point = Constant.violetHorseTeam.get(i);
-            horses.add(new HorseViolet(i, point.x, point.y));
+            horses.add(new HorseViolet(i, point.x, point.y,this));
         }
     }
 }

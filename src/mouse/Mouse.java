@@ -81,4 +81,12 @@ public class Mouse implements MouseListener, MouseMotionListener {
     public boolean isRightClick() {
         return rightClick;
     }
+
+    public void setLeftClick(boolean leftClick) {
+        this.leftClick = leftClick;
+    }
+
+    public void setRightClick(boolean rightClick) {
+        this.rightClick = rightClick;
+    }
 }

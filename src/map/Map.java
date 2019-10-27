@@ -10,7 +10,6 @@ import teamGraphics.Blue;
 import teamGraphics.Orange;
 import teamGraphics.Red;
 import teamGraphics.Violet;
-import graphics.CreateImage;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -42,10 +41,13 @@ public class Map {
         violetTeam = new Violet();
         orangeTeam = new Orange();
         redTeam = new Red();
-        Stream.of(blueTeam.getSteps(), violetTeam.getSteps(), orangeTeam.getSteps(), redTeam.getSteps()).
-                flatMap(m -> m.entrySet().stream()).collect(Collectors.toMap(java.util.Map.Entry::getKey, java.util.Map.Entry::getValue));
+        mapGraphics.putAll(blueTeam.getSteps());
+        mapGraphics.putAll(violetTeam.getSteps());
+        mapGraphics.putAll(orangeTeam.getSteps());
+        mapGraphics.putAll(redTeam.getSteps());
         initVirtualMap();
         initPlayer();
+        initTurn();
         Constant.init();
     }
 
@@ -66,10 +68,14 @@ public class Map {
 
     // khởi tạo turn cho người chơi đầu tiên
     private void initTurn() {
-
+        turn = TeamType.TEAM_BLUE;
     }
 
     public void tick() {
+        playerBlue.tick();
+        playerRed.tick();
+        playerOrange.tick();
+        playerViolet.tick();
     }
 
     public void render(Graphics g) {
@@ -83,18 +89,6 @@ public class Map {
         playerRed.render(g);
         playerOrange.render(g);
         playerViolet.render(g);
-
-//        g.drawImage(CreateImage.dice, EntityPosition.ORANGE_DICE_PLACE_X + 25, EntityPosition.ORANGE_DICE_PLACE_Y + 25, 50, 50, null);
-//        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN, EntityPosition.RED_HORSE_Y, null);
-//        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30, EntityPosition.RED_HORSE_Y, null);
-//        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30 * 2, EntityPosition.RED_HORSE_Y, null);
-//        g.drawImage(CreateImage.redHorse, EntityPosition.RED_HORSE_X_MIN + 30 * 3, EntityPosition.RED_HORSE_Y, null);
-//
-//        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN, EntityPosition.BLUE_HORSE_Y, null);
-//        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30, EntityPosition.BLUE_HORSE_Y, null);
-//        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30 * 2, EntityPosition.BLUE_HORSE_Y, null);
-//        g.drawImage(CreateImage.blueHorse, EntityPosition.BLUE_HORSE_X_MIN + 30 * 3, EntityPosition.BLUE_HORSE_Y, null);
-
     }
 
     public HashMap<Integer, Step> getMapGraphics() {
@@ -106,7 +100,7 @@ public class Map {
     }
 
     public void kickAss(int position) {
-
+        System.out.println("Map - kickAss position : " + position);
         switch (virtualMap[position]) {
             case TEAM_VIOLET: {
                 if (playerViolet != null) {
@@ -114,6 +108,7 @@ public class Map {
                         if (horse.getPosition() == position) {
                             horse.iskickedAss();
                         }
+                        horse.printHorse();
                     }
                 }
             }
@@ -124,6 +119,7 @@ public class Map {
                         if (horse.getPosition() == position) {
                             horse.iskickedAss();
                         }
+                        horse.printHorse();
                     }
                 }
             }
@@ -134,6 +130,7 @@ public class Map {
                         if (horse.getPosition() == position) {
                             horse.iskickedAss();
                         }
+                        horse.printHorse();
                     }
                 }
             }
@@ -144,6 +141,7 @@ public class Map {
                         if (horse.getPosition() == position) {
                             horse.iskickedAss();
                         }
+                        horse.printHorse();
                     }
                 }
             }

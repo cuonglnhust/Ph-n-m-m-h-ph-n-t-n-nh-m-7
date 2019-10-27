@@ -12,7 +12,8 @@ public class PlayerOrange extends Player {
     public PlayerOrange() {
         Constant.initHorseOrange();
         initHorse();
-        dice = new Dice(EntityPosition.ORANGE_DICE_X,EntityPosition.ORANGE_DICE_Y,this);
+        dice = new Dice(EntityPosition.ORANGE_DICE_PLACE_X, EntityPosition.ORANGE_DICE_PLACE_Y, this);
+        team = TeamType.TEAM_ORANGE;
     }
 
     @Override
@@ -20,7 +21,8 @@ public class PlayerOrange extends Player {
         super.initHorse();
         for (int i = 0; i < 4; i++) {
             Point point = Constant.orangeHorseTeam.get(i);
-            horses.add(new HorseOrange(i, point.x, point.y));
+            horses.add(new HorseOrange(i, point.x, point.y,this
+            ));
         }
     }
 }

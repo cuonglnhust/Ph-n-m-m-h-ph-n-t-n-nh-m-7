@@ -30,6 +30,10 @@ public class Game implements Runnable {
     private void init() {
         Handler.getInstance().setGame(this);
         display = new Display(title, width, height);
+        display.getjFrame().addMouseListener(mouse);
+        display.getjFrame().addMouseMotionListener(mouse);
+        display.getCanvas().addMouseListener(mouse);
+        display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
         state = new GameState();
         State.setCurrentState(state);
