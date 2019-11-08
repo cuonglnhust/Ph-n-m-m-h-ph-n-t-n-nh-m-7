@@ -72,35 +72,27 @@ public class EntityPosition {
 
     public static final int BLUE_STEP_HORIZONTAL_X = 375;
     public static final int BLUE_STEP_HORIZONTAL_FIRST_Y = 75;
-//    public static final int BLUE_STEP_HORIZONTAL_LAST_Y = 235;
 
     public static final int BLUE_STEP_VERTICAL_Y = 275;
     public static final int BLUE_STEP_VERTICAL_FIRST_X = 135;
-//    public static final int BLUE_STEP_VERTICAL_LAST_X = 295;
 
     public static final int RED_STEP_HORIZONTAL_X = 525;
     public static final int RED_STEP_HORIZONTAL_FIRST_Y = 35;
-//    public static final int RED_STEP_HORIZONTAL_LAST_Y = 235;
 
     public static final int RED_STEP_VERTICAL_Y = 275;
     public static final int RED_STEP_VERTICAL_FIRST_X = 525;
-//    public static final int RED_STEP_VERTICAL_LAST_X = 685;
 
     public static final int VIOLET_STEP_HORIZONTAL_X = 375;
     public static final int VIOLET_STEP_HORIZONTAL_FIRST_Y = 465;
-//    public static final int VIOLET_STEP_HORIZONTAL_LAST_Y = 625;
 
     public static final int VIOLET_STEP_VERTICAL_Y = 425;
     public static final int VIOLET_STEP_VERTICAL_FIRST_X = 175;
-//    public static final int VIOLET_STEP_VERTICAL_LAST_X = 295;
 
     public static final int ORANGE_STEP_HORIZONTAL_X = 525;
     public static final int ORANGE_STEP_HORIZONTAL_FIRST_Y = 425;
-//    public static final int ORANGE_STEP_HORIZONTAL_LAST_Y = 585;
 
     public static final int ORANGE_STEP_VERTICAL_Y = 425;
     public static final int ORANGE_STEP_VERTICAL_FIRST_X = 565;
-//    public static final int ORANGE_STEP_VERTICAL_LAST_X = 725;
 
     public static final int BLUE_HORSE_X_MIN = 235;
     public static final int BLUE_HORSE_Y = 43;
@@ -113,6 +105,5 @@ public class EntityPosition {
 
     public static final int ORANGE_HORSE_X_MIN = 575;
     public static final int ORANGE_HORSE_Y = 503;
-
 
 }

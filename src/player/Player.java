@@ -1,11 +1,10 @@
 package player;
 
 import constant.DiceValue;
+import constant.HorseState;
 import constant.TeamType;
 import entity.changed.*;
-import graphics.Constant;
 import main.Handler;
-import map.Map;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,53 +13,33 @@ import java.util.HashMap;
 public class Player {
 
     // ngựa của người chơi
-    protected ArrayList<Horse> horses;
+    ArrayList<Horse> horses;
     // Xúc xắc
-    protected Dice dice;
+    Dice dice;
     // đội màu gì
     protected TeamType team;
 
-    // giai đoạn nào
+    // ngựa trên bản đồ
     private HashMap<Integer, Horse> onCourt = new HashMap<>();
 
+    // ngựa trên Rank
+    private HashMap<Integer, Horse> onRank = new HashMap<>();
+
+    // ngựa di chuyển được
+    private ArrayList<Horse> horseCanMove = new ArrayList<>();
+
     public void tick() {
-        diceShake();
-        // kiểm tra lượt và đã lắc hay chưa
-//        if (Handler.getInstance().getMap().getTurn() == team && !dice.isShake()) {
-
-        // lắc xúc xắc
-//            dice.tick();
-//            if (dice.isShake()) {
-//                System.out.println("Team : " + team + "Value -- " + dice.getDiceValue());
-//                // ngựa di chuyển theo xúc xắc
-//                for (Horse horse : horses) {
-//                    horse.tick();
-//                }
-//                // nếu giá trị là khác 6 thì chuyển lượt
-//                if (dice.getDiceValue() != DiceValue.SIX) {
-//                    Handler.getInstance().getMap().changeTurn();
-//                }
-//
-//                // đặt lại xúc xắc
-//                dice.setShake(false);
-//                dice.setDiceValue(DiceValue.NONE);
-//                Handler.getInstance().getMouse().setLeftClick(false);
-//                Handler.getInstance().getMouse().setRightClick(false);
-//            }
-
-//        }
-
+        action();
     }
 
-    // thực hiện lắc xúc xắc
-    private void diceShake() {
+    // xử lí hành động của Player
+    private void action() {
         // nếu đúng lượt
         if (Handler.getInstance().getMap().getTurn() == team) {
             // nếu đã lắc
             if (dice.isShake()) {
                 // nếu không có ngựa trên sân
                 if (onCourt.isEmpty()) {
-                    System.out.println("onCourt = 0");
                     // giai đoạn 1
                     // nếu diceValue khác 6
                     if (dice.getDiceValue() != DiceValue.SIX) {
@@ -69,8 +48,12 @@ public class Player {
                         setDiceDefault();
                         setMouseDefault();
                     } else {
-                        System.out.println("Player - XQ" + "Team : " + team + " diceValue : " + dice.getDiceValue());
                         // xuất quân
+                        for (Horse horse : horses) {
+                            // chạy hàm check để thay đổi trạng thái ngựa
+                            horse.checkState(dice.getDiceValue());
+                        }
+
                         for (Horse horse : horses) {
                             horse.tick();
                             if (horse.isTurn()) {
@@ -86,44 +69,52 @@ public class Player {
                 } else {
                     // giai đoạn 2
                     // di chuyển theo giá trị diceValue
-                    System.out.println("Player - GĐ2" + "Team : " + team + " diceValue : " + dice.getDiceValue());
-                    int cantMove = 0;
-
-                    for (Horse horse : horses) {
-                        horse.setCantMove(false);
-                    }
-
-                    for (Horse horse : horses) {
-                        horse.tick();
-                        if (horse.isCantMove()) {
-                            horse.printHorse();
-                            cantMove++;
-                            continue;
-                        }
-                        if (horse.isTurn()) {
-                            horse.setTurn(false);
-                            onCourt.put(horse.getId(), horse);
+                    checkLineAllHorse();
+                    System.out.println("GĐ 2 - Team " + team);
+                    // khi tất cả ngựa không thể di chuyển được
+                    if (horseCanMove.isEmpty()) {
+                        System.out.println("Horse Can move Empty");
+                        // khi lắc được giá trị khác 6
+                        if (dice.getDiceValue() != DiceValue.SIX) {
+                            System.out.println("Team " + team + " đổi lượt");
+                            Handler.getInstance().getMap().changeTurn();
                             setMouseDefault();
-                            if (dice.getDiceValue() != DiceValue.SIX) {
-                                Handler.getInstance().getMap().changeTurn();
-                            }
                             setDiceDefault();
-                            break;
+                        }
+                        // nếu lắc được 6 thì lắc tiếp
+                        else {
+                            System.out.println("Lắc tiếp");
+                            setMouseDefault();
+                            setDiceDefault();
                         }
                     }
-                    System.out.println("CANT MOVE = " + cantMove);
-                    System.out.println("ON COURT " + onCourt.size());
-                    if (cantMove == onCourt.size() && dice.getDiceValue() != DiceValue.SIX) {
-                        setMouseDefault();
-                        setDiceDefault();
-                        Handler.getInstance().getMap().changeTurn();
+                    // khi có ngựa có thể di chuyển được
+                    else {
+
+                        for (Horse horse : horseCanMove) {
+                            horse.tick();
+                            horse.printHorse();
+                            // đã di chuyển hay chưa, nếu đã di chuyển rồi thì
+                            if (horse.isTurn()) {
+                                // ngựa đã đi xong lượt của mình
+                                horse.setTurn(false);
+                                onCourt.put(horse.getId(), horse);
+                                setMouseDefault();
+                                // nếu giá trị lắc được không là 6 thì chuyển lượt
+                                if (dice.getDiceValue() != DiceValue.SIX) {
+                                    Handler.getInstance().getMap().changeTurn();
+                                }
+                                setDiceDefault();
+                                horseCanMove.clear();
+                                break;
+                            }
+                        }
                     }
                 }
             } else {
                 // lắc xúc xắc
                 dice.tick();
             }
-
         }
     }
 
@@ -139,14 +130,22 @@ public class Player {
         Handler.getInstance().getMouse().setRightClick(false);
     }
 
-    // thực hiện di chuyển ngựa
-    private void horseMove() {
-
+    // kiểm tra đường đi của ngựa
+    private void checkLineAllHorse() {
+        /* kiểm tra tính toán checkLine cho từng ngựa
+         *
+         *  TH di chuyển được có hai loại là đá
+         *  và di chuyển thông thường được checkLine trả
+         *  về = 2 giá trị là != CANT_MOVE(=56)
+         *
+         * */
+        for (Horse horse : horses) {
+            horse.checkState(dice.getDiceValue());
+            if (horse.getHorseState() != HorseState.CANT_MOVE) {
+                horseCanMove.add(horse);
+            }
+        }
     }
-
-    private void horseStarting() {
-    }
-
 
     public void render(Graphics g) {
         dice.render(g);
@@ -175,5 +174,9 @@ public class Player {
 
     public HashMap<Integer, Horse> getOnCourt() {
         return onCourt;
+    }
+
+    public HashMap<Integer, Horse> getOnRank() {
+        return onRank;
     }
 }

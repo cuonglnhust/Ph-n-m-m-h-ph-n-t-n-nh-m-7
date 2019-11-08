@@ -13,8 +13,6 @@ import teamGraphics.Violet;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Map {
 
@@ -89,6 +87,7 @@ public class Map {
         playerRed.render(g);
         playerOrange.render(g);
         playerViolet.render(g);
+
     }
 
     public HashMap<Integer, Step> getMapGraphics() {
@@ -106,7 +105,7 @@ public class Map {
                 if (playerViolet != null) {
                     for (Horse horse : playerViolet.getHorses()) {
                         if (horse.getPosition() == position) {
-                            horse.iskickedAss();
+                            horse.isKickedAss();
                         }
                         horse.printHorse();
                     }
@@ -117,7 +116,7 @@ public class Map {
                 if (playerOrange != null) {
                     for (Horse horse : playerOrange.getHorses()) {
                         if (horse.getPosition() == position) {
-                            horse.iskickedAss();
+                            horse.isKickedAss();
                         }
                         horse.printHorse();
                     }
@@ -128,7 +127,7 @@ public class Map {
                 if (playerRed != null) {
                     for (Horse horse : playerRed.getHorses()) {
                         if (horse.getPosition() == position) {
-                            horse.iskickedAss();
+                            horse.isKickedAss();
                         }
                         horse.printHorse();
                     }
@@ -139,7 +138,7 @@ public class Map {
                 if (playerBlue != null) {
                     for (Horse horse : playerBlue.getHorses()) {
                         if (horse.getPosition() == position) {
-                            horse.iskickedAss();
+                            horse.isKickedAss();
                         }
                         horse.printHorse();
                     }
@@ -176,5 +175,21 @@ public class Map {
                 turn = TeamType.TEAM_BLUE;
                 break;
         }
+    }
+
+    public Blue getBlueTeam() {
+        return blueTeam;
+    }
+
+    public Red getRedTeam() {
+        return redTeam;
+    }
+
+    public Orange getOrangeTeam() {
+        return orangeTeam;
+    }
+
+    public Violet getVioletTeam() {
+        return violetTeam;
     }
 }

@@ -25,4 +25,6 @@ public class EntitySize {
     // Horse
     public static final int HORSE_WIDTH = 30;
     public static final int HORSE_HEIGHT = 48;
+
+
 }

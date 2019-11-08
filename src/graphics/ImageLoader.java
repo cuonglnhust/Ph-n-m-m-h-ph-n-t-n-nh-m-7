@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ImageLoader {
+class ImageLoader {
 
-    public static BufferedImage loadImage(String path) {
+    static BufferedImage loadImage(String path) {
         try {
             return ImageIO.read(new File(path));
         } catch (IOException e) {
@@ -17,7 +17,7 @@ public class ImageLoader {
         return null;
     }
 
-    public static BufferedImage crop(BufferedImage bufferedImage, int x, int y, int width, int height) {
+    static BufferedImage crop(BufferedImage bufferedImage, int x, int y, int width, int height) {
         return bufferedImage.getSubimage(x, y, width, height);
     }
 }

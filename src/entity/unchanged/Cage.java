@@ -16,11 +16,6 @@ public class Cage extends Entity {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
         g.drawImage(entity, x, y, width, height, null);
         g.drawRect(x - 5, y - 5, width + 10, height + 10);

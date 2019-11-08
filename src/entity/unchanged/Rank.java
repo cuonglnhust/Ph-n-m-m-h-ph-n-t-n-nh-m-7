@@ -22,11 +22,6 @@ public class Rank extends Entity {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g.create();
         if (orientation) {

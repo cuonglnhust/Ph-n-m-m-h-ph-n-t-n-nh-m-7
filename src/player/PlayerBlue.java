@@ -4,7 +4,6 @@ import constant.TeamType;
 import entity.changed.Dice;
 import entity.changed.HorseBlue;
 import graphics.Constant;
-import main.Handler;
 import map.EntityPosition;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ public class PlayerBlue extends Player {
     public PlayerBlue() {
         Constant.initHorseBlue();
         initHorse();
-        dice = new Dice(EntityPosition.BLUE_DICE_PLACE_X, EntityPosition.BLUE_DICE_PLACE_Y, this);
+        dice = new Dice(EntityPosition.BLUE_DICE_PLACE_X, EntityPosition.BLUE_DICE_PLACE_Y);
         team = TeamType.TEAM_BLUE;
     }
 
@@ -26,6 +25,5 @@ public class PlayerBlue extends Player {
             horses.add(new HorseBlue(i, point.x, point.y,this));
         }
     }
-
 
 }

@@ -12,7 +12,7 @@ public class PlayerRed extends Player {
     public PlayerRed() {
         Constant.initHorseRed();
         initHorse();
-        dice = new Dice(EntityPosition.RED_DICE_PLACE_X, EntityPosition.RED_DICE_PLACE_Y, this);
+        dice = new Dice(EntityPosition.RED_DICE_PLACE_X, EntityPosition.RED_DICE_PLACE_Y);
         team = TeamType.TEAM_RED;
     }
 

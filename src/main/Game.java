@@ -20,7 +20,7 @@ public class Game implements Runnable {
     private Mouse mouse;
 
 
-    public Game(String title, int width, int height) {
+    Game(String title, int width, int height) {
         this.width = width;
         this.height = height;
         this.title = title;
@@ -81,11 +81,10 @@ public class Game implements Runnable {
                 delta--;
             }
         }
-
         stop();
     }
 
-    public synchronized void start() {
+    synchronized void start() {
         if (running) {
             return;
         }
@@ -94,7 +93,7 @@ public class Game implements Runnable {
         thread.start();
     }
 
-    public synchronized void stop() {
+    private synchronized void stop() {
         if (!running) {
             return;
         }
@@ -106,7 +105,7 @@ public class Game implements Runnable {
         }
     }
 
-    public Mouse getMouse() {
+    Mouse getMouse() {
         return mouse;
     }
 }

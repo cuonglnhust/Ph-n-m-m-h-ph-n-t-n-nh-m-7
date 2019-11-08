@@ -38,7 +38,7 @@ public class Handler {
         return game.getMouse();
     }
 
-    public void setGame(Game game) {
+    void setGame(Game game) {
         this.game = game;
     }
 }

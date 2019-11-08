@@ -17,7 +17,12 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public abstract void tick();
+    public Entity(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void tick() {}
 
     public abstract void render(Graphics g);
 

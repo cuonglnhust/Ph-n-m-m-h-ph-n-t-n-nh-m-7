@@ -16,11 +16,6 @@ public class Red extends Team {
     private final Color RED_RANK_BACKGROUND = Color.decode("#fc7c7c");
     private final Position position = new Position(42,41,54,48);
 
-
-
-
-
-
     public Red() {
         cage = new Cage(CreateImage.redBackground, EntityPosition.RED_CAGE_X, EntityPosition.RED_CAGE_Y);
         dicePlace = new DicePlace(CreateImage.redDice, EntityPosition.RED_DICE_PLACE_X, EntityPosition.RED_DICE_PLACE_Y);

@@ -15,11 +15,6 @@ public class Step extends Entity {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
         g.drawImage(entity, x, y, width, height, null);
     }

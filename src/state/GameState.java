@@ -9,7 +9,6 @@ import java.awt.*;
 
 public class GameState extends State {
 
-
     private Map map;
 
     public GameState() {

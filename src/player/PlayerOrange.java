@@ -12,7 +12,7 @@ public class PlayerOrange extends Player {
     public PlayerOrange() {
         Constant.initHorseOrange();
         initHorse();
-        dice = new Dice(EntityPosition.ORANGE_DICE_PLACE_X, EntityPosition.ORANGE_DICE_PLACE_Y, this);
+        dice = new Dice(EntityPosition.ORANGE_DICE_PLACE_X, EntityPosition.ORANGE_DICE_PLACE_Y);
         team = TeamType.TEAM_ORANGE;
     }
 

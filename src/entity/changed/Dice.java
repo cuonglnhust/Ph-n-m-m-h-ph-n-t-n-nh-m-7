@@ -15,7 +15,6 @@ public class Dice extends Entity {
 
     private static final int DICE_OFFSET = 25;
     private DiceValue diceValue;
-    private Player player;
     private Mouse mouse;
     private boolean shake;
     private Animation animation;
@@ -27,7 +26,7 @@ public class Dice extends Entity {
     private boolean onAnimation;
 
 
-    public Dice(int x, int y, Player player) {
+    public Dice(int x, int y) {
         super(x + DICE_OFFSET, y + DICE_OFFSET, EntitySize.DICE_WIDTH, EntitySize.DICE_HEIGHT);
         mouse = Handler.getInstance().getMouse();
         shake = false;
@@ -83,7 +82,7 @@ public class Dice extends Entity {
         } else if (value >= 0.45 && value < 0.6) {
             entity = CreateImage.dice4;
             diceValue = DiceValue.FOUR;
-        } else if (value >= 0.6 && value < 0.75) {
+        } else if (value >= 0.6 && value < 0.65) {
             entity = CreateImage.dice5;
             diceValue = DiceValue.FIVE;
         } else {
@@ -96,7 +95,7 @@ public class Dice extends Entity {
         return new Rectangle(x, y, 50, 50);
     }
 
-    public boolean isClicked() {
+    private boolean isClicked() {
         if (getBound().contains(mouse.getMouseX(), mouse.getMouseY())) {
             return mouse.isRightClick() || mouse.isLeftClick();
         }
@@ -111,7 +110,4 @@ public class Dice extends Entity {
         this.shake = shake;
     }
 
-    public void setDefaultDice() {
-        entity = CreateImage.dice;
-    }
 }

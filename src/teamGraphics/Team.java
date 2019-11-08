@@ -40,4 +40,8 @@ public abstract class Team {
     public HashMap<Integer, Step> getSteps() {
         return steps;
     }
+
+    public ArrayList<Rank> getRanks() {
+        return ranks;
+    }
 }

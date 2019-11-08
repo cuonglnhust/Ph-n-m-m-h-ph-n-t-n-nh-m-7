@@ -13,7 +13,7 @@ public class PlayerViolet extends Player {
     public PlayerViolet() {
         Constant.initHorseViolet();
         initHorse();
-        dice = new Dice(EntityPosition.VIOLET_DICE_PLACE_X,EntityPosition.VIOLET_DICE_PLACE_Y,this);
+        dice = new Dice(EntityPosition.VIOLET_DICE_PLACE_X,EntityPosition.VIOLET_DICE_PLACE_Y);
         team = TeamType.TEAM_VIOLET;
     }
 

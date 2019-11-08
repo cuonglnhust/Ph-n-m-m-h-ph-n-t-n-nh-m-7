@@ -3,13 +3,13 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
-public class Display {
+class Display {
     private JFrame jFrame;
     private Canvas canvas;
     private String title;
     private int width, height;
 
-    public Display(String title, int width, int height) {
+    Display(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
@@ -34,11 +34,11 @@ public class Display {
         jFrame.pack();
     }
 
-    public Canvas getCanvas() {
+    Canvas getCanvas() {
         return canvas;
     }
 
-    public JFrame getjFrame() {
+    JFrame getjFrame() {
         return jFrame;
     }
 }

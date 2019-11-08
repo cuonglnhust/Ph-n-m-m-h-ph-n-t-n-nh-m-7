@@ -10,10 +10,11 @@ public class CreateImage {
     public static BufferedImage redCircle, blueCircle, orangeCircle, violetCircle;
     public static BufferedImage redPoint, bluePoint, orangePoint, violetPoint;
     public static BufferedImage redDice, blueDice, orangeDice, violetDice;
-    public static BufferedImage blueNumber, redNumber, orangeNumber, violetNumber;
     public static ArrayList<BufferedImage> blueRanks, redRanks, orangeRanks, violetRanks;
     public static BufferedImage dice, dice1, dice2, dice3, dice4, dice5, dice6;
     public static BufferedImage[] diceAnimation;
+    public static BufferedImage blueHorseRank,redHorseRank,orangeHorseRank,violetHorseRank;
+    public static BufferedImage blueHorseFlip,redHorseFlip,orangeHorseFlip,violetHorseFlip;
 
 
     public static void create() {
@@ -42,7 +43,7 @@ public class CreateImage {
         orangeDice = ImageLoader.loadImage("res/images/orange_dice.png");
         violetDice = ImageLoader.loadImage("res/images/violet_dice.png");
 
-        orangeNumber = ImageLoader.loadImage("res/images/number_3.png");
+        BufferedImage orangeNumber = ImageLoader.loadImage("res/images/number_3.png");
         orangeRanks = new ArrayList<>();
         orangeRanks.add(ImageLoader.crop(orangeNumber, 0, 0, 20, 36));
         orangeRanks.add(ImageLoader.crop(orangeNumber, 20, 0, 25, 36));
@@ -51,7 +52,7 @@ public class CreateImage {
         orangeRanks.add(ImageLoader.crop(orangeNumber, 105, 0, 30, 36));
         orangeRanks.add(ImageLoader.crop(orangeNumber, 135, 0, 30, 36));
 
-        violetNumber = ImageLoader.loadImage("res/images/number_2.png");
+        BufferedImage violetNumber = ImageLoader.loadImage("res/images/number_2.png");
         violetRanks = new ArrayList<>();
         violetRanks.add(ImageLoader.crop(violetNumber, 0, 0, 36, 20));
         violetRanks.add(ImageLoader.crop(violetNumber, 0, 20, 36, 25));
@@ -60,7 +61,7 @@ public class CreateImage {
         violetRanks.add(ImageLoader.crop(violetNumber, 0, 105, 36, 30));
         violetRanks.add(ImageLoader.crop(violetNumber, 0, 135, 36, 30));
 
-        blueNumber = ImageLoader.loadImage("res/images/number.png");
+        BufferedImage blueNumber = ImageLoader.loadImage("res/images/number.png");
         blueRanks = new ArrayList<>();
         blueRanks.add(ImageLoader.crop(blueNumber, 145, 0, 20, 36));
         blueRanks.add(ImageLoader.crop(blueNumber, 120, 0, 25, 36));
@@ -69,7 +70,7 @@ public class CreateImage {
         blueRanks.add(ImageLoader.crop(blueNumber, 30, 0, 30, 36));
         blueRanks.add(ImageLoader.crop(blueNumber, 0, 0, 30, 36));
 
-        redNumber = ImageLoader.loadImage("res/images/number_1.png");
+        BufferedImage redNumber = ImageLoader.loadImage("res/images/number_1.png");
         redRanks = new ArrayList<>();
         redRanks.add(ImageLoader.crop(redNumber, 0, 145, 36, 20));
         redRanks.add(ImageLoader.crop(redNumber, 0, 120, 36, 25));
@@ -95,6 +96,14 @@ public class CreateImage {
         diceAnimation[5] = dice5;
         diceAnimation[6] = dice6;
 
+        blueHorseRank = ImageLoader.loadImage("res/images/blue_horse_rank.png");
+        redHorseRank = ImageLoader.loadImage("res/images/red_horse_rank.png");
+        violetHorseRank = ImageLoader.loadImage("res/images/violet_horse_rank.png");
+        orangeHorseRank = ImageLoader.loadImage("res/images/orange_horse.png");
 
+        blueHorseFlip = ImageLoader.loadImage("res/images/flip_blue_horse.png");
+        redHorseFlip = ImageLoader.loadImage("res/images/flip_red_horse.png");
+        violetHorseFlip = ImageLoader.loadImage("res/images/flip_violet_horse.png");
+        orangeHorseFlip = ImageLoader.loadImage("res/images/flip_orange_horse.png");
     }
 }
