@@ -1,7 +1,9 @@
 package main;
 
+import graphics.CreateFont;
 import mouse.Mouse;
-import state.GameState;
+import state.HistoryState;
+import state.HomeState;
 import state.State;
 import graphics.CreateImage;
 
@@ -35,7 +37,8 @@ public class Game implements Runnable {
         display.getCanvas().addMouseListener(mouse);
         display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
-        state = new GameState();
+        CreateFont.create();
+        state = new HistoryState();
         State.setCurrentState(state);
     }
 
@@ -53,7 +56,6 @@ public class Game implements Runnable {
         }
         g = bs.getDrawGraphics();
         g.clearRect(0, 0, width, height);
-
         // Draw here
         if (State.getCurrentState() != null) {
             State.getCurrentState().render(g);
@@ -108,4 +110,14 @@ public class Game implements Runnable {
     Mouse getMouse() {
         return mouse;
     }
+
+    public Display getDisplay() {
+        return display;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+
 }

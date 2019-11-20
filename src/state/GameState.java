@@ -1,9 +1,10 @@
 package state;
 
-import graphics.CreateImage;
+import constant.ModeType;
 import main.Handler;
-import map.EntityPosition;
 import map.Map;
+import rmi.client.ClientPlayer;
+import rmi.server.ServerPlayer;
 
 import java.awt.*;
 
@@ -15,6 +16,8 @@ public class GameState extends State {
         map = new Map();
         Handler.getInstance().setMap(map);
     }
+
+
 
     @Override
     public void tick() {

@@ -1,0 +1,121 @@
+package state;
+
+import button.ButtonHistory;
+import graphics.CreateFont;
+import graphics.CreateImage;
+import list.data.MatchDataElement;
+import list.graphics.MatchGraphicsElement;
+import list.graphics.PlayerGraphicsElement;
+import main.Handler;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class HomeState extends State {
+
+    private List<MatchDataElement> matchDataElementList;
+    private List<MatchGraphicsElement> matchGraphicsElementList;
+    private ButtonHistory buttonHistory;
+
+    private List<String> playerDataElementList;
+    private List<PlayerGraphicsElement> playerGraphicsElementList;
+
+
+    public HomeState() {
+        updateMatchDataElementList();
+        updateMatchGraphicsElementList();
+        updatePlayerDataElementList();
+        updatePlayerGraphicsElementList();
+        buttonHistory = new ButtonHistory(50, 621);
+    }
+
+    private void updateMatchDataElementList() {
+        matchDataElementList = new ArrayList<>();
+        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
+        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
+        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
+        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
+        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
+    }
+
+    private void updateMatchGraphicsElementList() {
+        matchGraphicsElementList = new ArrayList<>();
+        for (int i = 0; i < matchDataElementList.size(); i++) {
+            MatchGraphicsElement matchGraphicsElement = new MatchGraphicsElement(matchDataElementList.get(i), i);
+            matchGraphicsElementList.add(matchGraphicsElement);
+        }
+    }
+
+    private void updatePlayerDataElementList() {
+        playerDataElementList = new ArrayList<>();
+        playerDataElementList.add("Khanh");
+        playerDataElementList.add("Tung");
+        playerDataElementList.add("Vuong");
+        playerDataElementList.add("Cuong");
+        playerDataElementList.add("Viet");
+    }
+
+    private void updatePlayerGraphicsElementList() {
+        playerGraphicsElementList = new ArrayList<>();
+        for (int i = 0; i < playerDataElementList.size(); i++) {
+            playerGraphicsElementList.add(new PlayerGraphicsElement(i, playerDataElementList.get(i)));
+        }
+    }
+
+    @Override
+    public void tick() {
+        buttonHistory.tick();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        g.drawImage(CreateImage.home_background, 0, 0, 930, 730, null);
+        g.drawImage(CreateImage.mainLogo, 195, 50, null);
+        g.drawImage(CreateImage.playerList, 50, 210, null);
+        g.drawImage(CreateImage.matchList, 517, 210, null);
+        buttonHistory.render(g);
+
+
+        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
+            matchGraphicsElement.render(g);
+        }
+
+        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+            playerGraphicsElement.render(g);
+        }
+
+    }
+
+    private Font scaleFontWidth(Graphics g, String name) {
+        Graphics2D graphics2D = (Graphics2D) g;
+        graphics2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        Font font = Font.decode("Michroma");
+        Rectangle2D rectangle2D = graphics2D.getFontMetrics(font).getStringBounds(name, g);
+        float newSize = (float) (font.getSize2D() * 100 / rectangle2D.getWidth());
+        Font font1 = font.deriveFont(4 * newSize / 5);
+        graphics2D.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        Map<TextAttribute, Object> atts = new HashMap<TextAttribute, Object>();
+        atts.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
+        Font font2 = font1.deriveFont(atts);
+        return font2;
+    }
+
+    private int scaleFontHeight(Graphics g, String name, int height, int bottomLine) {
+        Graphics2D graphics2D = (Graphics2D) g;
+        graphics2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        Font font = Font.decode("Michroma");
+        Rectangle2D rectangle2D = graphics2D.getFontMetrics(font).getStringBounds(name, g);
+        float baseLine = bottomLine - ((float) (height - rectangle2D.getHeight())) / 2;
+        return (int) baseLine;
+    }
+}

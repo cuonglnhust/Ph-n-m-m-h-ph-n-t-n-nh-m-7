@@ -3,7 +3,7 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
-class Display {
+public class Display {
     private JFrame jFrame;
     private Canvas canvas;
     private String title;
@@ -38,7 +38,7 @@ class Display {
         return canvas;
     }
 
-    JFrame getjFrame() {
+    public JFrame getjFrame() {
         return jFrame;
     }
 }

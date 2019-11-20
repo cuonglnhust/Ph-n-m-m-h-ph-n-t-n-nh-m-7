@@ -11,7 +11,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
     private boolean rightClick;
 
     @Override
-    public void mouseClicked(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -38,10 +39,12 @@ public class Mouse implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -76,5 +79,10 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     public void setRightClick(boolean rightClick) {
         this.rightClick = rightClick;
+    }
+
+    public void setDefaultClick() {
+        leftClick = false;
+        rightClick = false;
     }
 }

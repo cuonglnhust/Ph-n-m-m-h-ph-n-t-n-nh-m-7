@@ -16,6 +16,13 @@ public class CreateImage {
     public static BufferedImage blueHorseRank,redHorseRank,orangeHorseRank,violetHorseRank;
     public static BufferedImage blueHorseFlip,redHorseFlip,orangeHorseFlip,violetHorseFlip;
 
+    public static BufferedImage home_background;
+    public static BufferedImage mainLogo,playerList,matchList,vs;
+    public static BufferedImage[] buttonHistory,buttonInvite,buttonWatch;
+
+    public static BufferedImage player,result,time;
+    public static BufferedImage[] buttonBack,buttonMore;
+
 
     public static void create() {
         redHorse = ImageLoader.loadImage("res/images/red_horse.png");
@@ -105,5 +112,35 @@ public class CreateImage {
         redHorseFlip = ImageLoader.loadImage("res/images/flip_red_horse.png");
         violetHorseFlip = ImageLoader.loadImage("res/images/flip_violet_horse.png");
         orangeHorseFlip = ImageLoader.loadImage("res/images/flip_orange_horse.png");
+
+        home_background = ImageLoader.loadImage("res/images/background_home.jpg");
+        mainLogo = ImageLoader.loadImage("res/images/main_logo.png");
+        playerList = ImageLoader.loadImage("res/images/player_list.png");
+        matchList = ImageLoader.loadImage("res/images/match_list.png");
+        vs = ImageLoader.loadImage("res/images/vs.png");
+
+        buttonHistory = new BufferedImage[2];
+        buttonHistory[0] = ImageLoader.loadImage("res/images/history_1.png");
+        buttonHistory[1] = ImageLoader.loadImage("res/images/history_2.png");
+
+        buttonInvite = new BufferedImage[2];
+        buttonInvite[0] = ImageLoader.loadImage("res/images/invite_1.png");
+        buttonInvite[1] = ImageLoader.loadImage("res/images/invite_2.png");
+
+        buttonWatch = new BufferedImage[2];
+        buttonWatch[0] = ImageLoader.loadImage("res/images/watch_1.png");
+        buttonWatch[1] = ImageLoader.loadImage("res/images/watch_2.png");
+
+        player = ImageLoader.loadImage("res/images/player.png");
+        result = ImageLoader.loadImage("res/images/result_1.png");
+        time = ImageLoader.loadImage("res/images/time.png");
+
+        buttonBack = new BufferedImage[2];
+        buttonBack[0] = ImageLoader.loadImage("res/images/back_1.png");
+        buttonBack[1] = ImageLoader.loadImage("res/images/back_2.png");
+
+        buttonMore = new BufferedImage[2];
+        buttonMore[0] =  ImageLoader.loadImage("res/images/more_1.png");
+        buttonMore[1] =  ImageLoader.loadImage("res/images/more_2.png");
     }
 }

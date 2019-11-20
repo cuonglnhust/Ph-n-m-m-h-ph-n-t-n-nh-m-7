@@ -1,0 +1,5 @@
+package constant;
+
+public enum ModeType {
+    CLIENT_LOGIN,CLIENT_PLAYER,CLIENT_VIEWER,SERVER_PLAYER,SERVER_VIEWER
+}
