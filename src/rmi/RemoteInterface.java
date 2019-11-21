@@ -4,5 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface RemoteInterface extends Remote {
-    public void hello() throws RemoteException;
+    void hello() throws RemoteException;
+
+    void invite(int idAnotherPlayer) throws RemoteException;
+
 }

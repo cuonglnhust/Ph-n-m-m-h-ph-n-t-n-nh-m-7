@@ -9,4 +9,15 @@ public class RemoteImplementation implements RemoteInterface {
     public void hello() throws RemoteException {
         System.out.println("Hello");
     }
+
+    public void sendInvitation(int idAnotherPlayer){
+
+    }
+
+    @Override
+    public void invite(int idAnotherPlayer) throws RemoteException {
+        sendInvitation(idAnotherPlayer);
+    }
+
+
 }

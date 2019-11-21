@@ -11,7 +11,10 @@ public class Client {
         try {
             Registry registry = LocateRegistry.getRegistry(5000);
             RemoteInterface stub = (RemoteInterface) registry.lookup("Server");
+
             stub.hello();
+
+            stub.invite(3);
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
