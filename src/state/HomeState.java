@@ -4,6 +4,7 @@ import button.ButtonHistory;
 import graphics.CreateFont;
 import graphics.CreateImage;
 import list.data.MatchDataElement;
+import list.data.PlayerDataElement;
 import list.graphics.MatchGraphicsElement;
 import list.graphics.PlayerGraphicsElement;
 import main.Handler;
@@ -23,25 +24,14 @@ public class HomeState extends State {
     private List<MatchGraphicsElement> matchGraphicsElementList;
     private ButtonHistory buttonHistory;
 
-    private List<String> playerDataElementList;
+    private List<PlayerDataElement> playerDataElementList;
     private List<PlayerGraphicsElement> playerGraphicsElementList;
 
 
     public HomeState() {
-        updateMatchDataElementList();
         updateMatchGraphicsElementList();
-        updatePlayerDataElementList();
         updatePlayerGraphicsElementList();
         buttonHistory = new ButtonHistory(50, 621);
-    }
-
-    private void updateMatchDataElementList() {
-        matchDataElementList = new ArrayList<>();
-        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
-        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
-        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
-        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
-        matchDataElementList.add(new MatchDataElement("Tung", "Cuong"));
     }
 
     private void updateMatchGraphicsElementList() {
@@ -50,15 +40,6 @@ public class HomeState extends State {
             MatchGraphicsElement matchGraphicsElement = new MatchGraphicsElement(matchDataElementList.get(i), i);
             matchGraphicsElementList.add(matchGraphicsElement);
         }
-    }
-
-    private void updatePlayerDataElementList() {
-        playerDataElementList = new ArrayList<>();
-        playerDataElementList.add("Khanh");
-        playerDataElementList.add("Tung");
-        playerDataElementList.add("Vuong");
-        playerDataElementList.add("Cuong");
-        playerDataElementList.add("Viet");
     }
 
     private void updatePlayerGraphicsElementList() {
@@ -70,7 +51,17 @@ public class HomeState extends State {
 
     @Override
     public void tick() {
-        buttonHistory.tick();
+
+        // nếu nhận được lời mời từ Server
+
+        // Hiển thị thông báo về lời mời: Tên người chơi + lời mời
+
+        // Trả lời thông báo
+
+        // mời người chơi khác
+        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+            playerGraphicsElement.tick();
+        }
     }
 
     @Override

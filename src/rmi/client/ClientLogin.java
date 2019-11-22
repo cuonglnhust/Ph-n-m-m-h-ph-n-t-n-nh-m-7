@@ -1,13 +1,18 @@
 package rmi.client;
 
 import constant.ModeType;
-import rmi.Mode;
+import rmi.model.Mode;
+import rmi.dataLogin.ConnectionData;
 
 public class ClientLogin extends Mode {
 
-    public ClientLogin(String bindName, int port) {
-        super(bindName, port);
+    public ClientLogin(ConnectionData connectionData) {
+        super(connectionData);
         modeType = ModeType.CLIENT_LOGIN;
+    }
+
+    public boolean connection(){
+        return true;
     }
 
 }

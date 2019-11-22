@@ -2,9 +2,7 @@ package main;
 
 import graphics.CreateFont;
 import mouse.Mouse;
-import state.HistoryState;
-import state.HomeState;
-import state.State;
+import state.*;
 import graphics.CreateImage;
 
 import java.awt.*;
@@ -38,7 +36,7 @@ public class Game implements Runnable {
         display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
         CreateFont.create();
-        state = new HistoryState();
+        state = new StartState();
         State.setCurrentState(state);
     }
 

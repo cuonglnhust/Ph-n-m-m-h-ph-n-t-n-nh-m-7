@@ -2,16 +2,19 @@ package main;
 
 import map.Map;
 import mouse.Mouse;
-import rmi.Mode;
+import rmi.model.Mode;
 import rmi.client.ClientLogin;
+import rmi.model.ModePlayer;
+import rmi.model.ModeViewer;
 
 public class Handler {
 
     private Game game;
     private Map map;
-    private Mouse mouse;
-    private Mode modePlayer, modeViewer;
+    private ModePlayer modePlayer;
+    private ModeViewer modeViewer;
     private ClientLogin clientLogin;
+
 
     private static Handler handler;
 
@@ -46,11 +49,11 @@ public class Handler {
         this.game = game;
     }
 
-    public Mode getModePlayer() {
+    public ModePlayer getModePlayer() {
         return modePlayer;
     }
 
-    public Mode getModeViewer() {
+    public ModeViewer getModeViewer() {
         return modeViewer;
     }
 
@@ -58,11 +61,11 @@ public class Handler {
         return clientLogin;
     }
 
-    public void setModePlayer(Mode modePlayer) {
+    public void setModePlayer(ModePlayer modePlayer) {
         this.modePlayer = modePlayer;
     }
 
-    public void setModeViewer(Mode modeViewer) {
+    public void setModeViewer(ModeViewer modeViewer) {
         this.modeViewer = modeViewer;
     }
 

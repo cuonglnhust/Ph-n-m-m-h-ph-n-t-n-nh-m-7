@@ -13,15 +13,17 @@ public class CreateImage {
     public static ArrayList<BufferedImage> blueRanks, redRanks, orangeRanks, violetRanks;
     public static BufferedImage dice, dice1, dice2, dice3, dice4, dice5, dice6;
     public static BufferedImage[] diceAnimation;
-    public static BufferedImage blueHorseRank,redHorseRank,orangeHorseRank,violetHorseRank;
-    public static BufferedImage blueHorseFlip,redHorseFlip,orangeHorseFlip,violetHorseFlip;
+    public static BufferedImage blueHorseRank, redHorseRank, orangeHorseRank, violetHorseRank;
+    public static BufferedImage blueHorseFlip, redHorseFlip, orangeHorseFlip, violetHorseFlip;
 
     public static BufferedImage home_background;
-    public static BufferedImage mainLogo,playerList,matchList,vs;
-    public static BufferedImage[] buttonHistory,buttonInvite,buttonWatch;
+    public static BufferedImage mainLogo, playerList, matchList, vs;
+    public static BufferedImage[] buttonHistory, buttonInvite, buttonWatch;
 
-    public static BufferedImage player,result,time;
-    public static BufferedImage[] buttonBack,buttonMore;
+    public static BufferedImage player, result, time;
+    public static BufferedImage[] buttonBack, buttonMore, buttonPlay, buttonStart;
+
+    public static BufferedImage player1, player2;
 
 
     public static void create() {
@@ -140,7 +142,19 @@ public class CreateImage {
         buttonBack[1] = ImageLoader.loadImage("res/images/back_2.png");
 
         buttonMore = new BufferedImage[2];
-        buttonMore[0] =  ImageLoader.loadImage("res/images/more_1.png");
-        buttonMore[1] =  ImageLoader.loadImage("res/images/more_2.png");
+        buttonMore[0] = ImageLoader.loadImage("res/images/more_1.png");
+        buttonMore[1] = ImageLoader.loadImage("res/images/more_2.png");
+
+        player1 = ImageLoader.loadImage("res/images/player_1.png");
+        player2 = ImageLoader.loadImage("res/images/player_2.png");
+
+        buttonPlay = new BufferedImage[2];
+        buttonPlay[0] = ImageLoader.loadImage("res/images/play_1.png");
+        buttonPlay[1] = ImageLoader.loadImage("res/images/play_2.png");
+
+        buttonStart = new BufferedImage[2];
+        buttonStart[0] = ImageLoader.loadImage("res/images/start_1.png");
+        buttonStart[1] = ImageLoader.loadImage("res/images/start_2.png");
+
     }
 }

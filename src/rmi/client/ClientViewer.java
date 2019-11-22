@@ -1,11 +1,14 @@
 package rmi.client;
 
 import constant.ModeType;
-import rmi.Mode;
+import rmi.model.Mode;
+import rmi.dataLogin.ConnectionData;
+import rmi.model.ModeViewer;
 
-public class ClientViewer extends Mode {
-    public ClientViewer(String bindName, int port) {
-        super(bindName, port);
+public class ClientViewer extends ModeViewer {
+    public ClientViewer(ConnectionData connectionData) {
+        super(connectionData);
         modeType = ModeType.CLIENT_VIEWER;
     }
+
 }
