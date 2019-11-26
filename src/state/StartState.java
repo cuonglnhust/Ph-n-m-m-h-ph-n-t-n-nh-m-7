@@ -16,7 +16,7 @@ public class StartState extends State {
 
     @Override
     public void tick() {
-
+            buttonStart.tick();
     }
 
     @Override
