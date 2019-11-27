@@ -13,7 +13,7 @@ public interface IServer extends Remote {
 
     void sendInvitation(Player player1, Player player2) throws RemoteException;  // player1 gửi lời mời sang player2
 
-    int signIn(String username, String password) throws RemoteException, SQLException; // đăng nhập
+    Player signIn(String username, String password) throws RemoteException, SQLException; // đăng nhập
 
 
     void registerClient(int playerId,IClient iClient) throws RemoteException; // sau khi đăng nhập thành công thì player

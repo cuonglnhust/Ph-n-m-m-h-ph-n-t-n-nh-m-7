@@ -36,7 +36,7 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
     }
 
     @Override
-    public int signIn(String username, String password) throws RemoteException, SQLException {
+    public Player signIn(String username, String password) throws RemoteException, SQLException {
 
         ConnectDatabase connectDatabase = new ConnectDatabase();
 
@@ -45,11 +45,11 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
         for(Player player : players){
             if(player.getUsername().trim().equals(username.trim())){
                 if (player.getPassword().trim().equals(password.trim())){
-                    return 1;
+                    return player;
                 }
             }
         }
-        return 0;
+        return null;
     }
 
 
