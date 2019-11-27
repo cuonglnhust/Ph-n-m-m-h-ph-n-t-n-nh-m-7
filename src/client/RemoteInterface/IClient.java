@@ -13,4 +13,6 @@ public interface IClient extends Remote {
     String getIpAddress() throws RemoteException;               // lấy ip address từ một client
 
     Player getPlayer() throws RemoteException;                  // lấy đối tượng player từ một client
+
+
 }
