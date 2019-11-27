@@ -2,6 +2,7 @@ package client;
 
 import client.ClientImplement.ClientImp;
 import client.RemoteInterface.IClient;
+import client.RemoteInterface.Match;
 import client.RemoteInterface.Player;
 import server.RemoteInterface.IServer;
 
@@ -21,17 +22,27 @@ public class MyClient {
 
             Player player1 = iServer.signIn("vuong","vuong");
 
-            if(player1 != null) {
+            if(player1 != null) {                                                   // đăng nhập thành công
                 IClient iClient = new ClientImp(player1, iServer); // tạo ra đối tượng Client có chứa player
 
-                List<Player> players = iServer.getPlayersOnline(player1);// lấy player 2 trong list player sau khi đăng nhập
+                // lấy player 2 trong list player sau khi đăng nhập mà không có player1 trong đó
+                List<Player> players = iServer.getPlayersOnline(player1);
+
+                //lấy các match đang diễn ra
+                List<Match> matches = iServer.getMatchsOnline();
 
                 //ví dụ mời player2 là player đang online có index là 1
-                Player player2 = players.get(1);
+                if (players.size() > 0){
 
-                //sau khi click mời thì sẽ gọi hàm sendInvitation của server
-                // trả về câu trả lời player2 có đồng ý chơi cùng hay không
-                iServer.sendInvitation(player1, player2);
+                    Player player2 = players.get(1);
+
+                    //sau khi click mời thì sẽ gọi hàm sendInvitation của server
+                    // trả về câu trả lời player2 có đồng ý chơi cùng hay không
+                    iServer.sendInvitation(player1, player2);
+                }else {
+                    System.out.println("there is noone online");
+                }
+
 
                 //nếu player 2 đồng ý chơi cùng thì ngay lập tức player1 tạo trận đấu
 

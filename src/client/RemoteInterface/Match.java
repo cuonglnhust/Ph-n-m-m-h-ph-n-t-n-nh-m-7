@@ -11,11 +11,18 @@ public class Match implements Serializable {
 
     private int winner;
 
-    private  int status;
+    private int status;
 
     private List<Player> players;
 
-    public  int getStatus(){return status;}
+    public int getStatus(){
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

@@ -15,8 +15,11 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
 
     public Map<Integer, IClient> playerOnline;
 
+    public List<Match> matches;
+
     public ServerImp() throws RemoteException {
         this.playerOnline = new HashMap<>();
+        this.matches = new ArrayList<>();
     }
 
     @Override
@@ -27,6 +30,12 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
             playerOnline.get(player2.getPid()).
                     retrieveIp(playerOnline.get(player1.getPid()).getIpAddress()); // client2 lấy ipaddress của client1
             System.out.println(player2.getPname() + "đã có chấp nhận lời mời của bạn !");
+            Match match = new Match();
+            List<Player> players = new ArrayList<>();
+            players.add(player1);
+            players.add(player2);
+            match.setPlayers(players);
+            matches.add(match);
         } else {
             System.out.println("Play : " + player2.getPname() + "Từ chối chơi với bạn !");
         }
@@ -80,16 +89,21 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
     }
 
     @Override
+    public List<Match> getMatchsOnline() throws RemoteException {
+        return this.matches;
+    }
+
+  /*  @Override
     public List<Integer> senIdMatch(List<Match> matches) {
         List<Integer> ListRun = new ArrayList<>();
-        for (var list : matches) {
-            if (list.getPlayers().size() >= 2 && list.getStatus() == 1) {
-                ListRun.add(list.getId());
+        for (Match match : matches) {
+            if (match.getPlayers().size() >= 2 && match.getStatus() == 1) {
+                ListRun.add(match.getId());
 
             }
 
         }
         return ListRun;
     }
-
+*/
 }
