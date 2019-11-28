@@ -17,6 +17,8 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
 
     public List<Match> matches;
 
+    private ConnectDatabase connectDatabase = null;
+
     public ServerImp() throws RemoteException {
         this.playerOnline = new HashMap<>();
         this.matches = new ArrayList<>();
@@ -46,7 +48,7 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
     @Override
     public Player signIn(String username, String password) throws RemoteException, SQLException {
 
-        ConnectDatabase connectDatabase = new ConnectDatabase();
+        connectDatabase = new ConnectDatabase();
 
         List<Player> players = connectDatabase.getPlayers();
 
@@ -91,6 +93,13 @@ public class ServerImp extends UnicastRemoteObject implements IServer, Serializa
     @Override
     public List<Match> getMatchsOnline() throws RemoteException {
         return this.matches;
+    }
+
+    @Override
+    public List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException {
+        connectDatabase = new ConnectDatabase();
+
+        return connectDatabase.getMatchsHistory(playerId1);
     }
 
   /*  @Override

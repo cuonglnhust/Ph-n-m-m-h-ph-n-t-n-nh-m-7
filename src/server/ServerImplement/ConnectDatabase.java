@@ -1,5 +1,6 @@
 package server.ServerImplement;
 
+import client.RemoteInterface.Match;
 import client.RemoteInterface.Player;
 
 import java.sql.*;
@@ -40,6 +41,49 @@ public class ConnectDatabase {
             players.add(player);
         }
         return players;
+    }
+    public List<Match> getMatchsHistory(int playerId1) throws SQLException{
+        List<Match> matches = new ArrayList<>();
+
+        List<Player> players = new ArrayList<>();
+
+        createConnection();
+
+        Statement statement1 = conn.createStatement();
+        ResultSet rs1 = statement1.executeQuery("select matches.id,matches.duration," +
+                                                            "matches.winner,player.id " +
+                                                    "from match_player,player,matches " +
+                                                    "where matches.id = match_player.match_id and player.id = match_player.player_id " +
+                                                    "and player.id=" + playerId1);
+
+        while (rs1.next()){
+            Match match = new Match();
+            match.setId(rs1.getInt(1));
+            match.setDuration(rs1.getString(2));
+            match.setWinner(rs1.getInt(3));
+
+            Statement statement2 = conn.createStatement();
+            ResultSet rs2 = statement2.executeQuery("select player.id,player.name," +
+                                                                "player.username,player.password " +
+                                                        "from match_player,player,matches " +
+                                                        "where matches.id = match_player.match_id and player.id = match_player.player_id " +
+                                                        "and matches.id=" + match.getId());
+            while (rs2.next()){
+
+                Player player = new Player();
+                player.setPid(rs2.getInt(1));
+                player.setPname(rs2.getString(2));
+                player.setUsername(rs2.getString(3));
+                player.setPassword(rs2.getString(4));
+                if (player.getPid() != playerId1){
+                    players.add(player);
+                }
+
+            }
+            match.setPlayers(players);
+            matches.add(match);
+        }
+        return matches;
     }
     private void shutdownConnection() {
 

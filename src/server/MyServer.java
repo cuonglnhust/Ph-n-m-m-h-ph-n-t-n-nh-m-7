@@ -23,11 +23,7 @@ public class MyServer {
             Naming.bind("rmi://localhost:9999/hippocampus", iServer);
             System.out.println("Server Ready ...");
 
-            while (true)
-            {
-                List<Match> listMatch = new ArrayList<>();
-                iServer.senIdMatch(listMatch);
-            }
+
         } catch (RemoteException | MalformedURLException | AlreadyBoundException e) {
             e.printStackTrace();
         }

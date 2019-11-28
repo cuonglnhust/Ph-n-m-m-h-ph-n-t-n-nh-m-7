@@ -25,9 +25,20 @@ public class MyClient {
             if(player1 != null) {                                                   // đăng nhập thành công
                 IClient iClient = new ClientImp(player1, iServer); // tạo ra đối tượng Client có chứa player
 
-                // lấy player 2 trong list player sau khi đăng nhập mà không có player1 trong đó
+                // lấy player 2 trong list player đang online sau khi đăng nhập mà không có player1 trong đó
                 List<Player> players = iServer.getPlayersOnline(player1);
 
+                // show history của player1
+                List<Match> matchesHistory = iServer.getMatchHistory(player1.getPid());
+                for (Match match : matchesHistory){
+                    System.out.println("match have id : " + match.getId() + "have : ");
+                    System.out.println("match duration : " + match.getDuration()+ " and ");
+                    System.out.println("match winner id : " + match.getWinner()+ " and ");
+                    List<Player> playerList = match.getPlayers();
+                    for (Player player : playerList){
+                        System.out.println(" have couter name is : " + player.getPname());
+                    }
+                }
                 //lấy các match đang diễn ra
                 List<Match> matches = iServer.getMatchsOnline();
 
