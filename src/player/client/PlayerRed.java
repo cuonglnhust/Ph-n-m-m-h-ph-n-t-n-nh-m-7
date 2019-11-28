@@ -1,8 +1,8 @@
-package player;
+package player.client;
 
 import constant.TeamType;
-import entity.changed.Dice;
-import entity.changed.HorseRed;
+import entity.changed.local.Dice;
+import entity.changed.local.HorseRed;
 import graphics.Constant;
 import map.EntityPosition;
 

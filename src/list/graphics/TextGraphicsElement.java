@@ -1,7 +1,5 @@
 package list.graphics;
 
-import graphics.CreateFont;
-
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
@@ -27,9 +25,10 @@ public class TextGraphicsElement {
     public void render(Graphics g) {
         g.setColor(Color.BLUE);
         g.setFont(scaleFontWidth(g));
-        g.drawString(text, x, scaleFontHeight(g, bottomLine));
+        g.drawString(text, alignCenterHorizontal(g), alignCenterVertical(g, bottomLine));
 
     }
+
 
     private Font scaleFontWidth(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g;
@@ -49,7 +48,7 @@ public class TextGraphicsElement {
     }
 
 
-    private int scaleFontHeight(Graphics g, int bottomLine) {
+    private int alignCenterVertical(Graphics g, int bottomLine) {
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
                 RenderingHints.VALUE_FRACTIONALMETRICS_ON);
@@ -57,5 +56,19 @@ public class TextGraphicsElement {
         Rectangle2D rectangle2D = graphics2D.getFontMetrics(font1).getStringBounds("KKKKKK", g);
         float baseLine = bottomLine - ((float) (height - rectangle2D.getHeight())) / 2;
         return (int) baseLine;
+    }
+
+    private int alignCenterHorizontal(Graphics g) {
+        Graphics2D graphics2D = (Graphics2D) g;
+        graphics2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS,
+                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        Font font1 = Font.decode(font);
+        Rectangle2D rectangle2D = graphics2D.getFontMetrics(font1).getStringBounds("KKKKKK", g);
+        float leftLine = x + ((float) (width - rectangle2D.getWidth())) / 8;
+        return (int) leftLine;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

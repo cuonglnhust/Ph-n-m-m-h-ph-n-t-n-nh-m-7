@@ -1,4 +1,4 @@
-package entity.changed;
+package entity.changed.local;
 
 import constant.TeamType;
 import entity.unchanged.Rank;
@@ -6,7 +6,7 @@ import graphics.Constant;
 import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
-import player.Player;
+import player.client.Player;
 
 import java.awt.*;
 

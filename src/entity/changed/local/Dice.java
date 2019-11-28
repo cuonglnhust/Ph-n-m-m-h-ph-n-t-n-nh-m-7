@@ -1,4 +1,4 @@
-package entity.changed;
+package entity.changed.local;
 
 import constant.DiceValue;
 import entity.Entity;
@@ -7,7 +7,6 @@ import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
 import mouse.Mouse;
-import player.Player;
 
 import java.awt.*;
 

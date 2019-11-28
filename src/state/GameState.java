@@ -1,20 +1,21 @@
 package state;
 
-import constant.ModeType;
+import button.PlayerData;
 import main.Handler;
-import map.Map;
-import rmi.client.ClientPlayer;
-import rmi.server.ServerPlayer;
+import map.local.Map;
 
 import java.awt.*;
+import java.util.List;
 
 public class GameState extends State {
 
     private Map map;
+    private List<PlayerData> playerDataList;
 
-    public GameState() {
+    public GameState(List<PlayerData> playerDataList) {
         map = new Map();
         Handler.getInstance().setMap(map);
+        this.playerDataList = playerDataList;
     }
 
 

@@ -1,25 +1,84 @@
 package button;
 
+import entity.Entity;
 import graphics.CreateImage;
 import main.Handler;
+import map.EntitySize;
+import state.ChoseTeamState;
 import state.GameState;
 import state.State;
 
+import javax.swing.*;
 import java.awt.*;
+import java.rmi.RemoteException;
 
 public class ButtonPlay extends Button {
 
-    public ButtonPlay(int x, int y) {
+    private ChoseTeamState choseTeamState;
+    private boolean isClicked;
+
+    public ButtonPlay(int x, int y, ChoseTeamState choseTeamState) {
         super(x, y);
+        this.choseTeamState = choseTeamState;
+        this.isClicked = false;
     }
 
     public void tick() {
         if (isOver()) {
             if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
-                Handler.getInstance().getMouse().setDefaultClick();
-                State.setCurrentState(new GameState());
+                isClicked = true;
+                // nếu là Client
+                if (Handler.getInstance().getClientPlayer() != null) {
+                    try {
+                        // kiểm tra các client khác đã sẵn sàng chưa
+                        boolean ready = Handler.getInstance().getClientPlayer().getChoseTeamServer()
+                                .messageReady(Handler.getInstance().getId());
+                        // nếu tất cả client đã sẵn sàng
+                        if (ready) {
+                            // kiểm tra xem server đã sẵn sàng chưa
+                            boolean serverReady = Handler.getInstance().getClientPlayer().getChoseTeamServer()
+                                    .serverReady();
+                            // nếu đã sẵn sàng
+                            if (serverReady) {
+                                // mở khóa cho server
+                                Handler.getInstance().getClientPlayer().getChoseTeamServer().unlockServer();
+                                choseTeamState.changeState();
+                            }
+                            // nếu chưa, thông báo cho server
+                            else {
+                                Handler.getInstance().getClientPlayer().getChoseTeamServer().allReady(Handler.getInstance().getId());
+                            }
+                        }
+                        // nếu có client chưa sẵn sàng
+                        else {
+                            // mở hộp thoại
+                            choseTeamState.getDialogClientWait().setVisible(true);
+                        }
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // nếu là Server
+                if (Handler.getInstance().getServerPlayer() != null) {
+                    Handler.getInstance().getServerPlayer().getChoseTeamImpServer().setServerReady(true);
+                    // nếu các máy khác đã ready rồi
+                    System.out.println("Server need click Play");
+                    System.out.println(checkClientPlayerReady());
+                    // nếu có client chưa sẵn sàng
+                    if (!checkClientPlayerReady()) {
+                        // hiển thị thông báo
+                        choseTeamState.getDialogServerWait().setVisible(true);
+                    }
+                }
             }
         }
+    }
+
+
+    // kiểm tra xem các Client khác đã vào hay chưa
+    private boolean checkClientPlayerReady() {
+        return Handler.getInstance().getServerPlayer().getChoseTeamImpServer().getPlayerReady().size()
+                == Handler.getInstance().getServerPlayer().getChoseTeamImpServer().getClientHashMap().size();
     }
 
     @Override
@@ -36,5 +95,9 @@ public class ButtonPlay extends Button {
         int width = CreateImage.buttonPlay[0].getWidth();
         int height = CreateImage.buttonPlay[0].getHeight();
         return new Rectangle(x, y, width, height);
+    }
+
+    public boolean isClicked() {
+        return isClicked;
     }
 }

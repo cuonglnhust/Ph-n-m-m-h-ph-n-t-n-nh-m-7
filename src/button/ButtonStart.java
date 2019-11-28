@@ -1,13 +1,24 @@
 package button;
 
 import graphics.CreateImage;
+import main.Handler;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class ButtonStart extends Button {
 
     public ButtonStart(int x, int y) {
         super(x, y);
+    }
+
+    public void tick() {
+        if (isOver()) {
+            if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
+                Handler.getInstance().getMouse().setDefaultClick();
+                JOptionPane.showMessageDialog(null, "Play game");
+            }
+        }
     }
 
     @Override
