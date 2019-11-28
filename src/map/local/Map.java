@@ -1,11 +1,11 @@
-package map;
+package map.local;
 
 
 import constant.TeamType;
-import entity.changed.Horse;
+import entity.changed.local.Horse;
 import entity.unchanged.Step;
 import graphics.Constant;
-import player.*;
+import player.client.*;
 import teamGraphics.Blue;
 import teamGraphics.Orange;
 import teamGraphics.Red;

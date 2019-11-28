@@ -9,6 +9,7 @@ import list.data.PlayerDataElement;
 import main.Handler;
 import rmi.client.ClientPlayer;
 import rmi.dataLogin.ConnectionData;
+import rmi.server.ServerPlayer;
 import state.ChoseTeamState;
 import state.State;
 
@@ -43,11 +44,11 @@ public class PlayerGraphicsElement {
                 ConnectionData connectionData = new ConnectionData("127.0.0.1", 5000, "game");
 
                 // Thiết lập kết nối
-                ClientPlayer clientPlayer = new ClientPlayer(connectionData);
-                Handler.getInstance().setModePlayer(clientPlayer);
+//                ServerPlayer clientPlayer = new ClientPlayer(connectionData);
+//                Handler.getInstance().setServerPlayer(clientPlayer);
 
                 // nếu kết nối thành công
-                if (Handler.getInstance().getModePlayer().connection()){
+                if (Handler.getInstance().getServerPlayer().connection()){
                     State.setCurrentState(new ChoseTeamState());
                 }
                 // nếu không thành công

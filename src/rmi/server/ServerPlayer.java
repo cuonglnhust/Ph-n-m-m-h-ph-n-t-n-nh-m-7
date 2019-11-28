@@ -1,31 +1,60 @@
 package rmi.server;
 
 import constant.ModeType;
-import rmi.model.Mode;
+import rmi.implementation.ChoseTeamImpServer;
+import rmi.implementation.RemoteImpServer;
 import rmi.dataLogin.ConnectionData;
-import rmi.implementation.RemoteImplementationPlayer;
-import rmi.interfaces.RemoteInterfacePlayer;
+import rmi.model.ModePlayer;
+import state.ChoseTeamState;
+import state.client.ChoseTeamServer;
 
-import java.rmi.AlreadyBoundException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class ServerPlayer extends Mode {
+public class ServerPlayer extends ModePlayer {
+
+    private String url;
+    private ChoseTeamImpServer choseTeamImpServer;
+
+
     public ServerPlayer(ConnectionData connectionData) {
         super(connectionData);
         modeType = ModeType.SERVER_PLAYER;
     }
 
-    private void openServer() {
+
+    @Override
+    public boolean connection() {
         try {
-            RemoteImplementationPlayer remoteImplementationPlayer = new RemoteImplementationPlayer();
-            stub = (RemoteInterfacePlayer) UnicastRemoteObject.exportObject(remoteImplementationPlayer, 0);
             registry = LocateRegistry.createRegistry(connectionData.getPort());
-            registry.bind("rmi://" + connectionData.getIp() + ";" + connectionData.getPort() +
-                    "/" + connectionData.getBindName(), stub);
-        } catch (RemoteException | AlreadyBoundException e) {
+            url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
+
+            RemoteImpServer server = new RemoteImpServer();
+            choseTeamImpServer = new ChoseTeamImpServer();
+
+            registry.rebind(url + connectionData.getBindName(), server);
+            registry.rebind(url + "choseTeam", choseTeamImpServer);
+
+            System.out.println("Server Ready");
+
+            return true;
+        } catch (RemoteException e) {
             e.printStackTrace();
+            return false;
         }
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public ChoseTeamImpServer getChoseTeamImpServer() {
+        return choseTeamImpServer;
+    }
+
+    public void setChoseTeamImpServer(ChoseTeamImpServer choseTeamImpServer) {
+        this.choseTeamImpServer = choseTeamImpServer;
     }
 }

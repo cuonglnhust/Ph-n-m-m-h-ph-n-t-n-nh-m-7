@@ -1,17 +1,18 @@
-package player;
+package player.client;
 
 import constant.DiceValue;
 import constant.HorseState;
 import constant.TeamType;
-import entity.changed.*;
+import entity.changed.local.Dice;
+import entity.changed.local.Horse;
 import main.Handler;
+import player.server.PlayerServerInterface;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Player {
-
+public class PlayerLocal {
     // ngựa của người chơi
     ArrayList<Horse> horses;
     // Xúc xắc
@@ -27,6 +28,16 @@ public class Player {
 
     // ngựa di chuyển được
     private ArrayList<Horse> horseCanMove = new ArrayList<>();
+
+
+    private PlayerServerInterface playerServerInterface;
+
+    public PlayerLocal(ArrayList<Horse> horses, PlayerServerInterface playerServerInterface) {
+        this.horses = horses;
+        this.playerServerInterface = playerServerInterface;
+    }
+
+
 
     public void tick() {
         action();
@@ -179,4 +190,6 @@ public class Player {
     public HashMap<Integer, Horse> getOnRank() {
         return onRank;
     }
+
+
 }

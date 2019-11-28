@@ -1,12 +1,11 @@
-package entity.changed;
+package entity.changed.local;
 
 import constant.TeamType;
 import entity.unchanged.Rank;
-import entity.unchanged.Step;
 import graphics.Constant;
 import graphics.CreateImage;
 import main.Handler;
-import player.Player;
+import player.client.Player;
 
 import java.awt.*;
 

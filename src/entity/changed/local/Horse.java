@@ -1,4 +1,4 @@
-package entity.changed;
+package entity.changed.local;
 
 import constant.DiceValue;
 import constant.HorseState;
@@ -6,15 +6,12 @@ import constant.TeamType;
 import entity.Entity;
 import entity.unchanged.Step;
 import graphics.Constant;
-import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
-import map.Map;
 import mouse.Mouse;
-import player.Player;
+import player.client.Player;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 // ngựa
 public class Horse extends Entity {

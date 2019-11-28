@@ -1,24 +1,31 @@
 package main;
 
-import map.Map;
+import map.local.Map;
 import mouse.Mouse;
-import rmi.model.Mode;
 import rmi.client.ClientLogin;
+import rmi.client.ClientPlayer;
 import rmi.model.ModePlayer;
 import rmi.model.ModeViewer;
+import rmi.server.ServerPlayer;
 
 public class Handler {
 
     private Game game;
     private Map map;
-    private ModePlayer modePlayer;
+    private ServerPlayer serverPlayer;
+    private ClientPlayer clientPlayer;
     private ModeViewer modeViewer;
     private ClientLogin clientLogin;
+    private int id;
+    private String name;
 
 
     private static Handler handler;
 
-    private Handler() {}
+    private Handler() {
+        id = 2;
+        name = "Cuong";
+    }
 
     public static Handler getInstance() {
         synchronized (Handler.class) {
@@ -49,8 +56,8 @@ public class Handler {
         this.game = game;
     }
 
-    public ModePlayer getModePlayer() {
-        return modePlayer;
+    public ServerPlayer getServerPlayer() {
+        return serverPlayer;
     }
 
     public ModeViewer getModeViewer() {
@@ -61,8 +68,8 @@ public class Handler {
         return clientLogin;
     }
 
-    public void setModePlayer(ModePlayer modePlayer) {
-        this.modePlayer = modePlayer;
+    public void setServerPlayer(ServerPlayer serverPlayer) {
+        this.serverPlayer = serverPlayer;
     }
 
     public void setModeViewer(ModeViewer modeViewer) {
@@ -71,5 +78,29 @@ public class Handler {
 
     public void setClientLogin(ClientLogin clientLogin) {
         this.clientLogin = clientLogin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ClientPlayer getClientPlayer() {
+        return clientPlayer;
+    }
+
+    public void setClientPlayer(ClientPlayer clientPlayer) {
+        this.clientPlayer = clientPlayer;
     }
 }

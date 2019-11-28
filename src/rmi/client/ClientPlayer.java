@@ -1,16 +1,22 @@
 package rmi.client;
 
 import constant.ModeType;
-import rmi.model.Mode;
+import main.Handler;
 import rmi.dataLogin.ConnectionData;
-import rmi.interfaces.RemoteInterfacePlayer;
+import rmi.implementation.ChoseTeamImpClient;
+import rmi.interfaces.RemoteInterfaceServer;
 import rmi.model.ModePlayer;
+import state.client.ChoseTeamServer;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
 public class ClientPlayer extends ModePlayer {
+
+    private ChoseTeamServer choseTeamServer;
+    private ChoseTeamImpClient choseTeamImpClient;
+    private String url;
 
     public ClientPlayer(ConnectionData connectionData) {
         super(connectionData);
@@ -19,13 +25,37 @@ public class ClientPlayer extends ModePlayer {
 
     public boolean connection() {
         try {
+
             registry = LocateRegistry.getRegistry(connectionData.getPort());
-            stub = (RemoteInterfacePlayer) registry.lookup("rmi://" + connectionData.getIp() + ":"
-                    + connectionData.getPort() + "/" + connectionData.getBindName());
+            url = "rmi://" + connectionData.getIp() + ":"
+                    + connectionData.getPort() + "/";
+            RemoteInterfaceServer stub = (RemoteInterfaceServer) registry.lookup(url + connectionData.getBindName());
+            choseTeamServer = (ChoseTeamServer) registry.lookup(url + "choseTeam");
+            choseTeamImpClient = new ChoseTeamImpClient(Handler.getInstance().getId(), choseTeamServer);
             return stub.hello();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public ChoseTeamServer getChoseTeamServer() {
+        return choseTeamServer;
+    }
+
+    public ChoseTeamImpClient getChoseTeamImpClient() {
+        return choseTeamImpClient;
+    }
+
+    public void setChoseTeamServer(ChoseTeamServer choseTeamServer) {
+        this.choseTeamServer = choseTeamServer;
+    }
+
+    public void setChoseTeamImpClient(ChoseTeamImpClient choseTeamImpClient) {
+        this.choseTeamImpClient = choseTeamImpClient;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

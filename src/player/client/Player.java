@@ -1,17 +1,17 @@
-package player;
+package player.client;
 
 import constant.DiceValue;
 import constant.HorseState;
 import constant.TeamType;
-import entity.changed.Dice;
-import entity.changed.Horse;
+import entity.changed.local.Dice;
+import entity.changed.local.Horse;
 import main.Handler;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerClient {
+public class Player {
 
     // ngựa của người chơi
     ArrayList<Horse> horses;
