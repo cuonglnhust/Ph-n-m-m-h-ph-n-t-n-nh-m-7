@@ -1,5 +1,6 @@
 package button;
 
+import Login.Login;
 import graphics.CreateImage;
 import main.Handler;
 
@@ -16,7 +17,12 @@ public class ButtonStart extends Button {
         if (isOver()) {
             if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
                 Handler.getInstance().getMouse().setDefaultClick();
-                JOptionPane.showMessageDialog(null, "Play game");
+                 Login login = new Login();
+                 login.setVisible(true);
+                 login.setTitle("Login form");
+                 login.setBounds(500,10,370,600);
+                 login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 login.setResizable(false);
             }
         }
     }

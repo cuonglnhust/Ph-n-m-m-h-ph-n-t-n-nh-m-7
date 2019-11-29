@@ -16,6 +16,7 @@ public class Handler {
     private ClientPlayer clientPlayer;
     private ModeViewer modeViewer;
     private ClientLogin clientLogin;
+
     private int id;
     private String name;
 

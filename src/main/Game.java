@@ -36,7 +36,7 @@ public class Game implements Runnable {
         display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
         CreateFont.create();
-        state = new ChoseTeamState();
+        state = new StartState();
         State.setCurrentState(state);
     }
 

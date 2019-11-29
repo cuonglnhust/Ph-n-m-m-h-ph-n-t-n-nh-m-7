@@ -7,4 +7,6 @@ public interface RemoteInterfaceLogin extends Remote {
 
     public void sendInvite(int playerId) throws RemoteException;
 
+
+
 }
