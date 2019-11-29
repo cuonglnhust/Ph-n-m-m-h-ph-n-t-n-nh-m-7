@@ -14,11 +14,13 @@ public class ClientImp extends UnicastRemoteObject implements IClient, Serializa
 
     private Player player;
 
-    private InetAddress ip = InetAddress.getLocalHost();
+    private InetAddress ip ;
 
     public ClientImp(Player player,IServer iServer) throws RemoteException, UnknownHostException {
 
         this.player = player;
+
+        ip = InetAddress.getLocalHost();
 
         iServer.registerClient(this.player.getPid(),this);
 
