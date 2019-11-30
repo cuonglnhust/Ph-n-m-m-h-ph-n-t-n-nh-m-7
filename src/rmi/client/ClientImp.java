@@ -1,7 +1,8 @@
 package rmi.client;
 
-import rmi.dataLogin.Player;
-import state.server.IServer;
+import SCCommon.IClient;
+import SCCommon.Player;
+import SCCommon.IServer;
 
 import java.io.Serializable;
 import java.net.InetAddress;

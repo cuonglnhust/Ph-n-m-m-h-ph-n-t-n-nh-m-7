@@ -1,8 +1,4 @@
-package state.server;
-
-import rmi.client.IClient;
-import rmi.dataLogin.Match;
-import rmi.dataLogin.Player;
+package SCCommon;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

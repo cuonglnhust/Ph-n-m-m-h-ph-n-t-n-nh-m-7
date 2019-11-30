@@ -1,4 +1,6 @@
-package rmi.dataLogin;
+package SCCommon;
+
+import SCCommon.Match;
 
 import java.io.Serializable;
 import java.util.List;

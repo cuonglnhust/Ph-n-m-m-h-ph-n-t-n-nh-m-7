@@ -87,16 +87,16 @@ public class Login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "hippocampus"));
+                ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "abc"));
                 Handler.getInstance().setClientLogin(clientLogin);
                 try {
-                    if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), passwordField.getPassword().toString())) {
+                    if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), String.copyValueOf(passwordField.getPassword()))) {
 
                         State.setCurrentState(new HomeState());
                         startState.getLogin().setVisible(false);
 
                     } else {
-                        JOptionPane.showMessageDialog(null,"Tài khoản không tồn tại");
+                        JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

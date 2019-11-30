@@ -29,8 +29,8 @@ public class HomeState extends State {
 
 
     public HomeState() {
-        updateMatchGraphicsElementList();
-        updatePlayerGraphicsElementList();
+//        updateMatchGraphicsElementList();
+//        updatePlayerGraphicsElementList();
         buttonHistory = new ButtonHistory(50, 621);
     }
 
@@ -59,9 +59,9 @@ public class HomeState extends State {
         // Trả lời thông báo
 
         // mời người chơi khác
-        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
-            playerGraphicsElement.tick();
-        }
+//        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+//            playerGraphicsElement.tick();
+//        }
     }
 
     @Override
@@ -73,13 +73,13 @@ public class HomeState extends State {
         buttonHistory.render(g);
 
 
-        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
-            matchGraphicsElement.render(g);
-        }
-
-        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
-            playerGraphicsElement.render(g);
-        }
+//        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
+//            matchGraphicsElement.render(g);
+//        }
+//
+//        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+//            playerGraphicsElement.render(g);
+//        }
 
     }
 

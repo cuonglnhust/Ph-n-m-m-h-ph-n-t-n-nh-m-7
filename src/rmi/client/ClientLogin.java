@@ -1,26 +1,23 @@
 package rmi.client;
 
-import Login.Login;
+import SCCommon.Player;
 import constant.ModeType;
 import main.Handler;
-import player.client.Player;
-import rmi.implementation.ChoseTeamImpClient;
 import rmi.implementation.SendIdPlayerImp;
-import rmi.interfaces.RemoteInterfaceServer;
 import rmi.model.Mode;
 import rmi.dataLogin.ConnectionData;
-import state.client.ChoseTeamServer;
-import state.server.IServer;
+import SCCommon.IServer;
 
+import java.net.MalformedURLException;
 import java.net.UnknownHostException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.sql.SQLException;
 
 public class ClientLogin extends Mode {
     private String url;
-    private rmi.dataLogin.Player GetPlayerServer;
+    private Player GetPlayerServer;
     //private IServer iServer;
     private SendIdPlayerImp sendIdPlayerImp;
 
@@ -32,25 +29,26 @@ public class ClientLogin extends Mode {
     public boolean connection(String UserName, String Password) throws SQLException {
         try {
 
-            registry = LocateRegistry.getRegistry(connectionData.getPort());
+            //registry = LocateRegistry.getRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":"
                     + connectionData.getPort() + "/";
-            IServer stub = (IServer) registry.lookup(url + connectionData.getBindName());
+            IServer stub = (IServer) Naming.lookup(url + connectionData.getBindName());
             GetPlayerServer = stub.signIn(UserName,Password);
             if (GetPlayerServer != null)
             {
                 Handler.getInstance().setId(GetPlayerServer.getPid());
                 Handler.getInstance().setName(GetPlayerServer.getPname());
+                sendIdPlayerImp = new SendIdPlayerImp(GetPlayerServer,stub);
                 return  true;
 
             }
-            IServer sigin = (IServer) registry.lookup(url + connectionData.getBindName());
-            sendIdPlayerImp = new SendIdPlayerImp(GetPlayerServer,sigin);
+            //IServer sigin = (IServer) registry.lookup(url + connectionData.getBindName());
+
 
 
 
             return false;
-        } catch (RemoteException | NotBoundException | UnknownHostException e) {
+        } catch (RemoteException | NotBoundException | UnknownHostException | MalformedURLException e) {
             e.printStackTrace();
             return false;
         }
@@ -60,6 +58,6 @@ public class ClientLogin extends Mode {
     public String getUrl() {
         return url;
     }
-    public  rmi.dataLogin.Player getPlayer() {return GetPlayerServer;}
+    public Player getPlayer() {return GetPlayerServer;}
 
 }

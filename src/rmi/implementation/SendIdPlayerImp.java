@@ -1,21 +1,51 @@
 package rmi.implementation;
 
-import rmi.client.IClient;
-import rmi.dataLogin.Player;
+import SCCommon.IClient;
+import SCCommon.Player;
 import rmi.interfaces.SenIdPlayer;
-import state.server.IServer;
+import SCCommon.IServer;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class SendIdPlayerImp extends UnicastRemoteObject implements SenIdPlayer, Serializable {
+public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Serializable {
 
     private Player player;
 
+    private InetAddress clientIp ;
+
     public SendIdPlayerImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
+
         this.player = player;
-        iServer.registerClient(this.player.getPid(), (IClient) this);
+        clientIp = InetAddress.getLocalHost();
+
+        iServer.registerClient(this.player.getPid(), this);
+
+        String msg =  player.getPname() + " have ip : " + this.clientIp.toString() + " connected !";
+
+        iServer.msgToServer(msg);
+    }
+
+    @Override
+    public boolean responseInvitation(IClient iClient) throws RemoteException {
+        return false;
+    }
+
+    @Override
+    public String retrieveIp(String player1Ip) throws RemoteException {
+        return player1Ip;
+    }
+
+    @Override
+    public String getIpAddress() throws RemoteException {
+        return clientIp.toString();
+    }
+
+    @Override
+    public Player getPlayer() throws RemoteException {
+        return player;
     }
 }
