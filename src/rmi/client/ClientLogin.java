@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class ClientLogin extends Mode {
     private String url;
     private Player GetPlayerServer;
-    //private IServer iServer;
+    private IServer iServer;
     private SendIdPlayerImp sendIdPlayerImp;
 
     public ClientLogin(ConnectionData connectionData) {
@@ -32,20 +32,15 @@ public class ClientLogin extends Mode {
             //registry = LocateRegistry.getRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":"
                     + connectionData.getPort() + "/";
-            IServer stub = (IServer) Naming.lookup(url + connectionData.getBindName());
-            GetPlayerServer = stub.signIn(UserName,Password);
-            if (GetPlayerServer != null)
-            {
+            iServer = (IServer) Naming.lookup(url + connectionData.getBindName());
+            GetPlayerServer = iServer.signIn(UserName, Password);
+            if (GetPlayerServer != null) {
                 Handler.getInstance().setId(GetPlayerServer.getPid());
                 Handler.getInstance().setName(GetPlayerServer.getPname());
-                sendIdPlayerImp = new SendIdPlayerImp(GetPlayerServer,stub);
-                return  true;
+                sendIdPlayerImp = new SendIdPlayerImp(GetPlayerServer, iServer);
+                return true;
 
             }
-            //IServer sigin = (IServer) registry.lookup(url + connectionData.getBindName());
-
-
-
 
             return false;
         } catch (RemoteException | NotBoundException | UnknownHostException | MalformedURLException e) {
@@ -58,6 +53,12 @@ public class ClientLogin extends Mode {
     public String getUrl() {
         return url;
     }
-    public Player getPlayer() {return GetPlayerServer;}
 
+    public Player getPlayer() {
+        return GetPlayerServer;
+    }
+
+    public IServer getiServer() {
+        return iServer;
+    }
 }

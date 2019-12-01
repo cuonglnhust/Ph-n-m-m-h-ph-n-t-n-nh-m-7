@@ -6,10 +6,21 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Player implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private int pid;
     private String pname;
     private String username;
     private String password;
+
+    public Player() {
+    }
+
+    public Player(int pid, String pname) {
+        this.pid = pid;
+        this.pname = pname;
+    }
 
     private List<Match> matches;
 

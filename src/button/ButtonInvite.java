@@ -1,25 +1,64 @@
 package button;
 
+import SCCommon.Player;
 import graphics.CreateImage;
+import list.data.PlayerDataElement;
 import main.Handler;
 
+import javax.swing.*;
 import java.awt.*;
+import java.rmi.RemoteException;
 
 public class ButtonInvite extends Button {
 
-    OnClickButton onClickButton;
+    // OnClickButton onClickButton;
+    private PlayerDataElement player2;
 
-    public ButtonInvite(int x, int y) {
+    private PlayerDataElement player1;
+
+    public ButtonInvite(int x, int y, PlayerDataElement player2,PlayerDataElement player1) {
         super(x, y);
+        this.player1 = player1;
+        this.player2 = player2;
     }
 
     public void tick() {
         if (isOver()) {
             if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
                 Handler.getInstance().getMouse().setDefaultClick();
-                if (onClickButton != null) {
-                    onClickButton.onClick();
+//                if (onClickButton != null) {
+//                    onClickButton.onClick();
+//                }
+
+                JDialog jd = new JDialog(Handler.getInstance().getGame().getDisplay().getjFrame(),"Invitation !");
+                JLabel l = new JLabel("             Bạn vừa mời " +
+                        this.player2.getPlayerName().toUpperCase() + " chơi cùng !");
+
+                jd.add(l);
+                jd.setLocation(jd.getParent().getWidth() / 2 - jd.getWidth() / 2, jd.getParent().getHeight() / 2 - jd.getHeight() / 2);
+                jd.setSize(265, 100);
+
+                jd.setVisible(true);
+
+                try {
+                    if(Handler.getInstance().getClientLogin().getiServer().
+                            sendInvitation(new Player(this.player1.getIdPlayer(),this.player1.getPlayerName()),
+                                    new Player(this.player2.getIdPlayer(),this.player2.getPlayerName()))){
+
+                        // neu true thi la player2 dong y choi va chuyen sang man hinh chon doi
+
+                    }
+
+                } catch (RemoteException e) {
+                    e.printStackTrace();
                 }
+
+
+//                JOptionPane.showMessageDialog(null, "Bạn vừa mời " +
+//                        this.player2.getPlayerName().toUpperCase() + " chơi cùng ! ");
+
+                System.out.println("bạn có id là " + this.player1.getIdPlayer() + " vừa mời người chơi có id là : " +
+                                                        this.player2.getIdPlayer());
 
             }
         }
@@ -41,7 +80,10 @@ public class ButtonInvite extends Button {
         return new Rectangle(x, y, width, height);
     }
 
-    public void setOnClickButton(OnClickButton onClickButton) {
-        this.onClickButton = onClickButton;
-    }
+
+
+    //    public void setOnClickButton(OnClickButton onClickButton) {
+//        this.onClickButton = onClickButton;
+//    }
+
 }

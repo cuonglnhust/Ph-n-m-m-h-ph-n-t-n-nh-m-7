@@ -1,5 +1,6 @@
 package state;
 
+import SCCommon.Player;
 import button.ButtonHistory;
 import graphics.CreateFont;
 import graphics.CreateImage;
@@ -13,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +31,8 @@ public class HomeState extends State {
 
 
     public HomeState() {
-//        updateMatchGraphicsElementList();
-//        updatePlayerGraphicsElementList();
+ //      updateMatchGraphicsElementList();
+       updatePlayerGraphicsElementList();
         buttonHistory = new ButtonHistory(50, 621);
     }
 
@@ -43,9 +45,27 @@ public class HomeState extends State {
     }
 
     private void updatePlayerGraphicsElementList() {
+
         playerGraphicsElementList = new ArrayList<>();
+        playerDataElementList = new ArrayList<>();
+        try {
+            List<Player> players = Handler.getInstance().getClientLogin().getiServer().getPlayersOnline(
+                                        new Player(Handler.getInstance().getId(),Handler.getInstance().getName()));
+            System.out.println("số người đang online là : "+players.size());
+            for (Player player : players){
+
+                PlayerDataElement playerDataElement = new PlayerDataElement();
+                playerDataElement.setIdPlayer(player.getPid());
+                playerDataElement.setPlayerName(player.getPname());
+
+                playerDataElementList.add(playerDataElement);
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < playerDataElementList.size(); i++) {
-            playerGraphicsElementList.add(new PlayerGraphicsElement(i, playerDataElementList.get(i)));
+            PlayerGraphicsElement playerGraphicsElement = new PlayerGraphicsElement(i, playerDataElementList.get(i));
+            playerGraphicsElementList.add(playerGraphicsElement);
         }
     }
 
@@ -77,9 +97,9 @@ public class HomeState extends State {
 //            matchGraphicsElement.render(g);
 //        }
 //
-//        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
-//            playerGraphicsElement.render(g);
-//        }
+        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+            playerGraphicsElement.render(g);
+        }
 
     }
 

@@ -5,6 +5,7 @@ import SCCommon.Player;
 import rmi.interfaces.SenIdPlayer;
 import SCCommon.IServer;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -31,7 +32,17 @@ public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Ser
 
     @Override
     public boolean responseInvitation(IClient iClient) throws RemoteException {
-        return false;
+
+        if (JOptionPane.showConfirmDialog(null, iClient.getPlayer().getPname().toUpperCase()+
+                        " vừa mời bạn chơi cùng, Bạn có muốn chơi với " + iClient.getPlayer().getPname().toUpperCase()+ " ?", "Accept Invitation",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null,"Bạn đã chấp nhận chơi với " +
+                    iClient.getPlayer().getPname().toUpperCase()+ ", vui lòng đợi phòng được tạo");
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
