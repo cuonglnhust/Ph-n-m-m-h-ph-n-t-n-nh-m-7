@@ -24,22 +24,32 @@ public class ServerImp extends UnicastRemoteObject implements IServer{
     }
 
     @Override
-    public void sendInvitation(Player player1, Player player2) throws RemoteException {
+    public boolean sendInvitation(Player player1, Player player2) throws RemoteException {
 
-        if (playerOnline.get(player2.getPid()).                             // client2 gửi trả lời invite
-                responseInvitation(playerOnline.get(player1.getPid()))) {
-            playerOnline.get(player2.getPid()).
-                    retrieveIp(playerOnline.get(player1.getPid()).getIpAddress()); // client2 lấy ipaddress của client1
-            System.out.println(player2.getPname() + "đã có chấp nhận lời mời của bạn !");
-            Match match = new Match();
-            List<Player> players = new ArrayList<>();
-            players.add(player1);
-            players.add(player2);
-            match.setPlayers(players);
-            matches.add(match);
-        } else {
-            System.out.println("Play : " + player2.getPname() + "Từ chối chơi với bạn !");
+        if(playerOnline.get(player2.getPid()).responseInvitation(playerOnline.get(player1.getPid()))){
+
+            return true;
+        }else {
+            return false;
         }
+
+
+
+//        if (playerOnline.get(player2.getPid()).                             // client2 gửi trả lời invite
+//                responseInvitation(playerOnline.get(player1.getPid()))) {
+//            playerOnline.get(player2.getPid()).
+//                    retrieveIp(playerOnline.get(player1.getPid()).getIpAddress()); // client2 lấy ipaddress của client1
+//            System.out.println(player2.getPname() + "đã có chấp nhận lời mời của bạn !");
+//            Match match = new Match();
+//            List<Player> players = new ArrayList<>();
+//            players.add(player1);
+//            players.add(player2);
+//            match.setPlayers(players);
+//            matches.add(match);
+//
+//        } else {
+//            System.out.println("Play : " + player2.getPname() + "Từ chối chơi với bạn !");
+//        }
 
     }
 

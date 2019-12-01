@@ -9,7 +9,7 @@ public interface IServer extends Remote {
 
  //   List<Integer> senIdMatch(List<Match> listMatch) throws  RemoteException; //  gửi list id của match đang có người chơi.
 
-    void sendInvitation(Player player1, Player player2) throws RemoteException;  // player1 gửi lời mời sang player2
+    boolean sendInvitation(Player player1, Player player2) throws RemoteException;  // player1 gửi lời mời sang player2
 
     Player signIn(String username, String password) throws RemoteException, SQLException; // đăng nhập
 

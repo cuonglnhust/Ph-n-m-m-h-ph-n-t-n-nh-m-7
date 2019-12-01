@@ -4,12 +4,24 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Player implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private int pid;
     private String pname;
     private String username;
     private String password;
 
     private List<Match> matches;
+
+    public Player() {
+    }
+
+
+    public Player(int pid, String pname) {
+        this.pid = pid;
+        this.pname = pname;
+    }
 
     public int getPid() {
         return pid;
