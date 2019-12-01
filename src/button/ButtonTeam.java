@@ -18,7 +18,7 @@ public class ButtonTeam extends Button {
 
     private BufferedImage team;
     private boolean isChose;
-    private boolean cantChose;
+    private boolean canChose;
     private TextGraphicsElement text;
     private TeamType teamType;
     private ChoseTeamState choseTeamState;
@@ -30,7 +30,7 @@ public class ButtonTeam extends Button {
                 y + getBound().height, "BLACKR");
         this.teamType = teamType;
         this.choseTeamState = choseTeamState;
-        this.cantChose = true;
+        this.canChose = true;
         this.id = -1;
         this.name = "";
     }
@@ -40,7 +40,7 @@ public class ButtonTeam extends Button {
             // nếu click
             if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
                 // nếu chưa bị đội khác chọn mất (có thể chọn)
-                if (cantChose) {
+                if (canChose) {
                     // nếu chưa chọn ô nào
                     if (choseTeamState.getChoseTeam() == TeamType.NONE) {
                         Handler.getInstance().getMouse().setDefaultClick();
@@ -48,6 +48,8 @@ public class ButtonTeam extends Button {
                         isChose = true;
                         // trạng thái người chơi là đã chọn đội màu teamtype
                         choseTeamState.setChoseTeam(teamType);
+                        // cập nhật id cho nút
+                        id = Handler.getInstance().getId();
                         // nếu là Player thì cập nhật lên Server
                         if (Handler.getInstance().getClientPlayer() != null) {
                             try {
@@ -62,7 +64,7 @@ public class ButtonTeam extends Button {
                         else if (Handler.getInstance().getServerPlayer() != null) {
                             try {
                                 System.out.println("Server Click");
-                                Handler.getInstance().getServerPlayer().getChoseTeamImpServer()
+                                Handler.getInstance().getServerPlayer().getChoseTeamServerImp()
                                         .broadcastChose(Handler.getInstance().getId(), Handler.getInstance().getName(), teamType);
                             } catch (RemoteException e) {
                                 e.printStackTrace();
@@ -70,31 +72,31 @@ public class ButtonTeam extends Button {
                         }
                     }
                     // nếu đã chọn một nút rồi và muốn bỏ chọn
-                    else if (choseTeamState.getChoseTeam() == teamType) {
-                        Handler.getInstance().getMouse().setDefaultClick();
-                        // chuyển trạng thái người chơi chưa chọn đội
-                        choseTeamState.setChoseTeam(TeamType.NONE);
-                        // chuyển trạng thái của nút thành chưa được chọn
-                        isChose = false;
-                        // nếu là Player thì cập nhật lên Server
-                        if (Handler.getInstance().getClientPlayer() != null) {
-                            try {
-                                Handler.getInstance().getClientPlayer().getChoseTeamServer()
-                                        .cancelChoseTeam(Handler.getInstance().getId(), Handler.getInstance().getName(), teamType);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        // nếu là Server thì broadcast cho các Client
-                        else if (Handler.getInstance().getServerPlayer() != null) {
-                            try {
-                                Handler.getInstance().getServerPlayer().getChoseTeamImpServer()
-                                        .broadcastCancel(Handler.getInstance().getId(), Handler.getInstance().getName(), teamType);
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
+//                    else if (choseTeamState.getChoseTeam() == teamType) {
+//                        Handler.getInstance().getMouse().setDefaultClick();
+//                        // chuyển trạng thái người chơi chưa chọn đội
+//                        choseTeamState.setChoseTeam(TeamType.NONE);
+//                        // chuyển trạng thái của nút thành chưa được chọn
+//                        isChose = false;
+//                        // nếu là Player thì cập nhật lên Server
+//                        if (Handler.getInstance().getClientPlayer() != null) {
+//                            try {
+//                                Handler.getInstance().getClientPlayer().getChoseTeamServer()
+//                                        .cancelChoseTeam(Handler.getInstance().getId(), Handler.getInstance().getName(), teamType);
+//                            } catch (RemoteException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        // nếu là Server thì broadcast cho các Client
+//                        else if (Handler.getInstance().getServerPlayer() != null) {
+//                            try {
+//                                Handler.getInstance().getServerPlayer().getChoseTeamServerImp()
+//                                        .broadcastCancel(Handler.getInstance().getId(), Handler.getInstance().getName(), teamType);
+//                            } catch (RemoteException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
                 }
             }
         }
@@ -107,7 +109,7 @@ public class ButtonTeam extends Button {
             g.setColor(new Color(145, 143, 135, 90));
             g.fillRect(getBound().x, getBound().y, getBound().width, getBound().height);
         }
-        if (isChose || !cantChose) {
+        if (isChose || !canChose) {
             g.setColor(new Color(145, 143, 135, 90));
             g.fillRect(getBound().x, getBound().y, getBound().width, getBound().height);
             text.render(g);
@@ -121,8 +123,8 @@ public class ButtonTeam extends Button {
         return new Rectangle(x, y, width, height);
     }
 
-    public void setCantChose(boolean cantChose) {
-        this.cantChose = cantChose;
+    public void setCanChose(boolean canChose) {
+        this.canChose = canChose;
     }
 
     public void setName(String name) {
@@ -154,8 +156,8 @@ public class ButtonTeam extends Button {
         return isChose;
     }
 
-    public boolean isCantChose() {
-        return cantChose;
+    public boolean isCanChose() {
+        return canChose;
     }
 
     public TeamType getTeamType() {

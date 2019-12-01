@@ -1,24 +1,32 @@
-package entity.changed.local;
+package entity.changed.remote;
 
 import constant.TeamType;
 import entity.unchanged.Rank;
 import graphics.Constant;
 import graphics.CreateImage;
 import main.Handler;
-import player.local.Player;
+import map.EntitySize;
 
 import java.awt.*;
 
-public class HorseBlue extends Horse {
+public class HorseCopyBlue extends HorseCopy {
 
-    public HorseBlue(int id, int x, int y, Player player) {
-        super(id, x, y, player);
+    public HorseCopyBlue(int id, int x, int y) {
+        super(id, x, y);
         team = TeamType.TEAM_BLUE;
     }
 
     @Override
-    protected void setEntity() {
+    public void setEntity() {
         entity = CreateImage.blueHorse;
+    }
+
+
+    @Override
+    public void updateRankGraphics() {
+        Rank rank = Handler.getInstance().getMapTemp().getBlueTeam().getRanks().get(this.rank - 1);
+        x = rank.getX() + 25;
+        y = rank.getY() + OFFSET;
     }
 
     @Override
@@ -27,24 +35,15 @@ public class HorseBlue extends Horse {
         x = point.x;
         y = point.y;
         this.position = -1;
-        player.getOnCourt().remove(this.id);
-    }
-
-    @Override
-    protected void updateRankGraphics() {
-        Rank rank = Handler.getInstance().getMapTemp().getBlueTeam().getRanks().get(this.rank - 1);
-        x = rank.getX() + 25;
-        y = rank.getY() + OFFSET;
     }
 
     @Override
     public void render(Graphics g) {
         if (position >= 13 && position <= 41) {
             entity = CreateImage.blueHorseFlip;
-        }else if (rank != 0){
+        } else if (rank != 0) {
             entity = CreateImage.blueHorseRank;
-        }
-        else entity = CreateImage.blueHorse;
+        } else entity = CreateImage.blueHorse;
         super.render(g);
     }
 }

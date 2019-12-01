@@ -2,7 +2,6 @@ package rmi.model;
 
 import constant.ModeType;
 import rmi.dataLogin.ConnectionData;
-import rmi.interfaces.RemoteInterfaceClient;
 
 import java.rmi.registry.Registry;
 

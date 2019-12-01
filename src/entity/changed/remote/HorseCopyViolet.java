@@ -1,4 +1,4 @@
-package entity.changed.local;
+package entity.changed.remote;
 
 import constant.TeamType;
 import entity.unchanged.Rank;
@@ -6,19 +6,17 @@ import graphics.Constant;
 import graphics.CreateImage;
 import main.Handler;
 import map.EntitySize;
-import player.local.Player;
 
 import java.awt.*;
 
-public class HorseViolet extends Horse {
+public class HorseCopyViolet extends HorseCopy {
 
-    public HorseViolet(int id, int x, int y, Player player) {
-        super(id, x, y, player);
+    public HorseCopyViolet(int id, int x, int y) {
+        super(id, x, y);
         team = TeamType.TEAM_VIOLET;
     }
 
-    @Override
-    protected void setEntity() {
+    public void setEntity() {
         entity = CreateImage.violetHorse;
     }
 
@@ -28,11 +26,10 @@ public class HorseViolet extends Horse {
         x = point.x;
         y = point.y;
         this.position = -1;
-        player.getOnCourt().remove(this.id);
     }
 
     @Override
-    protected void updateRankGraphics() {
+    public void updateRankGraphics() {
         Rank rank = Handler.getInstance().getMapTemp().getVioletTeam().getRanks().get(this.rank - 1);
         x = rank.getX();
         y = rank.getY() + 25 + OFFSET;
@@ -49,6 +46,7 @@ public class HorseViolet extends Horse {
         } else {
             entity = CreateImage.violetHorse;
         }
+        super.render(g);
         super.render(g);
     }
 }

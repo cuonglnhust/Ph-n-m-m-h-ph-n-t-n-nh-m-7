@@ -9,9 +9,10 @@ import graphics.Constant;
 import main.Handler;
 import map.EntitySize;
 import mouse.Mouse;
-import player.client.Player;
+import player.local.Player;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 
 // ngựa
 public class Horse extends Entity {
@@ -52,25 +53,28 @@ public class Horse extends Entity {
     }
 
     // khởi tạo graphics Horse theo team
-    protected void setEntity() {
-    }
+    protected void setEntity() {}
 
     // xuất quân
     private void starting() {
         // nếu vị trí xuất quân không có ngựa
-        if (Handler.getInstance().getMap().
+        if (Handler.getInstance().getMapTemp().
                 getVirtualMap()[Constant.teamFirstPoint.get(team)] == TeamType.NONE) {
             startingUpdate();
-            // cập nhật vị trí cho map
-            Handler.getInstance().getMap().updateVirtualMap(position, team);
+            // cập nhật vị trí cho map và quảng bá
+            Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, team);
             turn = true;
-        } else if (Handler.getInstance().getMap().
+        } else if (Handler.getInstance().getMapTemp().
                 getVirtualMap()[Constant.teamFirstPoint.get(team)] != team) {
+
             startingUpdate();
+
             // lấy Player có ngựa bị đá và cập nhật
-            Handler.getInstance().getMap().kickAss(position);
-            Handler.getInstance().getMap().updateVirtualMap(position, team);
+            Handler.getInstance().getMapTemp().kickAss(position);
+
+            Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, team);
             turn = true;
+
         }
 
     }
@@ -136,7 +140,7 @@ public class Horse extends Entity {
             else {
                 if (diceValue == DiceValue.SIX) {
                     // nếu vị trí xuất quân hiện tại không có ngựa nào của mình
-                    if (Handler.getInstance().getMap().getVirtualMap()[Constant.teamFirstPoint.get(team)] != team) {
+                    if (Handler.getInstance().getMapTemp().getVirtualMap()[Constant.teamFirstPoint.get(team)] != team) {
                         horseState = HorseState.START;
                     } else horseState = HorseState.CANT_MOVE;
                 } else
@@ -165,11 +169,13 @@ public class Horse extends Entity {
 
     // di chuyển ngựa
     private void run() {
-        Handler.getInstance().getMap().updateVirtualMapNone(position);
+        Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, TeamType.NONE);
         position = checkResult;
-        this.setX(Handler.getInstance().getMap().getMapGraphics().get(position).getX());
-        this.setY(Handler.getInstance().getMap().getMapGraphics().get(position).getY());
-        Handler.getInstance().getMap().updateVirtualMap(position, team);
+        this.setX(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getX());
+        this.setY(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getY());
+        // quảng bá di chuyển
+        broadcastHorse();
+        Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, team);
         turn = true;
     }
 
@@ -178,8 +184,9 @@ public class Horse extends Entity {
         int last = -(checkResult + 1);
         kickAss(last);
         position = last;
-        this.setX(Handler.getInstance().getMap().getMapGraphics().get(position).getX());
-        this.setY(Handler.getInstance().getMap().getMapGraphics().get(position).getY());
+        this.setX(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getX());
+        this.setY(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getY());
+        broadcastHorse();
         turn = true;
     }
 
@@ -189,15 +196,16 @@ public class Horse extends Entity {
         updateRankGraphics();
         if (position != -1) {
             player.getOnCourt().remove(id);
-            Handler.getInstance().getMap().updateVirtualMapNone(position);
+            Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, TeamType.NONE);
             position = -1;
         }
         player.getOnRank().put(rank, this);
+        // quảng bá di chuyển
+        broadcastHorse();
         turn = true;
     }
 
-    protected void updateRankGraphics() {
-    }
+    protected void updateRankGraphics() {}
 
     /*
     Check xem trên đường đi có ngựa khác hay không
@@ -226,11 +234,10 @@ public class Horse extends Entity {
         }
     }
 
-
     // check ngựa trên đường trong TH first < last < 56
     private int isBlock1(int first, int last) {
         for (int i = first + 1; i <= last; i++) {
-            if (Handler.getInstance().getMap().getVirtualMap()[i] != TeamType.NONE) {
+            if (Handler.getInstance().getMapTemp().getVirtualMap()[i] != TeamType.NONE) {
                 if (i == last) {
                     // ô last đang có ngựa
                     return 1;
@@ -249,14 +256,14 @@ public class Horse extends Entity {
 
         // xét nửa đoạn đường đầu
         for (int i = first + 1; i < 56; i++) {
-            if (Handler.getInstance().getMap().getVirtualMap()[i] != TeamType.NONE) {
+            if (Handler.getInstance().getMapTemp().getVirtualMap()[i] != TeamType.NONE) {
                 return -1;
             }
         }
 
         // xét nửa đoạn sau
         for (int i = 0; i <= last; i++) {
-            if (Handler.getInstance().getMap().getVirtualMap()[i] != TeamType.NONE) {
+            if (Handler.getInstance().getMapTemp().getVirtualMap()[i] != TeamType.NONE) {
                 if (i == last) {
                     return 1;
                 }
@@ -274,7 +281,7 @@ public class Horse extends Entity {
             case 1:
                 // check xem ô last là ngựa gì
                 // cùng màu
-                if (Handler.getInstance().getMap().getVirtualMap()[lastPosition] == team) {
+                if (Handler.getInstance().getMapTemp().getVirtualMap()[lastPosition] == team) {
                     return CANT_MOVE;
                 }
                 return -(lastPosition + 1);
@@ -284,13 +291,57 @@ public class Horse extends Entity {
     }
 
     // cập nhật lại vị trí khi bị đá
-    public void isKickedAss() {
-    }
+    public void isKickedAss() {}
 
     private void kickAss(int last) {
-        Handler.getInstance().getMap().updateVirtualMapNone(position);
-        Handler.getInstance().getMap().kickAss(last);
-        Handler.getInstance().getMap().updateVirtualMap(last, team);
+        Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, TeamType.NONE);
+
+        Handler.getInstance().getMapTemp().kickAss(last);
+
+        Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(last, team);
+    }
+
+    // cập nhật vị trí cho ngựa
+    private void startingUpdate() {
+        Step step = Handler.getInstance().getMapTemp().getMapGraphics().get(Constant.teamFirstPoint.get(team));
+        x = step.getX();
+        y = step.getY();
+        position = Constant.teamFirstPoint.get(team);
+        // quảng bá di chuyển
+        broadcastHorse();
+    }
+
+    private void broadcastHorse() {
+        if (Handler.getInstance().getClientPlayer() != null) {
+            try {
+                Handler.getInstance().getClientPlayer().getPlayGameServer().
+                        updateHorse(Handler.getInstance().getId(), this.id, position, rank);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else if (Handler.getInstance().getServerPlayer() != null) {
+            try {
+                Handler.getInstance().getServerPlayer().getPlayGameServerImp().
+                        updateHorseFromServer(Handler.getInstance().getId(), this.id, position, rank);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void printHorse() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Team : ")
+                .append(team)
+                .append(" Horse : " + id)
+                .append("Position : " + position)
+                .append("State : " + horseState)
+        ;
+        System.out.println(stringBuffer.toString());
+    }
+
+    public HorseState getHorseState() {
+        return horseState;
     }
 
     public int getPosition() {
@@ -307,27 +358,5 @@ public class Horse extends Entity {
 
     public int getId() {
         return id;
-    }
-
-    private void startingUpdate() {
-        Step step = Handler.getInstance().getMap().getMapGraphics().get(Constant.teamFirstPoint.get(team));
-        x = step.getX();
-        y = step.getY();
-        position = Constant.teamFirstPoint.get(team);
-    }
-
-    public void printHorse() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Team : ")
-                .append(team)
-                .append(" Horse : " + id)
-                .append("Position : " + position)
-                .append("State : " + horseState)
-        ;
-        System.out.println(stringBuffer.toString());
-    }
-
-    public HorseState getHorseState() {
-        return horseState;
     }
 }

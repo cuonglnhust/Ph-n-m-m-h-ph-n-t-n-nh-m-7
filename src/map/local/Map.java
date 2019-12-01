@@ -5,7 +5,7 @@ import constant.TeamType;
 import entity.changed.local.Horse;
 import entity.unchanged.Step;
 import graphics.Constant;
-import player.client.*;
+import player.local.*;
 import teamGraphics.Blue;
 import teamGraphics.Orange;
 import teamGraphics.Red;
@@ -90,13 +90,8 @@ public class Map {
 
     }
 
-    public HashMap<Integer, Step> getMapGraphics() {
-        return mapGraphics;
-    }
 
-    public TeamType[] getVirtualMap() {
-        return virtualMap;
-    }
+
 
     public void kickAss(int position) {
         System.out.println("Map - kickAss position : " + position);
@@ -192,4 +187,13 @@ public class Map {
     public Violet getVioletTeam() {
         return violetTeam;
     }
+
+    public HashMap<Integer, Step> getMapGraphics() {
+        return mapGraphics;
+    }
+
+    public TeamType[] getVirtualMap() {
+        return virtualMap;
+    }
+
 }

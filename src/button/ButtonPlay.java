@@ -1,12 +1,8 @@
 package button;
 
-import entity.Entity;
 import graphics.CreateImage;
 import main.Handler;
-import map.EntitySize;
 import state.ChoseTeamState;
-import state.GameState;
-import state.State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,46 +25,70 @@ public class ButtonPlay extends Button {
                 isClicked = true;
                 // nếu là Client
                 if (Handler.getInstance().getClientPlayer() != null) {
+
                     try {
-                        // kiểm tra các client khác đã sẵn sàng chưa
-                        boolean ready = Handler.getInstance().getClientPlayer().getChoseTeamServer()
-                                .messageReady(Handler.getInstance().getId());
-                        // nếu tất cả client đã sẵn sàng
-                        if (ready) {
-                            // kiểm tra xem server đã sẵn sàng chưa
-                            boolean serverReady = Handler.getInstance().getClientPlayer().getChoseTeamServer()
-                                    .serverReady();
-                            // nếu đã sẵn sàng
-                            if (serverReady) {
-                                // mở khóa cho server
-                                Handler.getInstance().getClientPlayer().getChoseTeamServer().unlockServer();
-                                choseTeamState.changeState();
+                        // nếu đủ số đội chơi click chọn
+                        if (choseTeamState.buttonClickCount() == Handler.getInstance().getPlayerCount()) {
+                            // kiểm tra các client khác đã sẵn sàng chưa
+                            boolean ready = Handler.getInstance().getClientPlayer().getChoseTeamServer()
+                                    .messageReady(Handler.getInstance().getId());
+                            // nếu tất cả client đã sẵn sàng
+                            if (ready) {
+                                // kiểm tra xem server đã sẵn sàng chưa
+                                boolean serverReady = Handler.getInstance().getClientPlayer().getChoseTeamServer()
+                                        .serverReady();
+                                // nếu đã sẵn sàng
+                                if (serverReady) {
+                                    // mở khóa cho server
+                                    Handler.getInstance().getClientPlayer().getChoseTeamServer().unlockServer();
+                                    choseTeamState.changeState();
+                                }
+                                // nếu chưa, thông báo cho server
+                                else {
+                                    Handler.getInstance().getClientPlayer().getChoseTeamServer().allReady(Handler.getInstance().getId());
+                                }
                             }
-                            // nếu chưa, thông báo cho server
+                            // nếu có client chưa sẵn sàng
                             else {
-                                Handler.getInstance().getClientPlayer().getChoseTeamServer().allReady(Handler.getInstance().getId());
+                                // mở hộp thoại
+                                choseTeamState.getDialogClientWait().setVisible(true);
                             }
                         }
-                        // nếu có client chưa sẵn sàng
+                        // nếu chưa đủ đội chọn, thông báo
                         else {
-                            // mở hộp thoại
-                            choseTeamState.getDialogClientWait().setVisible(true);
+                            JOptionPane.showMessageDialog(null,
+                                    "Others player have not aready chose their team. Please wait ... ",
+                                    "Message", JOptionPane.PLAIN_MESSAGE);
+                            Handler.getInstance().getMouse().setDefaultClick();
                         }
+
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                 }
                 // nếu là Server
                 if (Handler.getInstance().getServerPlayer() != null) {
-                    Handler.getInstance().getServerPlayer().getChoseTeamImpServer().setServerReady(true);
-                    // nếu các máy khác đã ready rồi
-                    System.out.println("Server need click Play");
-                    System.out.println(checkClientPlayerReady());
-                    // nếu có client chưa sẵn sàng
-                    if (!checkClientPlayerReady()) {
-                        // hiển thị thông báo
-                        choseTeamState.getDialogServerWait().setVisible(true);
+                    // nếu đủ số đội chơi click chọn đội
+                    if (choseTeamState.buttonClickCount() == Handler.getInstance().getPlayerCount()) {
+                        Handler.getInstance().getServerPlayer().getChoseTeamServerImp().setServerReady(true);
+                        // nếu các máy khác đã ready rồi
+                        System.out.println("Server need click Play");
+                        System.out.println(checkClientPlayerReady());
+                        // nếu có client chưa sẵn sàng
+                        if (!checkClientPlayerReady()) {
+                            // hiển thị thông báo
+                            choseTeamState.getDialogServerWait().setVisible(true);
+                        }
                     }
+                    // nếu không đủ
+                    else {
+                        JOptionPane.showMessageDialog(null,
+                                "Others player have not aready chose their team. Please wait ... ",
+                                "Message", JOptionPane.PLAIN_MESSAGE);
+                        Handler.getInstance().getMouse().setDefaultClick();
+                    }
+
+
                 }
             }
         }
@@ -77,8 +97,8 @@ public class ButtonPlay extends Button {
 
     // kiểm tra xem các Client khác đã vào hay chưa
     private boolean checkClientPlayerReady() {
-        return Handler.getInstance().getServerPlayer().getChoseTeamImpServer().getPlayerReady().size()
-                == Handler.getInstance().getServerPlayer().getChoseTeamImpServer().getClientHashMap().size();
+        return Handler.getInstance().getServerPlayer().getChoseTeamServerImp().getPlayerReady().size()
+                == Handler.getInstance().getServerPlayer().getChoseTeamServerImp().getClientHashMap().size();
     }
 
     @Override

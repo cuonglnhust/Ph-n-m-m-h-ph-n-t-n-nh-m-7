@@ -7,9 +7,7 @@ import list.constant.PlayerElementConstant;
 import list.caculate.PlayerCaculateElement;
 import list.data.PlayerDataElement;
 import main.Handler;
-import rmi.client.ClientPlayer;
 import rmi.dataLogin.ConnectionData;
-import rmi.server.ServerPlayer;
 import state.ChoseTeamState;
 import state.State;
 

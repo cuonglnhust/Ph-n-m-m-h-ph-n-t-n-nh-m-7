@@ -3,30 +3,31 @@ package state;
 import button.PlayerData;
 import main.Handler;
 import map.local.Map;
+import map.local.MapTemp;
 
 import java.awt.*;
 import java.util.List;
 
 public class GameState extends State {
 
-    private Map map;
-    private List<PlayerData> playerDataList;
+    private MapTemp mapTemp;
 
     public GameState(List<PlayerData> playerDataList) {
-        map = new Map();
-        Handler.getInstance().setMap(map);
-        this.playerDataList = playerDataList;
+        Handler.getInstance().getMouse().setDefaultClick();
+        mapTemp = new MapTemp(playerDataList);
+        Handler.getInstance().setMapTemp(mapTemp);
+
     }
 
 
     @Override
     public void tick() {
-        map.tick();
+        mapTemp.tick();
     }
 
     @Override
     public void render(Graphics g) {
-        map.render(g);
+        mapTemp.render(g);
     }
 
 

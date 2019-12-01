@@ -8,17 +8,12 @@ import graphics.CreateImage;
 import main.Handler;
 import rmi.client.ClientPlayer;
 import rmi.dataLogin.ConnectionData;
-import rmi.implementation.ChoseTeamImpClient;
-import rmi.implementation.ChoseTeamImpServer;
 import rmi.server.ServerPlayer;
-import state.client.ChoseTeamServer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +23,6 @@ public class ChoseTeamState extends State implements Remote {
     private ButtonPlay buttonPlay;
     private TeamType choseTeam;
     private JDialog dialogClientWait, dialogServerWait;
-    private boolean unlock;
 
     public ChoseTeamState() {
         blueTeam = new ButtonTeam(150, 240, CreateImage.blueBackground, TeamType.TEAM_BLUE, this);
@@ -45,7 +39,7 @@ public class ChoseTeamState extends State implements Remote {
         Handler.getInstance().setServerPlayer(modePlayer);
         if (Handler.getInstance().getServerPlayer().connection()) {
             System.out.println("Server OK");
-            Handler.getInstance().getServerPlayer().getChoseTeamImpServer().setChoseTeamState(this);
+            Handler.getInstance().getServerPlayer().getChoseTeamServerImp().setChoseTeamState(this);
             dialogServerWait = createWaitDialog("Others player are not ready. Please wait ... ", "Message");
 
         }
@@ -57,8 +51,14 @@ public class ChoseTeamState extends State implements Remote {
         Handler.getInstance().setClientPlayer(clientPlayer);
         if (Handler.getInstance().getClientPlayer().connection()) {
             System.out.println("Client connect");
-            Handler.getInstance().getClientPlayer().getChoseTeamImpClient().setChoseTeamState(this);
+            Handler.getInstance().getClientPlayer().getChoseTeamClientImp().setChoseTeamState(this);
             dialogClientWait = createWaitDialog("Please wait .... ", "Message");
+            try {
+                // lấy số người chơi trong trận
+                Handler.getInstance().setPlayerCount(Handler.getInstance().getClientPlayer().getChoseTeamServer().getPlayerCount());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -69,7 +69,7 @@ public class ChoseTeamState extends State implements Remote {
         // nếu click ok
         if (input == 0) {
             // chuyển trạng thái GameState
-            Handler.getInstance().getServerPlayer().getChoseTeamImpServer().setServerReady(true);
+            Handler.getInstance().getServerPlayer().getChoseTeamServerImp().setServerReady(true);
             this.changeState();
         }
     }
@@ -90,7 +90,7 @@ public class ChoseTeamState extends State implements Remote {
     private PlayerData createPlayerFromButton(ButtonTeam buttonTeam) {
         if (buttonTeam.isChose()) {
             return new PlayerData(buttonTeam.getId(), buttonTeam.getName(), buttonTeam.getTeamType(), true);
-        } else if (!buttonTeam.isCantChose()) {
+        } else if (!buttonTeam.isCanChose()) {
             return new PlayerData(buttonTeam.getId(), buttonTeam.getName(), buttonTeam.getTeamType(), false);
         } else return null;
     }
@@ -125,6 +125,16 @@ public class ChoseTeamState extends State implements Remote {
         orangeTeam.render(g);
         violetTeam.render(g);
         buttonPlay.render(g);
+    }
+
+    // số nút đã được chọn
+    public int buttonClickCount() {
+        int count = 0;
+        if (blueTeam.isChose() || !blueTeam.isCanChose()) count++;
+        if (redTeam.isChose() || !redTeam.isCanChose()) count++;
+        if (violetTeam.isChose() || !violetTeam.isCanChose()) count++;
+        if (orangeTeam.isChose() || !orangeTeam.isCanChose()) ++count;
+        return count;
     }
 
     public ButtonTeam getBlueTeam() {
@@ -166,4 +176,5 @@ public class ChoseTeamState extends State implements Remote {
     public JDialog getDialogServerWait() {
         return dialogServerWait;
     }
+
 }
