@@ -27,8 +27,9 @@ public class PlayerGraphicsElement {
                 PlayerElementConstant.TEXT_ELEMENT_WIDTH, PlayerElementConstant.TEXT_ELEMENT_HEIGHT,
                 playerDataElement.getPlayerName(), playerCaculateElement.getBottomLine(), CreateFont.homeFont);
         Point buttonInviteCoordinate = playerCaculateElement.getButtonInvite();
-        this.buttonInvite = new ButtonInvite(buttonInviteCoordinate.x, buttonInviteCoordinate.y);
-        this.buttonInvite.setOnClickButton(setOnClickButtonInvite());
+        this.buttonInvite = new ButtonInvite(buttonInviteCoordinate.x, buttonInviteCoordinate.y, playerDataElement,
+                    new PlayerDataElement(Handler.getInstance().getId(),Handler.getInstance().getName()));
+       // this.buttonInvite.setOnClickButton(setOnClickButtonInvite());
 
     }
 
@@ -64,5 +65,13 @@ public class PlayerGraphicsElement {
     public void render(Graphics g) {
         textGraphicsElement.render(g);
         buttonInvite.render(g);
+    }
+
+    public ButtonInvite getButtonInvite() {
+        return buttonInvite;
+    }
+
+    public void setButtonInvite(ButtonInvite buttonInvite) {
+        this.buttonInvite = buttonInvite;
     }
 }

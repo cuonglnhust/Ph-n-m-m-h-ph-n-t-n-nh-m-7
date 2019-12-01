@@ -1,22 +1,39 @@
 package button;
 
+import Login.Login;
 import graphics.CreateImage;
 import main.Handler;
+import state.StartState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class ButtonStart extends Button {
 
-    public ButtonStart(int x, int y) {
+    private StartState startState;
+
+    public ButtonStart(int x, int y,StartState startState) {
         super(x, y);
+        this.startState = startState;
     }
 
     public void tick() {
         if (isOver()) {
             if (Handler.getInstance().getMouse().isLeftClick() || Handler.getInstance().getMouse().isRightClick()) {
                 Handler.getInstance().getMouse().setDefaultClick();
-                JOptionPane.showMessageDialog(null, "Play game");
+                Login login = null;
+                try {
+                    login = new Login(startState);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                login.setVisible(true);
+                 login.setTitle("Login form");
+                 login.setBounds(500,10,370,600);
+                 login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 login.setResizable(false);
+                 startState.setLogin(login);
             }
         }
     }
