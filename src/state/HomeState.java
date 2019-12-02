@@ -51,7 +51,7 @@ public class HomeState extends State {
         try {
             List<Player> players = Handler.getInstance().getClientLogin().getiServer().getPlayersOnline(
                                         new Player(Handler.getInstance().getId(),Handler.getInstance().getName()));
-            System.out.println("số người đang online là : "+players.size());
+            System.out.println("số người đang online là : " + players.size());
             for (Player player : players){
 
                 PlayerDataElement playerDataElement = new PlayerDataElement();

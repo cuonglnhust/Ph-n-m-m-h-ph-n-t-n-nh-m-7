@@ -2,7 +2,7 @@ package rmi.server;
 
 import constant.ModeType;
 import rmi.model.Mode;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 
 public class ServerViewer extends Mode {
 

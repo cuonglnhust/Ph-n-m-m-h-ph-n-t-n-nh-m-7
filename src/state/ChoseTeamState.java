@@ -1,5 +1,6 @@
 package state;
 
+import SCCommon.Match;
 import button.ButtonPlay;
 import button.ButtonTeam;
 import button.PlayerData;
@@ -7,7 +8,7 @@ import constant.TeamType;
 import graphics.CreateImage;
 import main.Handler;
 import rmi.client.ClientPlayer;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import rmi.server.ServerPlayer;
 
 import javax.swing.*;
@@ -24,30 +25,42 @@ public class ChoseTeamState extends State implements Remote {
     private TeamType choseTeam;
     private JDialog dialogClientWait, dialogServerWait;
 
-    public ChoseTeamState() {
+    public ChoseTeamState(boolean isServer, ConnectionData connectionData) {
         blueTeam = new ButtonTeam(150, 240, CreateImage.blueBackground, TeamType.TEAM_BLUE, this);
         redTeam = new ButtonTeam(540, 240, CreateImage.redBackground, TeamType.TEAM_RED, this);
         orangeTeam = new ButtonTeam(150, 480, CreateImage.orangeBackground, TeamType.TEAM_ORANGE, this);
         violetTeam = new ButtonTeam(540, 480, CreateImage.violetBackground, TeamType.TEAM_VIOLET, this);
         buttonPlay = new ButtonPlay(800, 650, this);
         choseTeam = TeamType.NONE;
-        openServer();
+        if (isServer) {
+            openServer(connectionData);
+        } else {
+            connectToServer(connectionData);
+        }
     }
 
-    private void openServer() {
-        ServerPlayer modePlayer = new ServerPlayer(new ConnectionData("127.0.0.1", 5000, "abc"));
+    private void openServer(ConnectionData connectionData) {
+        ServerPlayer modePlayer = new ServerPlayer(connectionData);
         Handler.getInstance().setServerPlayer(modePlayer);
         if (Handler.getInstance().getServerPlayer().connection()) {
             System.out.println("Server OK");
             Handler.getInstance().getServerPlayer().getChoseTeamServerImp().setChoseTeamState(this);
             dialogServerWait = createWaitDialog("Others player are not ready. Please wait ... ", "Message");
 
+            Match match = new Match();
+            // gửi match lên cho server
+            try {
+                Handler.getInstance().getClientLogin().getiServer().sendMatchtoServer(match);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
 
-    private void connectToServer() {
-        ClientPlayer clientPlayer = new ClientPlayer(new ConnectionData("127.0.0.1", 5000, "abc"));
+    private void connectToServer(ConnectionData connectionData) {
+        ClientPlayer clientPlayer = new ClientPlayer(connectionData);
         Handler.getInstance().setClientPlayer(clientPlayer);
         if (Handler.getInstance().getClientPlayer().connection()) {
             System.out.println("Client connect");

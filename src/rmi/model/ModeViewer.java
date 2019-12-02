@@ -1,6 +1,6 @@
 package rmi.model;
 
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 
 public class ModeViewer extends Mode {
     public ModeViewer(ConnectionData connectionData) {

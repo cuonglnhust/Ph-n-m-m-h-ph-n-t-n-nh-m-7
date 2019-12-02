@@ -1,5 +1,6 @@
 package main;
 
+import constant.Connection;
 import graphics.CreateFont;
 import mouse.Mouse;
 import state.*;
@@ -38,6 +39,8 @@ public class Game implements Runnable {
         CreateFont.create();
         state = new ChoseTeamState();
         State.setCurrentState(state);
+
+        Handler.getInstance().setConnection(Connection.create());
     }
 
     private void tick() {

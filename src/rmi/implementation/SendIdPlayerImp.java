@@ -1,9 +1,12 @@
 package rmi.implementation;
 
+import SCCommon.ConnectionData;
 import SCCommon.IClient;
 import SCCommon.Player;
 import rmi.interfaces.SenIdPlayer;
 import SCCommon.IServer;
+import state.ChoseTeamState;
+import state.State;
 
 import javax.swing.*;
 import java.io.Serializable;
@@ -16,7 +19,7 @@ public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Ser
 
     private Player player;
 
-    private InetAddress clientIp ;
+    private InetAddress clientIp;
 
     public SendIdPlayerImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
 
@@ -25,7 +28,7 @@ public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Ser
 
         iServer.registerClient(this.player.getPid(), this);
 
-        String msg =  player.getPname() + " have ip : " + this.clientIp.toString() + " connected !";
+        String msg = player.getPname() + " have ip : " + this.clientIp.toString() + " connected !";
 
         iServer.msgToServer(msg);
     }
@@ -33,16 +36,21 @@ public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Ser
     @Override
     public boolean responseInvitation(IClient iClient) throws RemoteException {
 
-        if (JOptionPane.showConfirmDialog(null, iClient.getPlayer().getPname().toUpperCase()+
-                        " vừa mời bạn chơi cùng, Bạn có muốn chơi với " + iClient.getPlayer().getPname().toUpperCase()+ " ?", "Accept Invitation",
+        if (JOptionPane.showConfirmDialog(null, iClient.getPlayer().getPname().toUpperCase() +
+                        " vừa mời bạn chơi cùng, Bạn có muốn chơi với " + iClient.getPlayer().getPname().toUpperCase() + " ?", "Accept Invitation",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null,"Bạn đã chấp nhận chơi với " +
-                    iClient.getPlayer().getPname().toUpperCase()+ ", vui lòng đợi phòng được tạo");
+            JOptionPane.showMessageDialog(null, "Bạn đã chấp nhận chơi với " +
+                    iClient.getPlayer().getPname().toUpperCase() + ", vui lòng đợi phòng được tạo");
             return true;
         } else {
             return false;
         }
 
+    }
+
+    @Override
+    public void setConnectDataForPlayer2(ConnectionData connectionData) throws RemoteException {
+        State.setCurrentState(new ChoseTeamState(false, connectionData));
     }
 
     @Override
@@ -59,4 +67,5 @@ public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Ser
     public Player getPlayer() throws RemoteException {
         return player;
     }
+
 }

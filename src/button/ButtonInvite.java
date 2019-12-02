@@ -4,6 +4,8 @@ import SCCommon.Player;
 import graphics.CreateImage;
 import list.data.PlayerDataElement;
 import main.Handler;
+import state.ChoseTeamState;
+import state.State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,10 +45,28 @@ public class ButtonInvite extends Button {
                 try {
                     if(Handler.getInstance().getClientLogin().getiServer().
                             sendInvitation(new Player(this.player1.getIdPlayer(),this.player1.getPlayerName()),
-                                    new Player(this.player2.getIdPlayer(),this.player2.getPlayerName()))){
+                                    new Player(this.player2.getIdPlayer(),this.player2.getPlayerName()),Handler.getInstance().getConnection())){
 
+
+                        State.setCurrentState(new ChoseTeamState(true,Handler.getInstance().getConnection()));
                         // neu true thi la player2 dong y choi va chuyen sang man hinh chon doi
+//                        Match match = new Match();
+//                        ConnectionData connectionData=null;
+//                        try {
+//                             connectionData = new ConnectionData(InetAddress.getLocalHost().getHostName(),5000,"conToPlay");
+//                        } catch (UnknownHostException e) {
+//                            e.printStackTrace();
+//                        }
+//                        ClientPlayer clientPlayer = new ClientPlayer(connectionData);
+//
+//                            Handler.getInstance().setClientPlayer(clientPlayer);
+//                            // gửi match lên cho server
+//                            Handler.getInstance().getClientLogin().getiServer().sendMatchtoServer(match,
+//                                                            new Player(this.player1.getIdPlayer(),this.player1.getPlayerName()));
 
+                    }else{
+                        JOptionPane.showMessageDialog(null,
+                                this.player2.getPlayerName().toUpperCase() + " từ chối chơi cùng bạn ! ");
                     }
 
                 } catch (RemoteException e) {

@@ -7,7 +7,7 @@ import list.constant.PlayerElementConstant;
 import list.caculate.PlayerCaculateElement;
 import list.data.PlayerDataElement;
 import main.Handler;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import state.ChoseTeamState;
 import state.State;
 
@@ -33,30 +33,6 @@ public class PlayerGraphicsElement {
 
     }
 
-    private OnClickButton setOnClickButtonInvite() {
-        return new OnClickButton() {
-            @Override
-            public void onClick() {
-                // gửi yêu cầu lên Server
-
-                // Nhận về thông tin dạng ConnectionData
-                ConnectionData connectionData = new ConnectionData("127.0.0.1", 5000, "game");
-
-                // Thiết lập kết nối
-//                ServerPlayer clientPlayer = new ClientPlayer(connectionData);
-//                Handler.getInstance().setServerPlayer(clientPlayer);
-
-                // nếu kết nối thành công
-                if (Handler.getInstance().getServerPlayer().connection()){
-                    State.setCurrentState(new ChoseTeamState());
-                }
-                // nếu không thành công
-                else{
-
-                }
-            }
-        };
-    }
 
     public void tick() {
         buttonInvite.tick();

@@ -2,7 +2,7 @@ package rmi.client;
 
 import constant.ModeType;
 import main.Handler;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import rmi.implementation.ChoseTeamClientImp;
 import rmi.implementation.PlayGameClientImp;
 import rmi.interfaces.PlayGameServer;

@@ -1,7 +1,7 @@
 package rmi.model;
 
 import constant.ModeType;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 
 import java.rmi.registry.Registry;
 

@@ -2,7 +2,7 @@ package rmi.server;
 
 import constant.ModeType;
 import rmi.implementation.ChoseTeamServerImp;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import rmi.implementation.PlayGameServerImp;
 import rmi.model.ModePlayer;
 
@@ -29,6 +29,7 @@ public class ServerPlayer extends ModePlayer {
             url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
             choseTeamServerImp = new ChoseTeamServerImp();
             playGameServerImp = new PlayGameServerImp();
+            System.setProperty("java.rmi.server.hostname",connectionData.getIp());
             registry.rebind(url + "choseTeam", choseTeamServerImp);
             registry.rebind(url + "playGame", playGameServerImp);
             System.out.println("Server Ready");

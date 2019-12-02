@@ -2,8 +2,7 @@ package Login;
 
 import main.Handler;
 import rmi.client.ClientLogin;
-import rmi.client.ClientPlayer;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import state.HomeState;
 import state.StartState;
 import state.State;

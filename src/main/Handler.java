@@ -1,11 +1,10 @@
 package main;
 
-import map.local.Map;
 import map.local.MapTemp;
 import mouse.Mouse;
 import rmi.client.ClientLogin;
 import rmi.client.ClientPlayer;
-import rmi.model.ModePlayer;
+import SCCommon.ConnectionData;
 import rmi.model.ModeViewer;
 import rmi.server.ServerPlayer;
 
@@ -17,6 +16,7 @@ public class Handler {
     private ClientPlayer clientPlayer;
     private ModeViewer modeViewer;
     private ClientLogin clientLogin;
+    private ConnectionData connection;
 
     private int id;
     private String name;
@@ -114,5 +114,13 @@ public class Handler {
 
     public int getPlayerCount() {
         return playerCount;
+    }
+
+    public ConnectionData getConnection() {
+        return connection;
+    }
+
+    public void setConnection(ConnectionData connection) {
+        this.connection = connection;
     }
 }

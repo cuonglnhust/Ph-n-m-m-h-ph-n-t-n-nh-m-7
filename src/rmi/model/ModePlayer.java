@@ -1,6 +1,6 @@
 package rmi.model;
 
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 
 public abstract class ModePlayer extends Mode {
 

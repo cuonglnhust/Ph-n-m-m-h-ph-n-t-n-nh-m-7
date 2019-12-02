@@ -5,7 +5,7 @@ import constant.ModeType;
 import main.Handler;
 import rmi.implementation.SendIdPlayerImp;
 import rmi.model.Mode;
-import rmi.dataLogin.ConnectionData;
+import SCCommon.ConnectionData;
 import SCCommon.IServer;
 
 import java.net.MalformedURLException;

@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
 public class HistoryGraphicsElement {
+
     private int id;
     private TextGraphicsElement player;
     private TextGraphicsElement result;
@@ -34,7 +35,7 @@ public class HistoryGraphicsElement {
 //            opponent = iterator.next().getPname() + ",";
 //        }
         for (int i=0; i< historyDataElement.getOpponents().size();i++){
-            opponent = opponent + historyDataElement.getOpponents().get(i).getPname();
+            opponent = opponent + historyDataElement.getOpponents().get(i).getPname().toUpperCase();
             if (i == historyDataElement.getOpponents().size()-1){
                 opponent = opponent + ".";
             }else {
