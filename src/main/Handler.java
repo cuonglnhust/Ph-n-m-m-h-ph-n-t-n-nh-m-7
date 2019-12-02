@@ -1,6 +1,7 @@
 package main;
 
 import map.local.Map;
+import map.local.MapTemp;
 import mouse.Mouse;
 import rmi.client.ClientLogin;
 import rmi.client.ClientPlayer;
@@ -11,7 +12,7 @@ import rmi.server.ServerPlayer;
 public class Handler {
 
     private Game game;
-    private Map map;
+    private MapTemp mapTemp;
     private ServerPlayer serverPlayer;
     private ClientPlayer clientPlayer;
     private ModeViewer modeViewer;
@@ -19,6 +20,7 @@ public class Handler {
 
     private int id;
     private String name;
+    private int playerCount;
 
 
     private static Handler handler;
@@ -26,6 +28,7 @@ public class Handler {
     private Handler() {
         id = 2;
         name = "Cuong";
+        playerCount = 2;
     }
 
     public static Handler getInstance() {
@@ -41,12 +44,12 @@ public class Handler {
         return game;
     }
 
-    public Map getMap() {
-        return map;
+    public MapTemp getMapTemp() {
+        return mapTemp;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
+    public void setMapTemp(MapTemp mapTemp) {
+        this.mapTemp = mapTemp;
     }
 
     public Mouse getMouse() {
@@ -103,5 +106,13 @@ public class Handler {
 
     public void setClientPlayer(ClientPlayer clientPlayer) {
         this.clientPlayer = clientPlayer;
+    }
+
+    public void setPlayerCount(int playerCount) {
+        this.playerCount = playerCount;
+    }
+
+    public int getPlayerCount() {
+        return playerCount;
     }
 }

@@ -1,22 +1,19 @@
 package rmi.server;
 
 import constant.ModeType;
-import rmi.implementation.ChoseTeamImpServer;
-import rmi.implementation.RemoteImpServer;
+import rmi.implementation.ChoseTeamServerImp;
 import rmi.dataLogin.ConnectionData;
+import rmi.implementation.PlayGameServerImp;
 import rmi.model.ModePlayer;
-import state.ChoseTeamState;
-import state.client.ChoseTeamServer;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.server.UnicastRemoteObject;
 
 public class ServerPlayer extends ModePlayer {
 
     private String url;
-    private ChoseTeamImpServer choseTeamImpServer;
+    private ChoseTeamServerImp choseTeamServerImp;
+    private PlayGameServerImp playGameServerImp;
 
 
     public ServerPlayer(ConnectionData connectionData) {
@@ -30,15 +27,11 @@ public class ServerPlayer extends ModePlayer {
         try {
             registry = LocateRegistry.createRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
-
-            RemoteImpServer server = new RemoteImpServer();
-            choseTeamImpServer = new ChoseTeamImpServer();
-
-            registry.rebind(url + connectionData.getBindName(), server);
-            registry.rebind(url + "choseTeam", choseTeamImpServer);
-
+            choseTeamServerImp = new ChoseTeamServerImp();
+            playGameServerImp = new PlayGameServerImp();
+            registry.rebind(url + "choseTeam", choseTeamServerImp);
+            registry.rebind(url + "playGame", playGameServerImp);
             System.out.println("Server Ready");
-
             return true;
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -46,15 +39,12 @@ public class ServerPlayer extends ModePlayer {
         }
     }
 
-    public String getUrl() {
-        return url;
+
+    public ChoseTeamServerImp getChoseTeamServerImp() {
+        return choseTeamServerImp;
     }
 
-    public ChoseTeamImpServer getChoseTeamImpServer() {
-        return choseTeamImpServer;
-    }
-
-    public void setChoseTeamImpServer(ChoseTeamImpServer choseTeamImpServer) {
-        this.choseTeamImpServer = choseTeamImpServer;
+    public PlayGameServerImp getPlayGameServerImp() {
+        return playGameServerImp;
     }
 }

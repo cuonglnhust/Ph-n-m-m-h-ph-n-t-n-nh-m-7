@@ -6,44 +6,76 @@ public class Animation {
 
     private static final int SPEED = 200;
 
-    // thời gian bắt đầu animation
-    private long beginTime;
-
     // thời gian để thực hiện Animation
     private long timer, lastTime;
     // số thứ tự ảnh trong mảng và tốc độ hiển thị Animation
     private int index;
     // mảng các ảnh để tạo thành Animation
     private BufferedImage[] anim;
+    // đếm số lần lặp lại
+    private int count;
+    // số lần lặp lại
+    private int repeatTime;
+    // đánh dấu kết thúc animation
+    private boolean end;
 
     public Animation(BufferedImage[] anim, long period) {
         this.anim = anim;
         index = 0;
         timer = 0;
         lastTime = System.currentTimeMillis();
-        beginTime = System.currentTimeMillis();
+    }
+
+    public Animation(BufferedImage[] anim, int repeatTime) {
+        this.anim = anim;
+        // chỉ số của mảng ảnh
+        index = 0;
+        // biến đặt hẹn giờ
+        timer = 0;
+        this.repeatTime = repeatTime;
     }
 
     // Vẽ Animation
-    public void DrawAnimation() {
-        // timer là chênh lệch thời gian giữa hệ thống hiện tại với lúc đo trước đó
-        timer += System.currentTimeMillis() - lastTime;
-        // lặp lại thời gian đo lần cuối hệ thống để cho thời điểm đo tiếp theo
-        lastTime = System.currentTimeMillis();
-        // Nếu thời gian giữa hai lần đo mà lớn hơn
-        // tốc độ chuyển ảnh thì chuyển sang ảnh khác
-        if (timer > SPEED) {
-            index++;
-            // đặt lại timer
+    public void runTimerAnimation() {
+        // thời gian hiện tại
+        timer = System.currentTimeMillis();
+        // nếu hiện tại - quá khứ = thời gian để đổi ảnh
+        if (timer - lastTime >= SPEED) {
+            // hiện tại trở thành quá khứ cho lần đổi ảnh kế tiếp
+            lastTime = System.currentTimeMillis();
+            // bộ đếm về mặc định
             timer = 0;
-            // Nếu chuyển hết ảnh trong Anim thì chuyển về ảnh ban đầu
-            if (index >= anim.length) {
+            // đổi ảnh
+            // nếu ảnh có chỉ số là cuối cùng trong mảng thì chuyển về phần tử đầu tiên
+            if (index == anim.length - 1) {
                 index = 0;
             }
+            // nếu không là phần tử cuối thì tăng lên 1 đơn vị
+            else
+                index++;
+            // tăng biến đếm số lần lặp lại lên 1 đơn vị
+            count++;
+        }
+        // nếu đã thực hiện đủ số lần lặp lại, đánh dấu kết thúc animation
+        if (count == repeatTime){
+            end = true;
+            count = 0;
         }
     }
 
     public BufferedImage getCurrentImage() {
         return anim[index];
+    }
+
+    public void setLastTime(long lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 }
