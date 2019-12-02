@@ -3,15 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0e9afea7-603d-4d6e-928e-7622000eefbf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/IServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/IServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/Match.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/Match.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/SCCommon/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/rmi/client/MyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/rmi/client/MyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/state/server/ServerImplement/ServerImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/state/server/ServerImplement/ServerImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SCCommon/IServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SCCommon/IServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SCCommon/Match.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SCCommon/Match.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SCCommon/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SCCommon/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/server/ServerImplement/ServerImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/server/ServerImplement/ServerImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/state/server/ServerImplement/ConnectDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LTU14-GROUP6-Server2/state/server/ServerImplement/ConnectDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/rmi/client/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rmi/client/MyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,16 +45,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SCCommon/IServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+            <state relative-caret-position="357">
+              <caret line="24" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/state/server/ServerImplement/ServerImp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
+            <state relative-caret-position="-714">
               <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
               <folding>
                 <element signature="e#818#925#0" />
@@ -71,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SCCommon/Match.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
+            <state relative-caret-position="170">
+              <caret line="13" column="28" lean-forward="true" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
+            <state relative-caret-position="154">
+              <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/rmi/client/MyClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+            <state relative-caret-position="153">
+              <caret line="36" column="53" lean-forward="true" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -164,12 +159,13 @@
         <option value="$PROJECT_DIR$/src/rmi/client/RemoteInterface/IClient.java" />
         <option value="$PROJECT_DIR$/src/rmi/client/IClient.java" />
         <option value="$PROJECT_DIR$/src/rmi/client/dataLogin/Match.java" />
-        <option value="$PROJECT_DIR$/src/rmi/client/MyClient.java" />
         <option value="$PROJECT_DIR$/src/SCCommon/IClient.java" />
         <option value="$PROJECT_DIR$/src/SCCommon/Match.java" />
         <option value="$PROJECT_DIR$/src/SCCommon/Player.java" />
         <option value="$PROJECT_DIR$/src/state/server/ServerImplement/ServerImp.java" />
         <option value="$PROJECT_DIR$/src/SCCommon/IServer.java" />
+        <option value="$PROJECT_DIR$/src/rmi/client/MyClient.java" />
+        <option value="$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java" />
       </list>
     </option>
   </component>
@@ -204,13 +200,6 @@
               <item name="server" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="ClientImplement" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="server" type="b2602c69:ProjectViewProjectNode" />
@@ -264,6 +253,19 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.MyServer (1)">
+    <configuration name="MyClient (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="rmi.client.MyClient" />
+      <module name="LTU14-GROUP6-Server2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="rmi.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.MyClient" />
       <module name="LTU14-GROUP6-Server2" />
@@ -332,6 +334,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.MyServer (1)" />
+        <item itemvalue="Application.MyClient (1)" />
         <item itemvalue="Application.MyClient" />
         <item itemvalue="Application.MyServer" />
       </list>
@@ -351,7 +354,7 @@
       <workItem from="1574925036000" duration="19718000" />
       <workItem from="1575102076669" duration="5386000" />
       <workItem from="1575171451361" duration="750000" />
-      <workItem from="1575173207010" duration="7453000" />
+      <workItem from="1575173207010" duration="15257000" />
     </task>
     <task id="LOCAL-00001" summary="done feature return online matches after sign in successful !">
       <created>1574865400042</created>
@@ -381,11 +384,18 @@
       <option name="project" value="LOCAL" />
       <updated>1575102177478</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="xử lý mời người chơi !">
+      <created>1575188948662</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575188948662</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41829000" />
+    <option name="totallyTimeSpent" value="49633000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -405,7 +415,7 @@
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Find" order="7" />
-      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.26350245" />
+      <window_info anchor="bottom" id="Run" order="8" visible="true" weight="0.12929623" />
       <window_info anchor="bottom" id="Debug" order="9" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
@@ -461,39 +471,10 @@
     <MESSAGE value="done show match history for player !" />
     <MESSAGE value="fix ip in client" />
     <MESSAGE value="đồng bộ các lớp trên server để test deploy" />
-    <option name="LAST_COMMIT_MESSAGE" value="đồng bộ các lớp trên server để test deploy" />
+    <MESSAGE value="xử lý mời người chơi !" />
+    <option name="LAST_COMMIT_MESSAGE" value="xử lý mời người chơi !" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/SCCommon/Match.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="52" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rmi/client/MyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/rmi/client/ClientImplement/ClientImp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
@@ -533,17 +514,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SCCommon/IServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
+        <state relative-caret-position="357">
+          <caret line="24" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/state/server/ServerImplement/ServerImp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
+        <state relative-caret-position="-714">
           <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
           <folding>
             <element signature="e#818#925#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SCCommon/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" column="28" lean-forward="true" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rmi/client/MyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="36" column="53" lean-forward="true" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/state/server/ServerImplement/ConnectDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

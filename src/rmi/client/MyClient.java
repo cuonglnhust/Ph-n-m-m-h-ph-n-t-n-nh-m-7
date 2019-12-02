@@ -20,7 +20,7 @@ public class MyClient {
 
             IServer iServer = (IServer) Naming.lookup("rmi://localhost:9999/abc");
 
-            Player player1 = iServer.signIn("vuong","vuong");
+            Player player1 = iServer.signIn("khanh","khanh");
 
             if(player1 != null) {                                                   // đăng nhập thành công
                 IClient iClient = new ClientImp(player1, iServer); // tạo ra đối tượng Client có chứa player

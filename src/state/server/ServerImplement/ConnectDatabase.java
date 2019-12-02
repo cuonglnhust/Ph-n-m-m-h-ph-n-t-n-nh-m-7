@@ -45,7 +45,6 @@ public class ConnectDatabase {
     public List<Match> getMatchsHistory(int playerId1) throws SQLException{
         List<Match> matches = new ArrayList<>();
 
-        List<Player> players = new ArrayList<>();
 
         createConnection();
 
@@ -57,6 +56,8 @@ public class ConnectDatabase {
                                                     "and player.id=" + playerId1);
 
         while (rs1.next()){
+            List<Player> players = new ArrayList<>();
+
             Match match = new Match();
             match.setId(rs1.getInt(1));
             match.setDuration(rs1.getString(2));
@@ -81,6 +82,7 @@ public class ConnectDatabase {
 
             }
             match.setPlayers(players);
+
             matches.add(match);
         }
         return matches;
