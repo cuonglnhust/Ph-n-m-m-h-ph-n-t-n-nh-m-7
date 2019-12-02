@@ -78,10 +78,12 @@ public class HomeState extends State {
 
         // Trả lời thông báo
 
-        // mời người chơi khác
-//        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
-//            playerGraphicsElement.tick();
-//        }
+
+        for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
+            playerGraphicsElement.tick();
+        }
+
+        buttonHistory.tick();
     }
 
     @Override

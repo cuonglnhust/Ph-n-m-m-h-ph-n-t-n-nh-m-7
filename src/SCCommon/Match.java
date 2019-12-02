@@ -9,15 +9,12 @@ public class Match implements Serializable {
 
     private int id;
 
-    private int duration;
+    private String duration;
 
     private int winner;
 
-    private  int status;
-
     private List<Player> players;
 
-    public  int getStatus(){return status;}
     public int getId() {
         return id;
     }
@@ -26,11 +23,11 @@ public class Match implements Serializable {
         this.id = id;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

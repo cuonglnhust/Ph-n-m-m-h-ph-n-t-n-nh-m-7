@@ -86,22 +86,30 @@ public class Login extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "abc"));
-                Handler.getInstance().setClientLogin(clientLogin);
-                try {
-                    if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), String.copyValueOf(passwordField.getPassword()))) {
-
-                        State.setCurrentState(new HomeState());
-                        startState.getLogin().setVisible(false);
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                if (usertextField.getText().equals("") || String.copyValueOf(passwordField.getPassword()).equals("")|| IPAddressField.getText().equals(""))
+                {
+                    JOptionPane.showMessageDialog(null,"Tài khoản, mật khẩu, IP không được bỏ trống");
                 }
+                else {
+                    ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "hippocampus"));
+                    Handler.getInstance().setClientLogin(clientLogin);
+                    try {
+                        if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), String.copyValueOf(passwordField.getPassword()))) {
+
+                            State.setCurrentState(new HomeState());
+                            startState.getLogin().setVisible(false);
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
             }
+
 
 
         });
