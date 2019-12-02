@@ -169,14 +169,17 @@ public class Horse extends Entity {
 
     // di chuyển ngựa
     private void run() {
+        System.out.println("Run");
         Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, TeamType.NONE);
         position = checkResult;
         this.setX(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getX());
         this.setY(Handler.getInstance().getMapTemp().getMapGraphics().get(position).getY());
         // quảng bá di chuyển
+        System.out.println("Horse broadcast");
         broadcastHorse();
         Handler.getInstance().getMapTemp().updateVirtualMapBroadcast(position, team);
         turn = true;
+        System.out.println("Position = " + position + "");
     }
 
     // đá ngựa khác
@@ -314,6 +317,7 @@ public class Horse extends Entity {
     private void broadcastHorse() {
         if (Handler.getInstance().getClientPlayer() != null) {
             try {
+                System.out.println("Client broadcast");
                 Handler.getInstance().getClientPlayer().getPlayGameServer().
                         updateHorse(Handler.getInstance().getId(), this.id, position, rank);
             } catch (RemoteException e) {
@@ -321,6 +325,7 @@ public class Horse extends Entity {
             }
         } else if (Handler.getInstance().getServerPlayer() != null) {
             try {
+                System.out.println("Server broadcast");
                 Handler.getInstance().getServerPlayer().getPlayGameServerImp().
                         updateHorseFromServer(Handler.getInstance().getId(), this.id, position, rank);
             } catch (RemoteException e) {

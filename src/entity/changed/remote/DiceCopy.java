@@ -52,6 +52,7 @@ public class DiceCopy extends Entity {
                         firstTime = true;
                         animation.setEnd(false);
                         onAnimation = false;
+                        diceValue = DiceValue.NONE;
                     }
                 }
                 // nếu animation chưa kết thúc thì onanimation = true để vẽ animation

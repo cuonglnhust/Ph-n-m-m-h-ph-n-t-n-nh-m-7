@@ -135,7 +135,7 @@ public class Dice extends Entity {
         } else if (value >= 0.45 && value < 0.6) {
             entity = CreateImage.dice4;
             diceValue = DiceValue.FOUR;
-        } else if (value >= 0.6 && value < 0.95) {
+        } else if (value >= 0.6 && value < 0.75) {
             entity = CreateImage.dice5;
             diceValue = DiceValue.FIVE;
         } else {

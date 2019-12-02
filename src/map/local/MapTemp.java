@@ -287,10 +287,12 @@ public class MapTemp {
     public void updateVirtualMapBroadcast(int position, TeamType teamType) {
         // tự cập nhật
         updateVirtualMap(position, teamType);
+        System.out.println("Update local" + teamType.toString());
         // quảng bá
         // nếu là client
         if (Handler.getInstance().getClientPlayer() != null) {
             try {
+                System.out.println("client - update");
                 Handler.getInstance().getClientPlayer().getPlayGameServer().
                         updateVirtualMap(Handler.getInstance().getId(), position, teamType);
             } catch (RemoteException e) {
@@ -300,6 +302,7 @@ public class MapTemp {
         // nếu là server
         else if (Handler.getInstance().getServerPlayer() != null) {
             try {
+                System.out.println("server  - update");
                 Handler.getInstance().getServerPlayer().getPlayGameServerImp().
                         updateVirtualMapFromServer(Handler.getInstance().getId(), position, teamType);
             } catch (RemoteException e) {

@@ -95,18 +95,19 @@ public class Player {
                     }
                     // khi có ngựa có thể di chuyển được
                     else {
-
                         for (Horse horse : horseCanMove) {
                             horse.tick();
-                            horse.printHorse();
+//                            horse.printHorse();
                             // đã di chuyển hay chưa, nếu đã di chuyển rồi thì
                             if (horse.isTurn()) {
+                                System.out.println("Finish Turn");
                                 // ngựa đã đi xong lượt của mình
                                 horse.setTurn(false);
                                 onCourt.put(horse.getId(), horse);
                                 setMouseDefault();
                                 // nếu giá trị lắc được không là 6 thì chuyển lượt
                                 if (dice.getDiceValue() != DiceValue.SIX) {
+                                    System.out.println("Change Turn = " + DiceValue.values().toString());
                                     Handler.getInstance().getMapTemp().changeTurn();
                                 }
                                 setDiceDefault();
@@ -122,21 +123,18 @@ public class Player {
             }
         }
         // nếu không đúng lượt
-        else {
-            dice.setDiceValue(DiceValue.NONE);
-            if (isKick) {
-                if (kickedPosition != -1) {
-                    // tìm ngựa ở vị trí này
-                    for (Horse horse : horses) {
-                        if (horse.getPosition() == kickedPosition) {
-                            horse.isKickedAss();
-                            break;
-                        }
+        if (isKick) {
+            if (kickedPosition != -1) {
+                // tìm ngựa ở vị trí này
+                for (Horse horse : horses) {
+                    if (horse.getPosition() == kickedPosition) {
+                        horse.isKickedAss();
+                        break;
                     }
-                    kickedPosition = -1;
                 }
-                isKick = false;
+                kickedPosition = -1;
             }
+            isKick = false;
         }
 
     }

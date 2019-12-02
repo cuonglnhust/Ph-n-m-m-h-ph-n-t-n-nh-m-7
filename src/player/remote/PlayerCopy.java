@@ -38,36 +38,32 @@ public class PlayerCopy {
     }
 
     public void tick() {
-        if (Handler.getInstance().getMapTemp().getTurn() == team) {
-            diceCopy.tick();
-            // nếu có dấu hiệu cập nhật
-            if (horseData != null) {
-                // tìm ngựa phù hợp
+        diceCopy.tick();
+        // nếu có dấu hiệu cập nhật
+        if (horseData != null) {
+            // tìm ngựa phù hợp
+            for (HorseCopy horseCopy : horseCopies) {
+                if (horseCopy.getId() == horseData.getId()) {
+                    // cập nhật dữ liệu
+                    horseCopy.tick(horseData);
+                    break;
+                }
+            }
+            // đặt lại horseData
+            horseData = null;
+        }
+        if (isKick) {
+            if (kickedPosition != -1) {
+                // tìm ngựa ở vị trí này
                 for (HorseCopy horseCopy : horseCopies) {
-                    if (horseCopy.getId() == horseData.getId()) {
-                        // cập nhật dữ liệu
-                        horseCopy.tick(horseData);
+                    if (horseCopy.getPosition() == kickedPosition) {
+                        horseCopy.isKickedAss();
                         break;
                     }
                 }
-                // đặt lại horseData
-                horseData = null;
+                kickedPosition = -1;
             }
-        } else {
-            diceCopy.setDiceValue(DiceValue.NONE);
-            if (isKick) {
-                if (kickedPosition != -1) {
-                    // tìm ngựa ở vị trí này
-                    for (HorseCopy horseCopy : horseCopies) {
-                        if (horseCopy.getPosition() == kickedPosition) {
-                            horseCopy.isKickedAss();
-                            break;
-                        }
-                    }
-                    kickedPosition = -1;
-                }
-                isKick = false;
-            }
+            isKick = false;
         }
     }
 
