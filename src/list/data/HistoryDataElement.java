@@ -1,25 +1,45 @@
 package list.data;
 
+import SCCommon.Player;
+
+import java.util.List;
+
 public class HistoryDataElement {
-    private String player;
-    private boolean result;
-    private String times;
 
-    public HistoryDataElement(String player, boolean result, String times) {
-        this.player = player;
-        this.result = result;
-        this.times = times;
+    private List<Player> opponents;
+    private int winner;
+    private String duration;
+
+    public HistoryDataElement() {
     }
 
-    public String getPlayer() {
-        return player;
+    public HistoryDataElement(List<Player> opponents, int winner, String duration) {
+        this.opponents = opponents;
+        this.winner = winner;
+        this.duration = duration;
     }
 
-    public boolean isResult() {
-        return result;
+    public List<Player> getOpponents() {
+        return opponents;
     }
 
-    public String getTimes() {
-        return times;
+    public void setOpponents(List<Player> opponents) {
+        this.opponents = opponents;
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 }

@@ -1,13 +1,17 @@
 package state;
 
+import SCCommon.Match;
 import button.ButtonBack;
 import button.ButtonMore;
 import constant.StateTag;
 import graphics.CreateImage;
 import list.data.HistoryDataElement;
 import list.graphics.HistoryGraphicsElement;
+import main.Handler;
 
 import java.awt.*;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +34,31 @@ public class HistoryState extends State {
 
     private void updateHistoryDataElement() {
         historyDataElementList = new ArrayList<>();
-        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
-        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
-        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
-        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
+
+        try {
+            List<Match> matches = Handler.getInstance().getClientLogin().getiServer().getMatchHistory(
+                                                                Handler.getInstance().getClientLogin().getPlayer().getPid());
+
+            for(Match match : matches){
+                HistoryDataElement historyDataElement = new HistoryDataElement();
+                historyDataElement.setOpponents(match.getPlayers());
+                historyDataElement.setWinner(match.getWinner());
+                historyDataElement.setDuration(match.getDuration());
+
+                historyDataElementList.add(historyDataElement);
+            }
+
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+//        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
+//        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
+//        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
+//        historyDataElementList.add(new HistoryDataElement("Khanh", true, "18:45"));
     }
 
     private void updateHistoryGraphicsElementList() {

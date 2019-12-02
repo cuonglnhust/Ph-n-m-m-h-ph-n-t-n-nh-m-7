@@ -20,4 +20,7 @@ public interface IServer extends Remote {
 
     List<Player> getPlayersOnline(Player player1) throws RemoteException; // lấy các player đang online
 
+    List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException; // hàm trả về lịch sử các trận đấu mà player1 đã chơi
+
+
 }
