@@ -1,9 +1,6 @@
 package state.server.ServerImplement;
 
-import SCCommon.Match;
-import SCCommon.Player;
-import SCCommon.IClient;
-import SCCommon.IServer;
+import SCCommon.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -24,16 +21,14 @@ public class ServerImp extends UnicastRemoteObject implements IServer{
     }
 
     @Override
-    public boolean sendInvitation(Player player1, Player player2) throws RemoteException {
+    public boolean sendInvitation(Player player1, Player player2,ConnectionData connectionData) throws RemoteException {
 
         if(playerOnline.get(player2.getPid()).responseInvitation(playerOnline.get(player1.getPid()))){
-
+                playerOnline.get(player2.getPid()).setConnectDataForPlayer2(connectionData);
             return true;
         }else {
             return false;
         }
-
-
 
 //        if (playerOnline.get(player2.getPid()).                             // client2 gửi trả lời invite
 //                responseInvitation(playerOnline.get(player1.getPid()))) {
@@ -109,6 +104,13 @@ public class ServerImp extends UnicastRemoteObject implements IServer{
         connectDatabase = new ConnectDatabase();
 
         return connectDatabase.getMatchsHistory(playerId1);
+    }
+
+    @Override
+    public void sendMatchtoServer(Match match) throws RemoteException {
+
+        matches.add(match);
+
     }
 
   /*  @Override

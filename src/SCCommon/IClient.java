@@ -14,5 +14,6 @@ public interface IClient extends Remote {
 
     Player getPlayer() throws RemoteException;                  // lấy đối tượng player từ một client
 
+    void setConnectDataForPlayer2(ConnectionData connectionData) throws RemoteException;
 
 }

@@ -9,7 +9,7 @@ public interface IServer extends Remote {
 
  //   List<Integer> senIdMatch(List<Match> listMatch) throws  RemoteException; //  gửi list id của match đang có người chơi.
 
-    boolean sendInvitation(Player player1, Player player2) throws RemoteException;  // player1 gửi lời mời sang player2
+    boolean sendInvitation(Player player1, Player player2,ConnectionData connectionData) throws RemoteException;  // player1 gửi lời mời sang player2
 
     Player signIn(String username, String password) throws RemoteException, SQLException; // đăng nhập
 
@@ -23,4 +23,5 @@ public interface IServer extends Remote {
 
     List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException; // hàm trả về lịch sử các trận đấu mà player1 đã chơi
 
+    void sendMatchtoServer(Match match) throws RemoteException;
 }
