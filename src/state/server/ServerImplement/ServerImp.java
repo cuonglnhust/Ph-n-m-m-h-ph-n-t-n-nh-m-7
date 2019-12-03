@@ -7,7 +7,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.*;
 
-public class ServerImp extends UnicastRemoteObject implements IServer{
+public class ServerImp extends UnicastRemoteObject implements IServer {
 
     public Map<Integer, IClient> playerOnline;
 
@@ -20,13 +20,15 @@ public class ServerImp extends UnicastRemoteObject implements IServer{
         this.matches = new ArrayList<>();
     }
 
+    // xử lí lời mời của P1 đến P2
     @Override
-    public boolean sendInvitation(Player player1, Player player2,ConnectionData connectionData) throws RemoteException {
+    public boolean sendInvitation(Player player1, Player player2, ConnectionData connectionData) throws RemoteException {
 
-        if(playerOnline.get(player2.getPid()).responseInvitation(playerOnline.get(player1.getPid()))){
-                playerOnline.get(player2.getPid()).setConnectDataForPlayer2(connectionData);
+        // nếu P2 đồng ý chơi
+        if (playerOnline.get(player2.getPid()).responseInvitation(playerOnline.get(player1.getPid()))) {
+            // chuyển về cho P1 để P1 mở Server
             return true;
-        }else {
+        } else {
             return false;
         }
 
@@ -102,15 +104,13 @@ public class ServerImp extends UnicastRemoteObject implements IServer{
     @Override
     public List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException {
         connectDatabase = new ConnectDatabase();
-
         return connectDatabase.getMatchsHistory(playerId1);
     }
 
     @Override
-    public void sendMatchtoServer(Match match) throws RemoteException {
-
+    public void sendMatchtoServer(Match match, Player player, ConnectionData connectionData) throws RemoteException {
         matches.add(match);
-
+        playerOnline.get(player.getPid()).setConnectDataForPlayer2(connectionData);
     }
 
   /*  @Override
