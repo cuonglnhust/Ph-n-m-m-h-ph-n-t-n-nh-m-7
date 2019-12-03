@@ -8,6 +8,7 @@ import rmi.model.ModePlayer;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 
 public class ServerPlayer extends ModePlayer {
 
@@ -25,11 +26,11 @@ public class ServerPlayer extends ModePlayer {
     @Override
     public boolean connection() {
         try {
+            System.setProperty("java.rmi.server.hostname",connectionData.getIp());
             registry = LocateRegistry.createRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
             choseTeamServerImp = new ChoseTeamServerImp();
             playGameServerImp = new PlayGameServerImp();
-            System.setProperty("java.rmi.server.hostname",connectionData.getIp());
             registry.rebind(url + "choseTeam", choseTeamServerImp);
             registry.rebind(url + "playGame", playGameServerImp);
             System.out.println("Server Ready");

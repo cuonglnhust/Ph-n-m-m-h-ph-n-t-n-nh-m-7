@@ -15,7 +15,7 @@ public class Connection {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        ConnectionData connectionData = new ConnectionData("10.0.75.1",5000,"conToPlay");
+        ConnectionData connectionData = new ConnectionData(ip,5000,"conToPlay");
         return connectionData;
     }
 }

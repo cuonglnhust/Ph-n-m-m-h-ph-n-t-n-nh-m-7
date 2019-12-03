@@ -1,5 +1,6 @@
 package main;
 
+import SCCommon.ConnectionData;
 import constant.Connection;
 import graphics.CreateFont;
 import mouse.Mouse;
@@ -37,10 +38,9 @@ public class Game implements Runnable {
         display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
         CreateFont.create();
-        state = new ChoseTeamState();
-        State.setCurrentState(state);
-
         Handler.getInstance().setConnection(Connection.create());
+        state = new StartState();
+        State.setCurrentState(state);
     }
 
     private void tick() {

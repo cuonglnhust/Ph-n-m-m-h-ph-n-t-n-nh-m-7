@@ -15,42 +15,36 @@ import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class SendIdPlayerImp extends UnicastRemoteObject implements IClient, Serializable {
+public class IClientImp extends UnicastRemoteObject implements IClient, Serializable {
 
     private Player player;
-
     private InetAddress clientIp;
 
-    public SendIdPlayerImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
-
+    public IClientImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
         this.player = player;
         clientIp = InetAddress.getLocalHost();
-
         iServer.registerClient(this.player.getPid(), this);
-
         String msg = player.getPname() + " have ip : " + this.clientIp.toString() + " connected !";
-
         iServer.msgToServer(msg);
     }
 
     @Override
     public boolean responseInvitation(IClient iClient) throws RemoteException {
-
-        if (JOptionPane.showConfirmDialog(null, iClient.getPlayer().getPname().toUpperCase() +
+        int input = JOptionPane.showConfirmDialog(null, iClient.getPlayer().getPname().toUpperCase() +
                         " vừa mời bạn chơi cùng, Bạn có muốn chơi với " + iClient.getPlayer().getPname().toUpperCase() + " ?", "Accept Invitation",
-                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            JOptionPane.showMessageDialog(null, "Bạn đã chấp nhận chơi với " +
-                    iClient.getPlayer().getPname().toUpperCase() + ", vui lòng đợi phòng được tạo");
+                JOptionPane.YES_NO_OPTION);
+        if (input == JOptionPane.YES_OPTION) {
+//            JOptionPane.showMessageDialog(null, "Bạn đã chấp nhận chơi với " +
+//                    iClient.getPlayer().getPname().toUpperCase() + ", vui lòng đợi phòng được tạo");
             return true;
         } else {
             return false;
         }
-
     }
 
     @Override
     public void setConnectDataForPlayer2(ConnectionData connectionData) throws RemoteException {
-        State.setCurrentState(new ChoseTeamState(false, connectionData));
+        State.setCurrentState(new ChoseTeamState(connectionData));
     }
 
     @Override

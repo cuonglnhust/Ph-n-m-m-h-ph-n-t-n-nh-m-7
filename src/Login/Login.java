@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 
@@ -38,9 +39,7 @@ public class Login extends JFrame {
         if (Username == name && Password == pass) {
 
         }
-
     }
-
 
     public Login(StartState startState) throws SQLException {
         setLayoutManager();
@@ -85,18 +84,16 @@ public class Login extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if (usertextField.getText().equals("") || String.copyValueOf(passwordField.getPassword()).equals("")|| IPAddressField.getText().equals(""))
-                {
-                    JOptionPane.showMessageDialog(null,"Tài khoản, mật khẩu, IP không được bỏ trống");
-                }
-                else {
-                    ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "hippocampus"));
+                if (usertextField.getText().equals("") || String.copyValueOf(passwordField.getPassword()).equals("") || IPAddressField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Tài khoản, mật khẩu, IP không được bỏ trống");
+                } else {
+                    ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "abc"));
                     Handler.getInstance().setClientLogin(clientLogin);
                     try {
                         if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), String.copyValueOf(passwordField.getPassword()))) {
-
                             State.setCurrentState(new HomeState());
                             startState.getLogin().setVisible(false);
+                            startState.getLogin().dispose();
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại");
@@ -108,7 +105,6 @@ public class Login extends JFrame {
 
 
             }
-
 
 
         });

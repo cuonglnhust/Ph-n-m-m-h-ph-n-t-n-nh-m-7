@@ -3,7 +3,7 @@ package rmi.client;
 import SCCommon.Player;
 import constant.ModeType;
 import main.Handler;
-import rmi.implementation.SendIdPlayerImp;
+import rmi.implementation.IClientImp;
 import rmi.model.Mode;
 import SCCommon.ConnectionData;
 import SCCommon.IServer;
@@ -19,7 +19,7 @@ public class ClientLogin extends Mode {
     private String url;
     private Player GetPlayerServer;
     private IServer iServer;
-    private SendIdPlayerImp sendIdPlayerImp;
+    private IClientImp IClientImp;
 
     public ClientLogin(ConnectionData connectionData) {
         super(connectionData);
@@ -37,7 +37,7 @@ public class ClientLogin extends Mode {
             if (GetPlayerServer != null) {
                 Handler.getInstance().setId(GetPlayerServer.getPid());
                 Handler.getInstance().setName(GetPlayerServer.getPname());
-                sendIdPlayerImp = new SendIdPlayerImp(GetPlayerServer, iServer);
+                IClientImp = new IClientImp(GetPlayerServer, iServer);
                 return true;
 
             }
