@@ -1,6 +1,7 @@
 package state.server;
 
 import SCCommon.IServer;
+import state.server.ServerImplement.ConnectDatabase;
 import state.server.ServerImplement.ServerImp;
 
 import java.net.InetAddress;
@@ -23,10 +24,10 @@ public class MyServer {
             System.out.println("Server Ready ...");
             try {
                 System.out.println(InetAddress.getLocalHost().getHostAddress());
-
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
+
 
 
         } catch (RemoteException | AlreadyBoundException | MalformedURLException e) {

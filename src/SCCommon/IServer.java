@@ -23,5 +23,5 @@ public interface IServer extends Remote {
 
     List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException; // hàm trả về lịch sử các trận đấu mà player1 đã chơi
 
-    void sendMatchtoServer(Match match) throws RemoteException;
+    void sendMatchtoServer(Match match,Player player2,ConnectionData connectionData) throws RemoteException;
 }

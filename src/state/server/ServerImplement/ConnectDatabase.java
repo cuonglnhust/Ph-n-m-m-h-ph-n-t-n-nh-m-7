@@ -11,12 +11,12 @@ public class ConnectDatabase {
 
     private String url="jdbc:mysql://localhost:3306/hippocampus?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
     private String username="root";
-    private String password="vuong";
+    private String password="";
 
     private Connection conn=null;
     private Statement statement = null;
 
-    private void createConnection() throws SQLException {
+    public void createConnection() throws SQLException {
         if(conn==null) {
 
             conn = DriverManager.getConnection(url, username, password);
