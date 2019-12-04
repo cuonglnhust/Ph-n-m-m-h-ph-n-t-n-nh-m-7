@@ -11,7 +11,7 @@ public class Connection {
         //
         String ip= null;
         try {
-            ip = Inet4Address.getLocalHost().getHostName();
+            ip = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

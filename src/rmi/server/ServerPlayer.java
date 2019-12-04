@@ -6,6 +6,9 @@ import SCCommon.ConnectionData;
 import rmi.implementation.PlayGameServerImp;
 import rmi.model.ModePlayer;
 
+import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
@@ -27,15 +30,15 @@ public class ServerPlayer extends ModePlayer {
     public boolean connection() {
         try {
             System.setProperty("java.rmi.server.hostname",connectionData.getIp());
-            registry = LocateRegistry.createRegistry(connectionData.getPort());
+            LocateRegistry.createRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
             choseTeamServerImp = new ChoseTeamServerImp();
             playGameServerImp = new PlayGameServerImp();
-            registry.rebind(url + "choseTeam", choseTeamServerImp);
-            registry.rebind(url + "playGame", playGameServerImp);
+            Naming.bind(url + "choseTeam", choseTeamServerImp);
+            Naming.bind(url + "playGame", playGameServerImp);
             System.out.println("Server Ready");
             return true;
-        } catch (RemoteException e) {
+        } catch (RemoteException | AlreadyBoundException | MalformedURLException e) {
             e.printStackTrace();
             return false;
         }

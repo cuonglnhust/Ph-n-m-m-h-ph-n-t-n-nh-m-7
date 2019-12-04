@@ -9,6 +9,8 @@ import rmi.interfaces.PlayGameServer;
 import rmi.model.ModePlayer;
 import rmi.interfaces.ChoseTeamServer;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -30,15 +32,15 @@ public class ClientPlayer extends ModePlayer {
     public boolean connection() {
         try {
 
-            registry = LocateRegistry.getRegistry(connectionData.getPort());
+            //registry = LocateRegistry.getRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":"
                     + connectionData.getPort() + "/";
-            choseTeamServer = (ChoseTeamServer) registry.lookup(url + "choseTeam");
-            playGameServer = (PlayGameServer) registry.lookup(url + "playGame");
+            choseTeamServer = (ChoseTeamServer) Naming.lookup(url + "choseTeam");
+            playGameServer = (PlayGameServer) Naming.lookup(url + "playGame");
             choseTeamClientImp = new ChoseTeamClientImp(Handler.getInstance().getId(), choseTeamServer);
             playGameClientImp = new PlayGameClientImp(Handler.getInstance().getId(),playGameServer);
             return choseTeamServer.hello();
-        } catch (RemoteException | NotBoundException e) {
+        } catch (RemoteException | NotBoundException | MalformedURLException e) {
             e.printStackTrace();
             return false;
         }
