@@ -11,13 +11,13 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
 
     public Map<Integer, IClient> playerOnline;
 
-    public List<Match> matches;
+    public Map<Integer,Match> matches;
 
     private ConnectDatabase connectDatabase = null;
 
     public ServerImp() throws RemoteException {
         this.playerOnline = new HashMap<>();
-        this.matches = new ArrayList<>();
+        this.matches = new HashMap<>();
     }
 
     // xử lí lời mời của P1 đến P2
@@ -72,6 +72,18 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
     @Override
     public void registerClient(int playerId, IClient iClient) throws RemoteException {
         this.playerOnline.put(playerId, iClient);
+
+        playerOnline.forEach((playerid, client) ->
+                {
+                    if (playerid != playerId) {
+                        try {
+                            iClient.updateData();
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -98,7 +110,11 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
 
     @Override
     public List<Match> getMatchsOnline() throws RemoteException {
-        return this.matches;
+        List<Match> listMatchs = new ArrayList<>();
+        matches.forEach((matchId,match) -> {
+            listMatchs.add(match);
+        });
+        return listMatchs;
     }
 
     @Override
@@ -108,9 +124,24 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public void sendMatchtoServer(Match match, Player player, ConnectionData connectionData) throws RemoteException {
-        matches.add(match);
+    public void sendMatchtoServer(int idMatch,Match match, Player player, ConnectionData connectionData) throws RemoteException {
+        matches.put(idMatch,match);
         playerOnline.get(player.getPid()).setConnectDataForPlayer2(connectionData);
+    }
+
+    @Override
+    public void updateMatchHistory(int idMatch, Match match) throws RemoteException {
+
+        matches.remove(matches.get(idMatch));
+
+        connectDatabase = new ConnectDatabase();
+
+        try {
+            connectDatabase.updateMatchHistory(match);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
   /*  @Override

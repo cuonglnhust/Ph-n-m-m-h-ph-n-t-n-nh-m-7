@@ -28,6 +28,8 @@ public class MyServer {
                 e.printStackTrace();
             }
 
+            ConnectDatabase connectDatabase = new ConnectDatabase();
+            connectDatabase.createConnection();
 
 
         } catch (RemoteException | AlreadyBoundException | MalformedURLException e) {

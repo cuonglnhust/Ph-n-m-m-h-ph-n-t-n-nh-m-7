@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ConnectDatabase {
 
-    private String url="jdbc:mysql://localhost:3306/hippocampus?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
+    private String url="jdbc:mysql://172.17.0.2:3306/hippocampus?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true";
     private String username="root";
-    private String password="";
+    private String password="cuong";
 
     private Connection conn=null;
     private Statement statement = null;
@@ -86,6 +86,54 @@ public class ConnectDatabase {
             matches.add(match);
         }
         return matches;
+    }
+    public void updateMatchHistory(Match match) throws SQLException {
+
+        createConnection();
+
+
+        //thuc hien insert matchs table
+        String sql1 =  "INSERT INTO matchs (duration,winner) VALUES(?,?)";
+
+        PreparedStatement ps1 = conn.prepareStatement(sql1);
+
+        ps1.setString(1,match.getDuration());
+        ps1.setInt(2,match.getWinner());
+
+        ps1.execute();
+
+
+        // thuc hien tim id cao nhat
+        String sql2 = "SELECT matches.id FROM matches WHERE matches.id >= ALL(SELECT matches.id FROM matches)";
+
+        PreparedStatement ps2 = conn.prepareStatement(sql2);
+
+        ResultSet resultSet = ps2.executeQuery();
+
+        int matchId_max = 0;
+
+        while (resultSet.next()){
+            matchId_max = resultSet.getInt(1);
+        }
+
+
+        // thcu hien insert table match_player
+        String sql3 =  "INSERT INTO match_player (match_id,player_id) VALUES(?,?)";
+
+        PreparedStatement ps3 = conn.prepareStatement(sql3);
+
+        List<Player> players = match.getPlayers();
+
+        for (Player player : players){
+
+            ps3.setInt(1,matchId_max);
+            ps3.setInt(2,player.getPid());
+
+        }
+
+        ps3.execute();
+
+
     }
     private void shutdownConnection() {
 

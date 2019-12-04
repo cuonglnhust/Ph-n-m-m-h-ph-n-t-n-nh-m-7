@@ -16,4 +16,5 @@ public interface IClient extends Remote {
 
     void setConnectDataForPlayer2(ConnectionData connectionData) throws RemoteException;
 
+    void updateData() throws RemoteException;
 }

@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IServer extends Remote {
 
@@ -23,5 +24,9 @@ public interface IServer extends Remote {
 
     List<Match> getMatchHistory(int playerId1) throws RemoteException, SQLException; // hàm trả về lịch sử các trận đấu mà player1 đã chơi
 
-    void sendMatchtoServer(Match match,Player player2,ConnectionData connectionData) throws RemoteException;
+    void sendMatchtoServer(int idMatch,Match match,Player player2,ConnectionData connectionData) throws RemoteException;
+
+    void updateMatchHistory(int idMatch, Match match) throws RemoteException;
+
+
 }
