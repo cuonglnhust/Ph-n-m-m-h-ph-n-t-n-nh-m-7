@@ -24,6 +24,7 @@ public class CreateImage {
     public static BufferedImage[] buttonBack, buttonMore, buttonPlay, buttonStart;
 
     public static BufferedImage player1, player2;
+    public static BufferedImage lose, win;
 
 
     public static void create() {
@@ -156,5 +157,7 @@ public class CreateImage {
         buttonStart[0] = ImageLoader.loadImage("res/images/start_1.png");
         buttonStart[1] = ImageLoader.loadImage("res/images/start_2.png");
 
+        lose = ImageLoader.loadImage("res/images/lose.jpg");
+        win = ImageLoader.loadImage("res/images/win.jpg");
     }
 }

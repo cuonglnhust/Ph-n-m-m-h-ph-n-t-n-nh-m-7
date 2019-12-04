@@ -201,6 +201,28 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         }
     }
 
+    @Override
+    public void updateResult(int id) throws RemoteException {
+        // quảng bá ra các máy khác
+        playGameClients = new ArrayList<>(playGameClientHashMap.values());
+        playGameClients.remove(playGameClientHashMap.get(id));
+        for (PlayGameClient client: playGameClients){
+            client.updateResultLose();
+        }
+
+        // tự cập nhật
+        mapTemp.setLose(true);
+    }
+
+    public void updateResultFromServer() throws RemoteException {
+        // quảng bá ra các máy khác
+        playGameClients = new ArrayList<>(playGameClientHashMap.values());
+        for (PlayGameClient client: playGameClients){
+            client.updateResultLose();
+        }
+    }
+
+
     public void setMapTemp(MapTemp mapTemp) {
         this.mapTemp = mapTemp;
     }

@@ -6,14 +6,18 @@ import constant.TeamType;
 import entity.changed.remote.HorseCopy;
 import entity.unchanged.Step;
 import graphics.Constant;
+import graphics.CreateImage;
 import main.Handler;
 import player.local.*;
 import player.remote.*;
+import state.HomeState;
+import state.State;
 import teamGraphics.Blue;
 import teamGraphics.Orange;
 import teamGraphics.Red;
 import teamGraphics.Violet;
 
+import javax.swing.*;
 import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -47,6 +51,10 @@ public class MapTemp {
 
     // Lượt chơi hiện tại
     private TeamType turn;
+
+    // trạng thái kết quả
+    private boolean isLose;
+
 
     public MapTemp(List<PlayerData> playerDataList) {
         // các đội mô phỏng
@@ -165,17 +173,20 @@ public class MapTemp {
     }
 
     public void tick() {
+        // nếu chưa thua
+        if (!isLose) {
 
-        // nếu cờ đổi lượt bật thì thay đổi lượt
-        if (isChangeTurn) {
-            changeTurnLocal();
-            isChangeTurn = false;
-        }
+            // nếu cờ đổi lượt bật thì thay đổi lượt
+            if (isChangeTurn) {
+                changeTurnLocal();
+                isChangeTurn = false;
+            }
 
-        // logic của player chính
-        player.tick();
-        for (PlayerCopy playerCopy : playerCopies) {
-            playerCopy.tick();
+            // logic của player chính
+            player.tick();
+            for (PlayerCopy playerCopy : playerCopies) {
+                playerCopy.tick();
+            }
         }
     }
 
@@ -193,6 +204,33 @@ public class MapTemp {
         // vẽ các player copy
         for (PlayerCopy playerCopy : playerCopies) {
             playerCopy.render(g);
+        }
+
+        // nếu thua
+        if (isLose) {
+            // màn hình thua
+            g.drawImage(CreateImage.lose, 100, 100, 730, 530, null);
+
+            // hiển thị hộp thoại
+            Object[] options = {"OK"};
+            int option = JOptionPane.showOptionDialog(null,
+                    "Bạn đã thua. Vui lòng nhấn OK để tiếp tục", "Message",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+
+            // nếu click ok
+            if (option == JOptionPane.OK_OPTION) {
+
+                // gửi thông tin lịch sử lên Server
+
+                // chuyển trạng thái
+                State.setCurrentState(new HomeState());
+
+
+            }
         }
 
     }
@@ -339,4 +377,9 @@ public class MapTemp {
     public Player getPlayer() {
         return player;
     }
+
+    public void setLose(boolean lose) {
+        isLose = lose;
+    }
+
 }

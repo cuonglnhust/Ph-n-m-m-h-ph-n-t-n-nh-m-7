@@ -31,4 +31,7 @@ public interface PlayGameServer extends Remote {
 
     // cập nhật vị trí đá của ngựa bị đá
     public void updateKickedHorsePosition(int id, int kickedId, int position) throws RemoteException;
+
+    // cập nhật thắng
+    public void updateResult (int id) throws RemoteException;
 }

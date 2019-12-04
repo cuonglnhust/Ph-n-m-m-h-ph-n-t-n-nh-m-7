@@ -18,4 +18,6 @@ public interface PlayGameClient extends Remote {
     public void updateHorse(int id, int horseId, int position, int rank) throws RemoteException;
 
     public void updateKickedHorsePosition(int kickedId, int position) throws RemoteException;
+
+    public void updateResultLose() throws RemoteException;
 }
