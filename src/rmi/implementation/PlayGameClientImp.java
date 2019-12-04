@@ -64,6 +64,12 @@ public class PlayGameClientImp extends UnicastRemoteObject implements PlayGameCl
         }
     }
 
+    @Override
+    public void updateResultLose() throws RemoteException {
+        // cập nhật biến trong Map
+        mapTemp.setLose(true);
+    }
+
     public void setMapTemp(MapTemp mapTemp) {
         this.mapTemp = mapTemp;
     }

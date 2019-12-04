@@ -18,11 +18,11 @@ import java.rmi.server.UnicastRemoteObject;
 public class IClientImp extends UnicastRemoteObject implements IClient, Serializable {
 
     private Player player;
-    private InetAddress clientIp;
+    private String clientIp;
 
     public IClientImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
         this.player = player;
-        clientIp = InetAddress.getLocalHost();
+        clientIp = InetAddress.getLocalHost().getHostAddress();
         iServer.registerClient(this.player.getPid(), this);
         String msg = player.getPname() + " have ip : " + this.clientIp.toString() + " connected !";
         iServer.msgToServer(msg);
@@ -34,8 +34,6 @@ public class IClientImp extends UnicastRemoteObject implements IClient, Serializ
                         " vừa mời bạn chơi cùng, Bạn có muốn chơi với " + iClient.getPlayer().getPname().toUpperCase() + " ?", "Accept Invitation",
                 JOptionPane.YES_NO_OPTION);
         if (input == JOptionPane.YES_OPTION) {
-//            JOptionPane.showMessageDialog(null, "Bạn đã chấp nhận chơi với " +
-//                    iClient.getPlayer().getPname().toUpperCase() + ", vui lòng đợi phòng được tạo");
             return true;
         } else {
             return false;
@@ -54,7 +52,7 @@ public class IClientImp extends UnicastRemoteObject implements IClient, Serializ
 
     @Override
     public String getIpAddress() throws RemoteException {
-        return clientIp.toString();
+        return clientIp;
     }
 
     @Override

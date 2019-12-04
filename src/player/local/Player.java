@@ -5,9 +5,14 @@ import constant.HorseState;
 import constant.TeamType;
 import entity.changed.local.Dice;
 import entity.changed.local.Horse;
+import graphics.CreateImage;
 import main.Handler;
+import state.HomeState;
+import state.State;
 
+import javax.swing.*;
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,6 +28,9 @@ public class Player {
     // dấu hiệu bị đá
     private boolean isKick;
     private int kickedPosition = -1;
+
+    // điều kiện thắng
+    private boolean win;
 
 
     // ngựa trên bản đồ
@@ -137,6 +145,33 @@ public class Player {
             isKick = false;
         }
 
+        // kiểm tra điều kiện thắng
+        if (onRank.size() == 4) {
+            if (!onRank.containsKey(1) && !onRank.containsKey(2)) {
+                // quảng bá
+                // nếu là client
+                if (Handler.getInstance().getClientPlayer() != null) {
+                    try {
+                        Handler.getInstance().getClientPlayer().getPlayGameServer()
+                                .updateResult(Handler.getInstance().getId());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+                // nếu là server
+                else if (Handler.getInstance().getServerPlayer() != null) {
+                    try {
+                        Handler.getInstance().getServerPlayer().getPlayGameServerImp().updateResultFromServer();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                win = true;
+            }
+        }
+
+
     }
 
     // xét default cho dice
@@ -172,6 +207,29 @@ public class Player {
         dice.render(g);
         for (Horse horse : horses) {
             horse.render(g);
+        }
+
+        if (win){
+            g.drawImage(CreateImage.win,100,100,730,530,null);
+            Object[] options = {"OK"};
+            int option = JOptionPane.showOptionDialog(null,
+                    "Bạn đã thắng. Vui lòng nhấn OK để tiếp tục", "Message",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+
+            // nếu click ok
+            if (option == JOptionPane.OK_OPTION) {
+
+                // gửi thông tin lịch sử lên Server
+
+                // chuyển trạng thái
+                State.setCurrentState(new HomeState());
+
+
+            }
         }
     }
 
