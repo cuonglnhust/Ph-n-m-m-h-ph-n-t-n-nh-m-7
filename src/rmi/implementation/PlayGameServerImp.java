@@ -1,5 +1,6 @@
 package rmi.implementation;
 
+import SCCommon.Match;
 import constant.DiceValue;
 import constant.TeamType;
 import entity.changed.data.HorseData;
@@ -201,25 +202,49 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         }
     }
 
+    // quảng bá kết quả trận đấu
     @Override
     public void updateResult(int id) throws RemoteException {
         // quảng bá ra các máy khác
         playGameClients = new ArrayList<>(playGameClientHashMap.values());
         playGameClients.remove(playGameClientHashMap.get(id));
-        for (PlayGameClient client: playGameClients){
+        for (PlayGameClient client : playGameClients) {
             client.updateResultLose();
         }
 
         // tự cập nhật
         mapTemp.setLose(true);
+
+        // khởi tạo kết quả trận đấu
+        Match match = new Match();
+        match.setWinner(id);
+        String duration = String.valueOf(System.currentTimeMillis() - mapTemp.getDuration());
+        match.setDuration(duration);
+        match.setPlayers(mapTemp.getPlayerList());
+
+        // Gửi kết quả trận đấu lên Server
+        Handler.getInstance().getClientLogin().getiServer().updateMatchHistory(Handler.getInstance()
+                .getId(), match);
     }
 
+    // quảng bá kết quả trận đấu
     public void updateResultFromServer() throws RemoteException {
         // quảng bá ra các máy khác
         playGameClients = new ArrayList<>(playGameClientHashMap.values());
-        for (PlayGameClient client: playGameClients){
+        for (PlayGameClient client : playGameClients) {
             client.updateResultLose();
         }
+
+        // khởi tạo kết quả trận đấu
+        Match match = new Match();
+        match.setWinner(Handler.getInstance().getId());
+        String duration = String.valueOf(System.currentTimeMillis() - mapTemp.getDuration());
+        match.setDuration(duration);
+        match.setPlayers(mapTemp.getPlayerList());
+
+        // Gửi kết quả trận đấu lên Server
+        Handler.getInstance().getClientLogin().getiServer().updateMatchHistory(Handler.getInstance()
+                .getId(), match);
     }
 
 

@@ -6,6 +6,7 @@ import entity.changed.local.HorseOrange;
 import entity.changed.remote.DiceCopy;
 import entity.changed.remote.HorseCopyOrange;
 import graphics.Constant;
+import main.Handler;
 import map.EntityPosition;
 
 import java.awt.*;
@@ -26,6 +27,15 @@ public class PlayerCopyOrange extends PlayerCopy {
         for (int i = 0; i < 4; i++) {
             Point point = Constant.orangeHorseTeam.get(i);
             horseCopies.add(new HorseCopyOrange(i, point.x, point.y));
+        }
+    }
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+            g.fillOval(EntityPosition.ORANGE_DICE_PLACE_X + 35,
+                    EntityPosition.ORANGE_DICE_PLACE_Y - 25, 30, 30);
         }
     }
 }

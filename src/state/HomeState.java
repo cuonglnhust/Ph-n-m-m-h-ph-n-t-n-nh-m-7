@@ -1,8 +1,8 @@
 package state;
 
+import SCCommon.Match;
 import SCCommon.Player;
 import button.ButtonHistory;
-import graphics.CreateFont;
 import graphics.CreateImage;
 import list.data.MatchDataElement;
 import list.data.PlayerDataElement;
@@ -10,7 +10,6 @@ import list.graphics.MatchGraphicsElement;
 import list.graphics.PlayerGraphicsElement;
 import main.Handler;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Rectangle2D;
@@ -26,45 +25,52 @@ public class HomeState extends State {
     private List<MatchGraphicsElement> matchGraphicsElementList;
     private ButtonHistory buttonHistory;
 
-    private List<PlayerDataElement> playerDataElementList;
+    private List<Player> playerList;
     private List<PlayerGraphicsElement> playerGraphicsElementList;
+
+    private boolean updateData;
 
 
     public HomeState() {
- //      updateMatchGraphicsElementList();
-       updatePlayerGraphicsElementList();
+        Handler.getInstance().getClientLogin().getIClientImp().setHomeState(this);
+        playerList = new ArrayList<>();
+        playerGraphicsElementList = new ArrayList<>();
+        matchDataElementList = new ArrayList<>();
+        matchGraphicsElementList = new ArrayList<>();
+        Handler.getInstance().getGame().getDisplay().getjFrame().setTitle(Handler.getInstance().getName());
+        updatePlayerGraphicsElementList();
+        updateMatchGraphicsElementList();
         buttonHistory = new ButtonHistory(50, 621);
     }
 
     private void updateMatchGraphicsElementList() {
-        matchGraphicsElementList = new ArrayList<>();
-        for (int i = 0; i < matchDataElementList.size(); i++) {
-            MatchGraphicsElement matchGraphicsElement = new MatchGraphicsElement(matchDataElementList.get(i), i);
-            matchGraphicsElementList.add(matchGraphicsElement);
-        }
-    }
-
-    private void updatePlayerGraphicsElementList() {
-
-        playerGraphicsElementList = new ArrayList<>();
-        playerDataElementList = new ArrayList<>();
         try {
-            List<Player> players = Handler.getInstance().getClientLogin().getiServer().getPlayersOnline(
-                                        new Player(Handler.getInstance().getId(),Handler.getInstance().getName()));
-            System.out.println("số người đang online là : " + players.size());
-            for (Player player : players){
+            List<Match> matches = Handler.getInstance().getClientLogin().getiServer().getMatchsOnline();
 
-                PlayerDataElement playerDataElement = new PlayerDataElement();
-                playerDataElement.setIdPlayer(player.getPid());
-                playerDataElement.setPlayerName(player.getPname());
+            for (Match match : matches) {
+                MatchDataElement matchDataElement = new MatchDataElement(match.getPlayers().get(0).getPname(), match.getPlayers().get(1).getPname());
+                matchDataElementList.add(matchDataElement);
+            }
 
-                playerDataElementList.add(playerDataElement);
+            for (int i = 0; i < matchDataElementList.size(); i++) {
+                MatchGraphicsElement matchGraphicsElement = new MatchGraphicsElement(matchDataElementList.get(i), i);
+                matchGraphicsElementList.add(matchGraphicsElement);
             }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < playerDataElementList.size(); i++) {
-            PlayerGraphicsElement playerGraphicsElement = new PlayerGraphicsElement(i, playerDataElementList.get(i));
+    }
+
+    private void updatePlayerGraphicsElementList() {
+        try {
+            playerList = Handler.getInstance().getClientLogin().getiServer().getPlayersOnline(
+                    new Player(Handler.getInstance().getId(), Handler.getInstance().getName()));
+            System.out.println("số người đang online là : " + playerList.size());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < playerList.size(); i++) {
+            PlayerGraphicsElement playerGraphicsElement = new PlayerGraphicsElement(i, playerList.get(i));
             playerGraphicsElementList.add(playerGraphicsElement);
         }
     }
@@ -73,14 +79,24 @@ public class HomeState extends State {
     public void tick() {
 
         // nếu nhận được lời mời từ Server
-
         // Hiển thị thông báo về lời mời: Tên người chơi + lời mời
-
         // Trả lời thông báo
 
+        if (updateData) {
+            playerGraphicsElementList = new ArrayList<>();
+            updatePlayerGraphicsElementList();
+            matchDataElementList = new ArrayList<>();
+            matchGraphicsElementList = new ArrayList<>();
+            updateMatchGraphicsElementList();
+            updateData = false;
+        }
 
         for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
             playerGraphicsElement.tick();
+        }
+
+        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
+            matchGraphicsElement.tick();
         }
 
         buttonHistory.tick();
@@ -94,15 +110,13 @@ public class HomeState extends State {
         g.drawImage(CreateImage.matchList, 517, 210, null);
         buttonHistory.render(g);
 
+        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
+            matchGraphicsElement.render(g);
+        }
 
-//        for (MatchGraphicsElement matchGraphicsElement : matchGraphicsElementList) {
-//            matchGraphicsElement.render(g);
-//        }
-//
         for (PlayerGraphicsElement playerGraphicsElement : playerGraphicsElementList) {
             playerGraphicsElement.render(g);
         }
-
     }
 
     private Font scaleFontWidth(Graphics g, String name) {
@@ -130,5 +144,9 @@ public class HomeState extends State {
         Rectangle2D rectangle2D = graphics2D.getFontMetrics(font).getStringBounds(name, g);
         float baseLine = bottomLine - ((float) (height - rectangle2D.getHeight())) / 2;
         return (int) baseLine;
+    }
+
+    public void setUpdateData(boolean updateData) {
+        this.updateData = updateData;
     }
 }

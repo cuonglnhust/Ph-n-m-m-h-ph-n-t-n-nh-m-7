@@ -6,6 +6,7 @@ import entity.changed.local.HorseRed;
 import entity.changed.remote.DiceCopy;
 import entity.changed.remote.HorseCopyRed;
 import graphics.Constant;
+import main.Handler;
 import map.EntityPosition;
 
 import java.awt.*;
@@ -26,6 +27,15 @@ public class PlayerCopyRed extends PlayerCopy {
         for (int i = 0; i < 4; i++) {
             Point point = Constant.redHorseTeam.get(i);
             horseCopies.add(new HorseCopyRed(i, point.x, point.y));
+        }
+    }
+
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+            g.fillOval(EntityPosition.RED_DICE_PLACE_X + 35,
+                    EntityPosition.RED_DICE_PLACE_Y + 125, 30, 30);
         }
     }
 }

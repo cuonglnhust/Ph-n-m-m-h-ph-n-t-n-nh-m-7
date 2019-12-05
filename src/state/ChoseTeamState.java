@@ -56,9 +56,13 @@ public class ChoseTeamState extends State implements Remote {
             Handler.getInstance().getServerPlayer().getChoseTeamServerImp().setChoseTeamState(this);
             dialogServerWait = createWaitDialog("Others player are not ready. Please wait ... ", "Message");
             Match match = new Match();
+            List<Player> players = new ArrayList<>();
+            players.add(player2);
+            players.add(Handler.getInstance().getClientLogin().getPlayer());
+            match.setPlayers(players);
 //             gửi match lên cho server và thông báo cho P2 là phòng đã tạo
             try {
-                Handler.getInstance().getClientLogin().getiServer().sendMatchtoServer(match, player2, connectionData);
+                Handler.getInstance().getClientLogin().getiServer().sendMatchtoServer(Handler.getInstance().getId(), match, player2, connectionData);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

@@ -6,6 +6,7 @@ import entity.changed.local.HorseBlue;
 import entity.changed.remote.DiceCopy;
 import entity.changed.remote.HorseCopyBlue;
 import graphics.Constant;
+import main.Handler;
 import map.EntityPosition;
 
 import java.awt.*;
@@ -29,4 +30,12 @@ public class PlayerCopyBlue extends PlayerCopy {
         }
     }
 
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+            g.fillOval(EntityPosition.BLUE_DICE_PLACE_X + 35,
+                    EntityPosition.BLUE_DICE_PLACE_Y + 125, 30, 30);
+        }
+    }
 }

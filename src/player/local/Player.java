@@ -144,7 +144,6 @@ public class Player {
             }
             isKick = false;
         }
-
         // kiểm tra điều kiện thắng
         if (onRank.size() == 4) {
             if (!onRank.containsKey(1) && !onRank.containsKey(2)) {
@@ -166,12 +165,10 @@ public class Player {
                         e.printStackTrace();
                     }
                 }
-
+                // đánh dấu là thắng
                 win = true;
             }
         }
-
-
     }
 
     // xét default cho dice
@@ -204,13 +201,18 @@ public class Player {
     }
 
     public void render(Graphics g) {
+
+
+
         dice.render(g);
         for (Horse horse : horses) {
             horse.render(g);
         }
 
-        if (win){
-            g.drawImage(CreateImage.win,100,100,730,530,null);
+        // nếu thắng
+        if (win) {
+            // hiển thị thông báo
+            g.drawImage(CreateImage.win, 100, 100, 730, 530, null);
             Object[] options = {"OK"};
             int option = JOptionPane.showOptionDialog(null,
                     "Bạn đã thắng. Vui lòng nhấn OK để tiếp tục", "Message",
@@ -222,9 +224,6 @@ public class Player {
 
             // nếu click ok
             if (option == JOptionPane.OK_OPTION) {
-
-                // gửi thông tin lịch sử lên Server
-
                 // chuyển trạng thái
                 State.setCurrentState(new HomeState());
 

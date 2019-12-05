@@ -3,9 +3,9 @@ package rmi.implementation;
 import SCCommon.ConnectionData;
 import SCCommon.IClient;
 import SCCommon.Player;
-import rmi.interfaces.SenIdPlayer;
 import SCCommon.IServer;
 import state.ChoseTeamState;
+import state.HomeState;
 import state.State;
 
 import javax.swing.*;
@@ -19,6 +19,7 @@ public class IClientImp extends UnicastRemoteObject implements IClient, Serializ
 
     private Player player;
     private String clientIp;
+    private HomeState homeState;
 
     public IClientImp(Player player, IServer iServer) throws RemoteException, UnknownHostException {
         this.player = player;
@@ -60,4 +61,13 @@ public class IClientImp extends UnicastRemoteObject implements IClient, Serializ
         return player;
     }
 
+    @Override
+    public void updateData() throws RemoteException {
+        homeState.setUpdateData(true);
+
+    }
+
+    public void setHomeState(HomeState homeState) {
+        this.homeState = homeState;
+    }
 }

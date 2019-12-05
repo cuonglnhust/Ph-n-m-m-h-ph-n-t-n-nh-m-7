@@ -55,6 +55,12 @@ public class MapTemp {
     // trạng thái kết quả
     private boolean isLose;
 
+    // danh sách người chơi cùng
+    List<SCCommon.Player> playerList;
+
+    // thời gian chơi
+    private long duration;
+
 
     public MapTemp(List<PlayerData> playerDataList) {
         // các đội mô phỏng
@@ -100,6 +106,7 @@ public class MapTemp {
             turn = player.getTeam();
         }
 
+        duration = System.currentTimeMillis();
     }
 
     // khởi tạo map ảo
@@ -149,6 +156,8 @@ public class MapTemp {
                         break;
                 }
             }
+
+            SCCommon.Player player = new SCCommon.Player(playerData.getId(), playerData.getName());
         }
     }
 
@@ -382,4 +391,11 @@ public class MapTemp {
         isLose = lose;
     }
 
+    public List<SCCommon.Player> getPlayerList() {
+        return playerList;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
 }

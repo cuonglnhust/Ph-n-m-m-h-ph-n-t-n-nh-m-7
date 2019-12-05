@@ -32,6 +32,8 @@ public class ClientPlayer extends ModePlayer {
     public boolean connection() {
         try {
 
+
+
             //registry = LocateRegistry.getRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":"
                     + connectionData.getPort() + "/";

@@ -1,15 +1,11 @@
 package list.graphics;
 
+import SCCommon.Player;
 import button.ButtonInvite;
-import button.OnClickButton;
 import graphics.CreateFont;
 import list.constant.PlayerElementConstant;
 import list.caculate.PlayerCaculateElement;
 import list.data.PlayerDataElement;
-import main.Handler;
-import SCCommon.ConnectionData;
-import state.ChoseTeamState;
-import state.State;
 
 import java.awt.*;
 
@@ -18,18 +14,16 @@ public class PlayerGraphicsElement {
     private int id;
     private TextGraphicsElement textGraphicsElement;
     private ButtonInvite buttonInvite;
-    private PlayerDataElement playerDataElement;
+    private Player player;
 
-    public PlayerGraphicsElement(int id, PlayerDataElement playerDataElement) {
+    public PlayerGraphicsElement(int id, Player player) {
         this.id = id;
         PlayerCaculateElement playerCaculateElement = new PlayerCaculateElement(id);
         this.textGraphicsElement = new TextGraphicsElement(PlayerElementConstant.FIRST_ELEMENT_X,
                 PlayerElementConstant.TEXT_ELEMENT_WIDTH, PlayerElementConstant.TEXT_ELEMENT_HEIGHT,
-                playerDataElement.getPlayerName(), playerCaculateElement.getBottomLine(), CreateFont.homeFont);
+                player.getPname(), playerCaculateElement.getBottomLine(), CreateFont.homeFont);
         Point buttonInviteCoordinate = playerCaculateElement.getButtonInvite();
-        this.buttonInvite = new ButtonInvite(buttonInviteCoordinate.x, buttonInviteCoordinate.y, playerDataElement);
-       // this.buttonInvite.setOnClickButton(setOnClickButtonInvite());
-
+        this.buttonInvite = new ButtonInvite(buttonInviteCoordinate.x, buttonInviteCoordinate.y, player);
     }
 
 

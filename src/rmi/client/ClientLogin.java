@@ -61,4 +61,8 @@ public class ClientLogin extends Mode {
     public IServer getiServer() {
         return iServer;
     }
+
+    public rmi.implementation.IClientImp getIClientImp() {
+        return IClientImp;
+    }
 }

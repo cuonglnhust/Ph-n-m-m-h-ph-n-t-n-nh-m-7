@@ -87,10 +87,10 @@ public class Login extends JFrame {
                 if (usertextField.getText().equals("") || String.copyValueOf(passwordField.getPassword()).equals("") || IPAddressField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Tài khoản, mật khẩu, IP không được bỏ trống");
                 } else {
-                    ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText(), 9999, "abc"));
+                    ClientLogin clientLogin = new ClientLogin(new ConnectionData(IPAddressField.getText().trim(), 9999, "abc"));
                     Handler.getInstance().setClientLogin(clientLogin);
                     try {
-                        if (Handler.getInstance().getClientLogin().connection(usertextField.getText(), String.copyValueOf(passwordField.getPassword()))) {
+                        if (Handler.getInstance().getClientLogin().connection(usertextField.getText().trim(), String.copyValueOf(passwordField.getPassword()).trim())) {
                             State.setCurrentState(new HomeState());
                             startState.getLogin().setVisible(false);
                             startState.getLogin().dispose();

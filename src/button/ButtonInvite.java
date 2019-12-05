@@ -13,11 +13,10 @@ import java.rmi.RemoteException;
 
 public class ButtonInvite extends Button {
 
-    // OnClickButton onClickButton;
-    private PlayerDataElement player2;
+    private Player player2;
     private JDialog dialogMessage;
 
-    public ButtonInvite(int x, int y, PlayerDataElement player2) {
+    public ButtonInvite(int x, int y, Player player2) {
         super(x, y);
         this.player2 = player2;
         this.dialogMessage = createMessage();
@@ -31,7 +30,7 @@ public class ButtonInvite extends Button {
                     // mở hộp thoại thông báo mời
                     dialogMessage.setVisible(true);
                     Player player1 = new Player(Handler.getInstance().getId(), Handler.getInstance().getName());
-                    Player player2 = new Player(this.player2.getIdPlayer(), this.player2.getPlayerName());
+                    Player player2 = new Player(this.player2.getPid(), this.player2.getPname());
                     if (Handler.getInstance().getClientLogin().getiServer().
                             sendInvitation(player1, player2, Handler.getInstance().getConnection())) {
                         // nếu nhận lời mời
@@ -42,7 +41,7 @@ public class ButtonInvite extends Button {
 
                     } else {
                         JOptionPane.showMessageDialog(null,
-                                this.player2.getPlayerName().toUpperCase() + " từ chối chơi cùng bạn ! ");
+                                this.player2.getPname().toUpperCase() + " từ chối chơi cùng bạn ! ");
                     }
 
                 } catch (RemoteException e) {
@@ -50,7 +49,7 @@ public class ButtonInvite extends Button {
                 }
 
                 System.out.println("bạn có id là " + Handler.getInstance().getName() + " vừa mời người chơi có id là : " +
-                        this.player2.getIdPlayer());
+                        this.player2.getPid());
 
             }
         }
@@ -59,7 +58,7 @@ public class ButtonInvite extends Button {
     private JDialog createMessage() {
         JDialog jDialog = new JDialog(Handler.getInstance().getGame().getDisplay().getjFrame(), "Invitation !");
         JLabel l = new JLabel("             Bạn vừa mời " +
-                this.player2.getPlayerName().toUpperCase() + " chơi cùng !");
+                this.player2.getPname().toUpperCase() + " chơi cùng !");
         jDialog.add(l);
         jDialog.setLocation(jDialog.getParent().getWidth() / 2 - jDialog.getWidth() / 2, jDialog.getParent().getHeight() / 2 - jDialog.getHeight() / 2);
         jDialog.setSize(265, 100);
@@ -82,9 +81,5 @@ public class ButtonInvite extends Button {
         return new Rectangle(x, y, width, height);
     }
 
-
-    //    public void setOnClickButton(OnClickButton onClickButton) {
-//        this.onClickButton = onClickButton;
-//    }
 
 }
