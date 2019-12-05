@@ -31,23 +31,6 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
         } else {
             return false;
         }
-
-//        if (playerOnline.get(player2.getPid()).                             // client2 gửi trả lời invite
-//                responseInvitation(playerOnline.get(player1.getPid()))) {
-//            playerOnline.get(player2.getPid()).
-//                    retrieveIp(playerOnline.get(player1.getPid()).getIpAddress()); // client2 lấy ipaddress của client1
-//            System.out.println(player2.getPname() + "đã có chấp nhận lời mời của bạn !");
-//            Match match = new Match();
-//            List<Player> players = new ArrayList<>();
-//            players.add(player1);
-//            players.add(player2);
-//            match.setPlayers(players);
-//            matches.add(match);
-//
-//        } else {
-//            System.out.println("Play : " + player2.getPname() + "Từ chối chơi với bạn !");
-//        }
-
     }
 
 
@@ -72,18 +55,12 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
     @Override
     public void registerClient(int playerId, IClient iClient) throws RemoteException {
         this.playerOnline.put(playerId, iClient);
+        ArrayList<IClient> iClients = new ArrayList<>(playerOnline.values());
+        iClients.remove(playerOnline.get(playerId));
+        for (IClient iClient1: iClients){
+            iClient1.updateData();
+        }
 
-        playerOnline.forEach((playerid, client) ->
-                {
-                    if (playerid != playerId) {
-                        try {
-                            iClient.updateData();
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        );
     }
 
     @Override
@@ -127,6 +104,12 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
     public void sendMatchtoServer(int idMatch,Match match, Player player, ConnectionData connectionData) throws RemoteException {
         matches.put(idMatch,match);
         playerOnline.get(player.getPid()).setConnectDataForPlayer2(connectionData);
+        ArrayList<IClient> iClients = new ArrayList<>(playerOnline.values());
+        iClients.remove(playerOnline.get(idMatch));
+        iClients.remove(playerOnline.get(player.getPid()));
+        for (IClient iClient: iClients){
+            iClient.updateData();
+        }
     }
 
     @Override
@@ -144,17 +127,5 @@ public class ServerImp extends UnicastRemoteObject implements IServer {
 
     }
 
-  /*  @Override
-    public List<Integer> senIdMatch(List<Match> matches) {
-        List<Integer> ListRun = new ArrayList<>();
-        for (Match match : matches) {
-            if (match.getPlayers().size() >= 2 && match.getStatus() == 1) {
-                ListRun.add(match.getId());
 
-            }
-
-        }
-        return ListRun;
-    }
-*/
 }

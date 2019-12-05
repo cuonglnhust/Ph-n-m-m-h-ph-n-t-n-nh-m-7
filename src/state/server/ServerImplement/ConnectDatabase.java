@@ -9,9 +9,9 @@ import java.util.List;
 
 public class ConnectDatabase {
 
-    private String url="jdbc:mysql://172.17.0.2:3306/hippocampus?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true";
+    private String url="jdbc:mysql://localhost:3306/hippocampus?useUnicode=yes&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true";
     private String username="root";
-    private String password="cuong";
+    private String password="";
 
     private Connection conn=null;
     private Statement statement = null;
@@ -21,6 +21,17 @@ public class ConnectDatabase {
 
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("connect database !!");
+//
+//            String SQL = " SELECT matches.id FROM matches " +
+//                    " WHERE matches.id >= ALL(SELECT matches.id FROM matches) ";
+//            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()){
+//                System.out.println("Row - " + resultSet.getInt(1));
+//            }
+//
+//
+
         }else {System.out.println("database da connect !!");}
     }
 
@@ -93,7 +104,7 @@ public class ConnectDatabase {
 
 
         //thuc hien insert matchs table
-        String sql1 =  "INSERT INTO matchs (duration,winner) VALUES(?,?)";
+        String sql1 =  "INSERT INTO matches (duration,winner) VALUES(?,?)";
 
         PreparedStatement ps1 = conn.prepareStatement(sql1);
 
