@@ -26,4 +26,9 @@ public interface IServer extends Remote {
 
     void updateMatchHistory(int idMatch, Match match) throws RemoteException;
 
+    void createNewViewServer(int id, ConnectionData connectionData) throws RemoteException;
+
+    void removeViewServer(int id) throws RemoteException;
+
+    ConnectionData requestViewMatch(int id) throws RemoteException;
 }

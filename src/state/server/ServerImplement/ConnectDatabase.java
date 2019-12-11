@@ -21,16 +21,7 @@ public class ConnectDatabase {
 
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("connect database !!");
-//
-//            String SQL = " SELECT matches.id FROM matches " +
-//                    " WHERE matches.id >= ALL(SELECT matches.id FROM matches) ";
-//            PreparedStatement preparedStatement = conn.prepareStatement(SQL);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()){
-//                System.out.println("Row - " + resultSet.getInt(1));
-//            }
-//
-//
+
 
         }else {System.out.println("database da connect !!");}
     }
