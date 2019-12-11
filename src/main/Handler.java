@@ -1,23 +1,28 @@
 package main;
 
+import constant.Connection;
+import map.local.MapCopy;
 import map.local.MapTemp;
 import mouse.Mouse;
 import rmi.client.ClientLogin;
 import rmi.client.ClientPlayer;
 import SCCommon.ConnectionData;
-import rmi.model.ModeViewer;
+import rmi.client.ClientViewer;
 import rmi.server.ServerPlayer;
+import rmi.server.ServerViewer;
 
 public class Handler {
 
     private Game game;
     private MapTemp mapTemp;
+    private MapCopy mapCopy;
     private ServerPlayer serverPlayer;
     private ClientPlayer clientPlayer;
-    private ModeViewer modeViewer;
+    private ClientViewer clientViewer;
+    private ServerViewer serverViewer;
     private ClientLogin clientLogin;
-    private ConnectionData connection;
-
+    private ConnectionData connectionToPlay;
+    private ConnectionData connectionToWatch;
     private int id;
     private String name;
     private int playerCount;
@@ -26,8 +31,6 @@ public class Handler {
     private static Handler handler;
 
     private Handler() {
-        id = 2;
-        name = "Cuong";
         playerCount = 2;
     }
 
@@ -64,20 +67,12 @@ public class Handler {
         return serverPlayer;
     }
 
-    public ModeViewer getModeViewer() {
-        return modeViewer;
-    }
-
     public ClientLogin getClientLogin() {
         return clientLogin;
     }
 
     public void setServerPlayer(ServerPlayer serverPlayer) {
         this.serverPlayer = serverPlayer;
-    }
-
-    public void setModeViewer(ModeViewer modeViewer) {
-        this.modeViewer = modeViewer;
     }
 
     public void setClientLogin(ClientLogin clientLogin) {
@@ -116,11 +111,43 @@ public class Handler {
         return playerCount;
     }
 
-    public ConnectionData getConnection() {
-        return connection;
+    public ConnectionData getConnectionToPlay() {
+        return connectionToPlay;
     }
 
-    public void setConnection(ConnectionData connection) {
-        this.connection = connection;
+    public void setConnectionToPlay(ConnectionData connectionToPlay) {
+        this.connectionToPlay = connectionToPlay;
+    }
+
+    public ClientViewer getClientViewer() {
+        return clientViewer;
+    }
+
+    public void setClientViewer(ClientViewer clientViewer) {
+        this.clientViewer = clientViewer;
+    }
+
+    public ServerViewer getServerViewer() {
+        return serverViewer;
+    }
+
+    public void setServerViewer(ServerViewer serverViewer) {
+        this.serverViewer = serverViewer;
+    }
+
+    public ConnectionData getConnectionToWatch() {
+        return connectionToWatch;
+    }
+
+    public void setConnectionToWatch(ConnectionData connectionToWatch) {
+        this.connectionToWatch = connectionToWatch;
+    }
+
+    public MapCopy getMapCopy() {
+        return mapCopy;
+    }
+
+    public void setMapCopy(MapCopy mapCopy) {
+        this.mapCopy = mapCopy;
     }
 }

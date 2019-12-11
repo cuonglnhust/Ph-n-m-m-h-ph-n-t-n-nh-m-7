@@ -1,6 +1,5 @@
 package main;
 
-import SCCommon.ConnectionData;
 import constant.Connection;
 import graphics.CreateFont;
 import mouse.Mouse;
@@ -38,7 +37,8 @@ public class Game implements Runnable {
         display.getCanvas().addMouseMotionListener(mouse);
         CreateImage.create();
         CreateFont.create();
-        Handler.getInstance().setConnection(Connection.create());
+        Handler.getInstance().setConnectionToPlay(Connection.createToPlayer());
+        Handler.getInstance().setConnectionToWatch(Connection.createToWatch());
         state = new StartState();
         State.setCurrentState(state);
     }

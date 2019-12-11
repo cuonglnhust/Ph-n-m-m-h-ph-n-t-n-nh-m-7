@@ -32,7 +32,7 @@ public class PlayerViolet extends Player {
         super.render(g);
         if (Handler.getInstance().getMapTemp().getTurn() == team) {
             g.fillOval(EntityPosition.VIOLET_DICE_PLACE_X + 35,
-                    EntityPosition.VIOLET_DICE_PLACE_Y - 25, 30, 30);
+                    EntityPosition.VIOLET_DICE_PLACE_Y - 65, 30, 30);
         }
     }
 }

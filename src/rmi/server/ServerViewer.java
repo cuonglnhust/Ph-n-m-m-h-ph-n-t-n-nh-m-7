@@ -38,4 +38,8 @@ public class ServerViewer extends ModeViewer {
             return false;
         }
     }
+
+    public WatchMatchServerImp getWatchMatchServerImp() {
+        return watchMatchServerImp;
+    }
 }

@@ -132,4 +132,8 @@ public class DiceCopy extends Entity {
     public void setClick(boolean click) {
         isClick = click;
     }
+
+    public DiceValue getDiceValue() {
+        return diceValue;
+    }
 }

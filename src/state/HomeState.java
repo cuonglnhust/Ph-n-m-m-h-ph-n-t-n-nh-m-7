@@ -48,7 +48,8 @@ public class HomeState extends State {
             List<Match> matches = Handler.getInstance().getClientLogin().getiServer().getMatchsOnline();
 
             for (Match match : matches) {
-                MatchDataElement matchDataElement = new MatchDataElement(match.getPlayers().get(0).getPname(), match.getPlayers().get(1).getPname());
+                MatchDataElement matchDataElement = new MatchDataElement(match.getPlayers().get(0).getPname(),
+                        match.getPlayers().get(1).getPname(), match.getId());
                 matchDataElementList.add(matchDataElement);
             }
 

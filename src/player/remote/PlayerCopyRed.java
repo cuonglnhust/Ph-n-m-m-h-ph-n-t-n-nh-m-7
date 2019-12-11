@@ -33,7 +33,12 @@ public class PlayerCopyRed extends PlayerCopy {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+        if (Handler.getInstance().getMapTemp() != null && Handler.getInstance().getMapTemp().getTurn() == team) {
+            g.fillOval(EntityPosition.RED_DICE_PLACE_X + 35,
+                    EntityPosition.RED_DICE_PLACE_Y + 125, 30, 30);
+        }
+
+        if (Handler.getInstance().getMapCopy() != null && Handler.getInstance().getMapCopy().getTurn() == team) {
             g.fillOval(EntityPosition.RED_DICE_PLACE_X + 35,
                     EntityPosition.RED_DICE_PLACE_Y + 125, 30, 30);
         }

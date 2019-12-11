@@ -17,7 +17,7 @@ public class PlayerCopyViolet extends PlayerCopy {
         super(id);
         Constant.initHorseViolet();
         initHorseCopy();
-        diceCopy = new DiceCopy(EntityPosition.VIOLET_DICE_PLACE_X,EntityPosition.VIOLET_DICE_PLACE_Y);
+        diceCopy = new DiceCopy(EntityPosition.VIOLET_DICE_PLACE_X, EntityPosition.VIOLET_DICE_PLACE_Y);
         team = TeamType.TEAM_VIOLET;
     }
 
@@ -33,9 +33,14 @@ public class PlayerCopyViolet extends PlayerCopy {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+        if (Handler.getInstance().getMapTemp() != null && Handler.getInstance().getMapTemp().getTurn() == team) {
             g.fillOval(EntityPosition.VIOLET_DICE_PLACE_X + 35,
-                    EntityPosition.VIOLET_DICE_PLACE_Y- 25, 30, 30);
+                    EntityPosition.VIOLET_DICE_PLACE_Y - 65, 30, 30);
+        }
+
+        if (Handler.getInstance().getMapCopy() != null && Handler.getInstance().getMapCopy().getTurn() == team) {
+            g.fillOval(EntityPosition.VIOLET_DICE_PLACE_X + 35,
+                    EntityPosition.VIOLET_DICE_PLACE_Y - 65, 30, 30);
         }
     }
 }

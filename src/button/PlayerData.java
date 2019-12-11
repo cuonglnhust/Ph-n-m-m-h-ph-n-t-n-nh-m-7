@@ -2,8 +2,10 @@ package button;
 
 import constant.TeamType;
 
+import java.io.Serializable;
+
 // thông tin để tạo Player trong GameState
-public class PlayerData {
+public class PlayerData implements Serializable {
     private int id;
     private String name;
     private TeamType teamType;

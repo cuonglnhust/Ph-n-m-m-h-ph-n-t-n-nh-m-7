@@ -27,11 +27,10 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
 
     @Override
     public boolean hello() throws RemoteException {
-        System.out.println("HaHaha");
         return true;
     }
 
-    // quảng bá sự kiện click vào ngựa
+    // quảng bá sự kiện click vào xúc xắc
     @Override
     public void broadcastDiceClick(int id) throws RemoteException {
         // broadcast cho các Client còn lại
@@ -42,6 +41,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         }
         // tự cập nhật cho mình
         mapTemp.getPlayerCopyHashMap().get(id).getDiceCopy().setClick(true);
+
+        // quảng bá cho các máy xem nếu có
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateDiceClick(id);
+        }
     }
 
     // quảng báo giá trị diceValue
@@ -55,9 +59,15 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         }
         // tự cập nhật cho mình
         mapTemp.getPlayerCopyHashMap().get(id).getDiceCopy().setDiceValue(diceValue);
+
+        // quảng bá cho các máy xem nếu có
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateDiceValue(id, diceValue);
+        }
+
     }
 
-    // quảng báo sự kiện click vào ngựa từ server
+    // quảng báo sự kiện click vào xúc xắc từ server
     public void broadcastDiceClickFromServer(int id) {
         playGameClients = new ArrayList<>(playGameClientHashMap.values());
         for (PlayGameClient client : playGameClients) {
@@ -66,6 +76,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        }
+
+        // quảng bá cho các máy xem nếu có
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateDiceClick(id);
         }
     }
 
@@ -79,6 +94,12 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
                 e.printStackTrace();
             }
         }
+
+        // quảng bá cho các máy xem nếu có
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateDiceValue(id, diceValue);
+        }
+
     }
 
     @Override
@@ -105,7 +126,7 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
     }
 
     // quảng bá change Turn cho các máy client
-    public void changeTurmFromServer() {
+    public void changeTurnFromServer() {
         playGameClients = new ArrayList<>(playGameClientHashMap.values());
         for (PlayGameClient client : playGameClients) {
             try {
@@ -149,6 +170,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         }
         // tự cập nhật
         mapTemp.getPlayerCopyHashMap().get(id).setHorseData(new HorseData(horseId, position, rank));
+
+        // quảng bá cho các máy xem
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateHorsePosition(id, horseId, position, rank);
+        }
     }
 
     // quảng bá di chuyển của ngựa ở Server
@@ -157,6 +183,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         playGameClients = new ArrayList<>(playGameClientHashMap.values());
         for (PlayGameClient client : playGameClients) {
             client.updateHorse(id, horseId, position, rank);
+        }
+
+        // quảng bá cho các máy xem
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateHorsePosition(id, horseId, position, rank);
         }
     }
 
@@ -169,11 +200,16 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
             mapTemp.getPlayer().setKick(true);
             mapTemp.getPlayer().setKickedPosition(position);
 
-            // quảng bá
+            // quảng bá cho client
             playGameClients = new ArrayList<>(playGameClientHashMap.values());
             playGameClients.remove(playGameClientHashMap.get(id));
             for (PlayGameClient client : playGameClients) {
                 client.updateKickedHorsePosition(kickedId, position);
+            }
+
+            // quảng bá cho người xem
+            if (Handler.getInstance().getServerViewer() != null) {
+                Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateKickedHorsePosition(id, position);
             }
         }
         // nếu là ngựa của client khác bị đá
@@ -188,6 +224,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
             for (PlayGameClient client : playGameClients) {
                 client.updateKickedHorsePosition(kickedId, position);
             }
+
+            // quảng bá cho người xem
+            if (Handler.getInstance().getServerViewer() != null) {
+                Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateKickedHorsePosition(id, position);
+            }
         }
     }
 
@@ -199,6 +240,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+        }
+
+        // quảng bá cho người xem
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateKickedHorsePosition(id, position);
         }
     }
 
@@ -225,6 +271,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         // Gửi kết quả trận đấu lên Server
         Handler.getInstance().getClientLogin().getiServer().updateMatchHistory(Handler.getInstance()
                 .getId(), match);
+
+        // quảng bá cho người xem
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateResult(id);
+        }
     }
 
     // quảng bá kết quả trận đấu
@@ -245,6 +296,11 @@ public class PlayGameServerImp extends UnicastRemoteObject implements PlayGameSe
         // Gửi kết quả trận đấu lên Server
         Handler.getInstance().getClientLogin().getiServer().updateMatchHistory(Handler.getInstance()
                 .getId(), match);
+
+        // quảng bá cho người xem
+        if (Handler.getInstance().getServerViewer() != null) {
+            Handler.getInstance().getServerViewer().getWatchMatchServerImp().updateResult(Handler.getInstance().getId());
+        }
     }
 
 

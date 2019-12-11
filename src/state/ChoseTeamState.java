@@ -11,6 +11,7 @@ import main.Handler;
 import rmi.client.ClientPlayer;
 import SCCommon.ConnectionData;
 import rmi.server.ServerPlayer;
+import rmi.server.ServerViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,9 +61,25 @@ public class ChoseTeamState extends State implements Remote {
             players.add(player2);
             players.add(Handler.getInstance().getClientLogin().getPlayer());
             match.setPlayers(players);
-//             gửi match lên cho server và thông báo cho P2 là phòng đã tạo
+            match.setId(Handler.getInstance().getId());
             try {
+                // Mở server cho người xem
+                ServerViewer serverViewer = new ServerViewer(Handler.getInstance().getConnectionToWatch());
+                Handler.getInstance().setServerViewer(serverViewer);
+                if (Handler.getInstance().getServerViewer().connection()) {
+
+                    // mở Server cho người xem thành công
+                    System.out.println("Server Viewer OK");
+
+                    // gửi thông tin connectionData cho Server trung gian
+                    Handler.getInstance().getClientLogin().getiServer().createNewViewServer(Handler.getInstance().getId(),
+                            Handler.getInstance().getConnectionToWatch());
+                }
+
+                // gửi match lên cho server và thông báo cho P2 là phòng đã tạo
                 Handler.getInstance().getClientLogin().getiServer().sendMatchtoServer(Handler.getInstance().getId(), match, player2, connectionData);
+
+
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

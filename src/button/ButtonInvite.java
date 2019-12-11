@@ -2,7 +2,6 @@ package button;
 
 import SCCommon.Player;
 import graphics.CreateImage;
-import list.data.PlayerDataElement;
 import main.Handler;
 import state.ChoseTeamState;
 import state.State;
@@ -32,16 +31,16 @@ public class ButtonInvite extends Button {
                     Player player1 = new Player(Handler.getInstance().getId(), Handler.getInstance().getName());
                     Player player2 = new Player(this.player2.getPid(), this.player2.getPname());
                     if (Handler.getInstance().getClientLogin().getiServer().
-                            sendInvitation(player1, player2, Handler.getInstance().getConnection())) {
+                            sendInvitation(player1, player2, Handler.getInstance().getConnectionToPlay())) {
                         // nếu nhận lời mời
                         // tắt hộp thoại
                         dialogMessage.dispose();
                         // Mở Server, truyền vào P2 dùng để thông báo lên Server rằng đã mở phòng
-                        State.setCurrentState(new ChoseTeamState(Handler.getInstance().getConnection(), player2));
+                        State.setCurrentState(new ChoseTeamState(Handler.getInstance().getConnectionToPlay(), player2));
 
                     } else {
                         JOptionPane.showMessageDialog(null,
-                                this.player2.getPname().toUpperCase() + " từ chối chơi cùng bạn ! ");
+                                this.player2.getPname().toUpperCase() + " từ chối chơi cùng bạn hoặc đang trong trận ! ");
                     }
 
                 } catch (RemoteException e) {

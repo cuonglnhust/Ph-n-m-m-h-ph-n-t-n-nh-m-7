@@ -1,6 +1,8 @@
 package entity.changed.data;
 
-public class HorseData {
+import java.io.Serializable;
+
+public class HorseData implements Serializable {
     private int id;
     private int position;
     private int rank;

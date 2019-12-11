@@ -39,7 +39,6 @@ public class ClientLogin extends Mode {
                 Handler.getInstance().setName(GetPlayerServer.getPname());
                 IClientImp = new IClientImp(GetPlayerServer, iServer);
                 return true;
-
             }
 
             return false;

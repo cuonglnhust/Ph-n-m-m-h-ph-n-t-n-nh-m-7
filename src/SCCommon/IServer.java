@@ -25,4 +25,12 @@ public interface IServer extends Remote {
     void sendMatchtoServer(int idMatch, Match match, Player player2, ConnectionData connectionData) throws RemoteException;
 
     void updateMatchHistory(int idMatch, Match match) throws RemoteException;
+
+    // tạo một máy chủ để xem
+    public void createNewViewServer(int id, ConnectionData connectionData) throws RemoteException;
+
+    // hủy máy chủ xem
+    public void removeViewServer(int id) throws RemoteException;
+
+    ConnectionData requestViewMatch(int id) throws RemoteException;
 }

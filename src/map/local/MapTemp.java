@@ -1,7 +1,6 @@
 package map.local;
 
 import button.PlayerData;
-import constant.DiceValue;
 import constant.TeamType;
 import entity.changed.remote.HorseCopy;
 import entity.unchanged.Step;
@@ -56,13 +55,18 @@ public class MapTemp {
     private boolean isLose;
 
     // danh sách người chơi cùng
-    List<SCCommon.Player> playerList;
+    List<SCCommon.Player> playerList = new ArrayList<>();
 
     // thời gian chơi
     private long duration;
 
+    List<PlayerData> playerDataList;
+
 
     public MapTemp(List<PlayerData> playerDataList) {
+
+        this.playerDataList = playerDataList;
+
         // các đội mô phỏng
         playerCopyHashMap = new HashMap<>();
 
@@ -158,6 +162,8 @@ public class MapTemp {
             }
 
             SCCommon.Player player = new SCCommon.Player(playerData.getId(), playerData.getName());
+            // thêm vào trong list
+            playerList.add(player);
         }
     }
 
@@ -195,6 +201,13 @@ public class MapTemp {
             player.tick();
             for (PlayerCopy playerCopy : playerCopies) {
                 playerCopy.tick();
+            }
+        } else {
+            if (Handler.getInstance().getClientPlayer() != null) {
+                Handler.getInstance().setClientPlayer(null);
+            } else {
+                Handler.getInstance().setServerPlayer(null);
+                Handler.getInstance().setServerViewer(null);
             }
         }
     }
@@ -237,8 +250,6 @@ public class MapTemp {
 
                 // chuyển trạng thái
                 State.setCurrentState(new HomeState());
-
-
             }
         }
 
@@ -251,7 +262,7 @@ public class MapTemp {
         // quảng bá đổi lượt cho các máy khác
         // nếu là server
         if (Handler.getInstance().getServerPlayer() != null) {
-            Handler.getInstance().getServerPlayer().getPlayGameServerImp().changeTurmFromServer();
+            Handler.getInstance().getServerPlayer().getPlayGameServerImp().changeTurnFromServer();
         }
         // nếu là client
         else if (Handler.getInstance().getClientPlayer() != null) {
@@ -266,8 +277,6 @@ public class MapTemp {
 
     // tự thay đổi lượt
     public void changeTurnLocal() {
-        System.out.println("Change Turn Local");
-        System.out.println("turn = " + turn.toString());
         for (int i = 0; i < teamTypes.length; i++) {
             if (turn == teamTypes[i]) {
                 if (i == teamTypes.length - 1) {
@@ -278,7 +287,12 @@ public class MapTemp {
                 break;
             }
         }
-        System.out.println("turn = " + turn.toString());
+        // thông báo đổi lượt cho các máy đang xem
+        if (Handler.getInstance().getServerPlayer() != null) {
+            if (Handler.getInstance().getServerViewer() != null) {
+                Handler.getInstance().getServerViewer().getWatchMatchServerImp().changeTurn(turn);
+            }
+        }
     }
 
     // đá ngựa tự cập nhật trong nội bộ
@@ -397,5 +411,9 @@ public class MapTemp {
 
     public long getDuration() {
         return duration;
+    }
+
+    public List<PlayerData> getPlayerDataList() {
+        return playerDataList;
     }
 }

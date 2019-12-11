@@ -33,7 +33,15 @@ public class PlayerCopyBlue extends PlayerCopy {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+        // nếu đang chơi
+
+        if (Handler.getInstance().getMapTemp() != null && Handler.getInstance().getMapTemp().getTurn() == team) {
+            g.fillOval(EntityPosition.BLUE_DICE_PLACE_X + 35,
+                    EntityPosition.BLUE_DICE_PLACE_Y + 125, 30, 30);
+        }
+
+        // nếu đang xem
+        if (Handler.getInstance().getMapCopy() != null && Handler.getInstance().getMapCopy().getTurn() == team) {
             g.fillOval(EntityPosition.BLUE_DICE_PLACE_X + 35,
                     EntityPosition.BLUE_DICE_PLACE_Y + 125, 30, 30);
         }

@@ -25,7 +25,6 @@ public class ButtonPlay extends Button {
                 isClicked = true;
                 // nếu là Client
                 if (Handler.getInstance().getClientPlayer() != null) {
-
                     try {
                         // nếu đủ số đội chơi click chọn
                         if (choseTeamState.buttonClickCount() == Handler.getInstance().getPlayerCount()) {

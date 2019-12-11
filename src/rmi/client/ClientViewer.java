@@ -2,6 +2,7 @@ package rmi.client;
 
 import constant.ModeType;
 import SCCommon.ConnectionData;
+import rmi.implementation.WatchMatchClientImp;
 import rmi.implementation.WatchMatchServerImp;
 import rmi.interfaces.WatchMatchServer;
 import rmi.model.ModeViewer;
@@ -15,26 +16,30 @@ import java.rmi.registry.LocateRegistry;
 
 public class ClientViewer extends ModeViewer {
 
-    String url;
-    WatchMatchServer watchMatchServer;
+    private String url;
+    private WatchMatchServer watchMatchServer;
+    private WatchMatchClientImp watchMatchClientImp;
 
     public ClientViewer(ConnectionData connectionData) {
         super(connectionData);
         modeType = ModeType.CLIENT_VIEWER;
     }
 
-    public boolean connection(){
+    public void connection() {
         try {
-            System.setProperty("java.rmi.server.hostname",connectionData.getIp());
-            LocateRegistry.createRegistry(connectionData.getPort());
             url = "rmi://" + connectionData.getIp() + ":" + connectionData.getPort() + "/";
             watchMatchServer = (WatchMatchServer) Naming.lookup(url + "watch");
-            System.out.println("Server Ready");
-            return true;
+            watchMatchClientImp = new WatchMatchClientImp(watchMatchServer);
         } catch (RemoteException | MalformedURLException | NotBoundException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
+    public WatchMatchServer getWatchMatchServer() {
+        return watchMatchServer;
+    }
+
+    public WatchMatchClientImp getWatchMatchClientImp() {
+        return watchMatchClientImp;
+    }
 }

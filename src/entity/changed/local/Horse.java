@@ -364,4 +364,8 @@ public class Horse extends Entity {
     public int getId() {
         return id;
     }
+
+    public int getRank() {
+        return rank;
+    }
 }

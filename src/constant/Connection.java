@@ -7,15 +7,27 @@ import java.net.UnknownHostException;
 
 public class Connection {
 
-    public static ConnectionData create(){
-        //
-        String ip= null;
+    public static ConnectionData createToPlayer() {    //
+        String ip = null;
         try {
             ip = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        ConnectionData connectionData = new ConnectionData(ip,5000,"conToPlay");
+        ConnectionData connectionData = new ConnectionData(ip, 5000, "conToPlay");
         return connectionData;
     }
+
+    public static ConnectionData createToWatch() {    //
+        String ip = null;
+        try {
+            ip = Inet4Address.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        ConnectionData connectionData = new ConnectionData(ip, 6000, "conToWatch");
+        return connectionData;
+    }
+
+
 }

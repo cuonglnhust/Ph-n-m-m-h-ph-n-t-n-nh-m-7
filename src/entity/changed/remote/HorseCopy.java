@@ -29,16 +29,17 @@ public class HorseCopy extends Entity {
     // định danh
     protected int id;
 
-
     public HorseCopy(int id, int x, int y) {
         super(x, y, EntitySize.HORSE_WIDTH, EntitySize.HORSE_HEIGHT);
         this.id = id;
         setEntity();
     }
 
-    public void setEntity() {}
+    public void setEntity() {
+    }
 
-    public void isKickedAss(){}
+    public void isKickedAss() {
+    }
 
     public void tick(HorseData horseData) {
         position = horseData.getPosition();
@@ -49,7 +50,15 @@ public class HorseCopy extends Entity {
     // cập nhật tọa độ theo vị trí
     private void updatePosition() {
         if (position != -1) {
-            Step step = Handler.getInstance().getMapTemp().getMapGraphics().get(position);
+            Step step = null;
+            // nếu trong trạng thái chơi
+            if (Handler.getInstance().getMapTemp() != null) {
+                step = Handler.getInstance().getMapTemp().getMapGraphics().get(position);
+            }
+            // nếu trong trạng thái xem
+            else if (Handler.getInstance().getMapCopy() != null) {
+                step = Handler.getInstance().getMapCopy().getMapGraphics().get(position);
+            }
             x = step.getX();
             y = step.getY();
         } else if (rank != 0) {
@@ -58,7 +67,14 @@ public class HorseCopy extends Entity {
     }
 
     // cập nhật đồ họa cho rank
-    public void updateRankGraphics() {}
+    public void updateRankGraphics() {
+    }
+
+    // cập nhật vị trí
+    public void setData(HorseData horseData) {
+        position = horseData.getPosition();
+        rank = horseData.getRank();
+    }
 
     @Override
     public void render(Graphics g) {
@@ -71,5 +87,9 @@ public class HorseCopy extends Entity {
 
     public int getPosition() {
         return position;
+    }
+
+    public int getRank() {
+        return rank;
     }
 }

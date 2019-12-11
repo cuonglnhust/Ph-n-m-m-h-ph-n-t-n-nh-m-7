@@ -33,9 +33,14 @@ public class PlayerCopyOrange extends PlayerCopy {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        if (Handler.getInstance().getMapTemp().getTurn() == team) {
+        if (Handler.getInstance().getMapTemp() != null && Handler.getInstance().getMapTemp().getTurn() == team) {
             g.fillOval(EntityPosition.ORANGE_DICE_PLACE_X + 35,
-                    EntityPosition.ORANGE_DICE_PLACE_Y - 25, 30, 30);
+                    EntityPosition.ORANGE_DICE_PLACE_Y - 65, 30, 30);
+        }
+
+        if (Handler.getInstance().getMapCopy() != null && Handler.getInstance().getMapCopy().getTurn() == team) {
+            g.fillOval(EntityPosition.ORANGE_DICE_PLACE_X + 35,
+                    EntityPosition.ORANGE_DICE_PLACE_Y - 65, 30, 30);
         }
     }
 }
